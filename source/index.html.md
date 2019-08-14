@@ -2,238 +2,322 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+  - typescript : api
+  - javascript : example
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
-  - errors
+  - version/0.1.0
 
 search: true
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Scalecube is a toolkit for creating microservices based systems.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Scalecube provides tools: 
+ 
+* [Microservice](#bootstrap)  
+* [Router](#router)  
+* [Discovery](#discovery)  
+* [Cluster](#cluster)  
+* [Transport](#transport)  
+* [Gateway](#gateway)  
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
-# Authentication
+## Installation
 
-> To authorize, use this code:
+yarn:
 
-```ruby
-require 'kittn'
+`
+yarn add @scalecube/scalecube-microservice
+`
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+npm:
+
+`
+npm install @scalecube/scalecube-microservice
+` 
+
+# Motivation
+
+Scalecube implements [Decouple by interface](https://en.wikipedia.org/wiki/Loose_coupling) architecture.  
+it is event-base communication system,  
+and allow to create services that are loosely coupled in a distributed environment.
+ 
+It can run on both browser or server.
+
+It support Reactive programing.
+
+## Browser
+
+scalecube provide event-base tool for working in microservice approach.
+
+### Isolation
+
+different services communicate via postMessage events, this solution isolates each service.
+
+### Scalability
+
+scalecube bootstrap is the same if your feature located on the main thread or in a web-worker.
+
+
+## NodeJS
+
+### Isolation
+
+
+
+### Scalability
+
+
+# Core-concepts
+
+## Member
+
+member is a microservice instances.
+
+## Distributed environment
+
+Distributed environment is collection of members that share services between them.
+
+Each member have access to all the services that are shared in the distributed environment.
+
+## Registry
+
+Registry store all [endpoints](#endpoint) received from the discovery.
+
+## LocalCall
+
+When a microservice use it own services.
+
+## RemoteCall
+
+When a microservice use another microservice's services.
+
+## SeedAddress
+
+seedAddress is an [address](#address) of another microservice(seed).
+
+## Seed
+the seed is a microservice container that used as an entrypoint to the [distributed environment](#distributed-environment).
+each microservice can act as a seed for other microservice containers.
+
+# Terminology
+
+## Discovery
+
+```typescript
+type CreateDiscovery = (options: DiscoveryOptions) => Discovery;
+
+interface DiscoveryOptions {
+  address: Address;
+  itemsToPublish: Item[];
+  seedAddress?: Address;
+  cluster?: (opt: ClusterOptions) => Cluster;
+  debug?: boolean;
+}
+
+interface Discovery {
+  discoveredItems$: () => Observable<ServiceDiscoveryEvent>;
+  destroy(): Promise<string>;
+}
+
+type Item = any;
 ```
 
-```python
-import kittn
+Discovery is a tool that connect the microservice instance to the [distributed environment](#distributed-environment).  
 
-api = kittn.authorize('meowmeowmeow')
-```
+It convert events received from the [distributed environment](#distributed-environment) to events that the registry can understand.
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+* address - A unique [address](#address).
+* itemsToPublish - The data that the discovery need to share.
+* seedAddress - the [address](#address) we want to use in-order to connect to the distributed environment.
+* cluster - optional pluggable [cluster](#cluster)
+* debug - discovery logs
+
+* discoveredItems$ - An Observable sequence that describes all the items that published by **other** discoveries.  
+Emits new array of all items each time new discovery is created or destroyed.
+* destroy - Destroy the discovery:  
+  - Completes discoveredItems$.  
+  - Notifies other discoveries that this discovery's items are not available anymore.  
+  - Resolves with the message, that specifies the [address](#address) of the discovery.
+
+## Cluster
+create a [member](#member) from the data it receive from the discovery,  
+and use it in-order to share data in the distributed environment.
+
+## Transport
+is the way scalecube send request/response from one microservice to another.
+
+## Router
 
 ```javascript
-const kittn = require('kittn');
+import { roundRobin } from '@scalecube/routers';
 
-let api = kittn.authorize('meowmeowmeow');
+const proxy = ms.createProxy({serviceDefinition, router: roundRobin})
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+```typescript
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+type Router = (options: RouterOptions) => Endpoint | null;
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+interface RouterOptions {
+  lookUp: LookUp;
+  message: Message;
+}
 ```
+router is a tool for picking the best service base on given criteria.
 
-```python
-import kittn
+* lookUp - The function that finds [Endpoint](#endpoint) by given criteria.
+* message - metadata, contain criteria for picking the [Endpoint](#endpoint)
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+### default
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+pick the first available item.
 
-```javascript
-const kittn = require('kittn');
+### RoundRobin
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
+pick the next item from a list of available items.
 
-> The above command returns JSON structured like this:
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
+## Message
 
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+```typescript
+interface Message {
+  qualifier: string;
+  data: any[];
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
+const message = {
+  qualifier : 'Service/someMethod',
+  data: ['value']
 }
 ```
 
-This endpoint deletes a specific kitten.
+structure of the data in scalecube.
 
-### HTTP Request
+* qualifier - The combination of serviceName and methodName: <serviceName/methodName>
+* data - Arguments of the invoked function.
 
-`DELETE http://example.com/kittens/<ID>`
+## LookUp
 
-### URL Parameters
+```typescript
+type LookUp = (options: LookupOptions) => Endpoint[] | [];
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+interface LookupOptions {
+  qualifier: string;
+}
+```
 
+Search for [endPoints](#endpoint) in the registry that match the qualifier.
+
+* qualifier - The combination of serviceName and methodName: <serviceName/methodName>
+
+## Microservice
+```typescript
+type CreateMicroservice = (options: MicroserviceOptions) => Microservice;
+
+export interface Microservice {
+  destroy: () => Promise<any>;
+  createProxies: CreateProxies;
+  createProxy: CreateProxy;
+  createServiceCall: CreateServiceCall;
+}
+
+export interface MicroserviceOptions {
+  services?: Service[];
+  seedAddress?: Address | string;
+  address?: Address | string;
+  transport?: Transport;
+  cluster?: (opt: ClusterOptions) => Cluster;
+  debug?: boolean;
+}
+```
+
+* destroy - The method is used to delete a microservice and close all the subscriptions related with it.
+* createProxies - Create a map of proxies or Promises to proxy. (deepened on configuration)
+* createProxy - Creates a proxy to a method and provides extra logic when is invoked.
+* createServiceCall - Exposes serviceCall to a user (not via Proxy)
+
+* services - An array of services, that will exist inside a microservice container
+* seedAddress - The seedAddress is an address of another microservice container in our distributed env.
+* address - An address for this microservice instance, other microservices can use this address to connect with this microservice container.
+* transport - a module that implements MicroserviceTransport.
+* cluster - a module that implements Cluster API
+* debug - add logs
+
+## Endpoint
+
+```typescript
+interface Endpoint {
+  qualifier: string;
+  serviceName: string;
+  methodName: string;
+  asyncModel: AsyncModel;
+  address: Address;
+}
+```
+
+Endpoint is the metadata of a service.  
+Contain information of how to access the service.
+
+* qualifier - The combination of serviceName and methodName: <serviceName/methodName>
+* serviceName - The name of a service, that is provided in serviceDefinition.
+* methodName - The name of a method, that is provided in the methods map in serviceDefinition.
+* asyncModel - Type of communication between a consumer and a provider.
+* address - A unique [address](#address) of an endpoint URI format: <protocol>://<host>:<port>/<path>
+
+## AsyncModel
+```typescript
+
+type RequestStreamAsyncModel = 'requestStream';
+
+type RequestResponseAsyncModel = 'requestResponse';
+
+type AsyncModel = RequestStreamAsyncModel | RequestResponseAsyncModel;
+```
+
+AsyncModel is the way a service can be resolved.  
+It can be a stream and use `requestStream`
+or can be a promise and use `requestResponse`
+
+* RequestStreamAsyncModel - Defines Stream asyncModel ( Observable, Flowable , etc.. ).
+* RequestResponseAsyncModel - Defines Async asyncModel ( Promise ).
+
+## Address
+```typescript
+interface Address {
+  host: string;
+  port: number;
+  protocol: string;
+  path: string;
+}
+```
+
+Address is the URI for the service.
+
+* host - unique identifier that allows other computers to access it.
+* port - determine on which port number the server will receive the data.
+* protocol - rules for communication between server and client (ws | pm | tcp)
+* path - relative address.
+
+## Service
+
+```typescript
+interface Service {
+  definition: ServiceDefinition;
+  reference: ServiceReference;
+}
+```
+
+Service is combination of contract and the reference that uphold the contract.  
+
+* definition - metadata that define the service.
+* reference - code of the service
