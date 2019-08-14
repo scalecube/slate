@@ -9,7 +9,8 @@ toc_footers:
   - <a href='https://github.com/scalecube/scalecube-js'>Scalecube github</a>
 
 includes:
-  - v-0.1.0/Terminology
+  - v-0.1.0/Core-concepts
+  - v-0.1.0/Term
   - v-0.1.0/Bootstrap
   - v-0.1.0/Basic-usage
   - v-0.1.0/Advance-usage
