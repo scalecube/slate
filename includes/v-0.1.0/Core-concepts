@@ -1,0 +1,17 @@
+<h1 id='core-concepts'>Core-concepts</h1><h2 id='member'>Member</h2>
+<p>member is a microservice instances.</p>
+<h2 id='distributed-environment'>Distributed environment</h2>
+<p>Distributed environment is collection of members that share services between them.</p>
+
+<p>Each member have access to all the services that are shared in the distributed environment.</p>
+<h2 id='registry'>Registry</h2>
+<p>Registry store all <a href="#endpoint">endpoints</a> received from the discovery.</p>
+<h2 id='localcall'>LocalCall</h2>
+<p>When a microservice use it own services.</p>
+<h2 id='remotecall'>RemoteCall</h2>
+<p>When a microservice use another microservice&#39;s services.</p>
+<h2 id='seedaddress'>SeedAddress</h2>
+<p>seedAddress is an <a href="#address">address</a> of another microservice(seed).</p>
+<h2 id='seed'>Seed</h2>
+<p>the seed is a microservice container that used as an entrypoint to the <a href="#distributed-environment">distributed environment</a>.
+each microservice can act as a seed for other microservice containers.</p>

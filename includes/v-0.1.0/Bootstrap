@@ -1,0 +1,102 @@
+<h1 id='bootstrap'>Bootstrap</h1>
+<p>bootstrap the microservice can be done in 3 steps:</p>
+<h2 id='1-define-the-service'>1. define the service</h2><pre class="highlight typescript tab-typescript"><code><span class="kr">interface</span> <span class="nx">ServiceDefinition</span> <span class="p">{</span>
+  <span class="nl">serviceName</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">methods</span><span class="p">:</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nx">methodName</span><span class="p">:</span> <span class="kr">string</span><span class="p">]:</span> <span class="p">{</span>
+      <span class="nl">asyncModel</span><span class="p">:</span> <span class="nx">AsyncModel</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">ASYNC_MODEL_TYPES</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">serviceDefinition</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">serviceName</span><span class="p">:</span> <span class="s1">'Service'</span><span class="p">,</span>
+  <span class="na">methods</span><span class="p">:{</span>
+  <span class="na">someMethod</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="na">asyncModel</span> <span class="p">:</span> <span class="nx">ASYNC_MODEL_TYPES</span><span class="p">.</span><span class="nx">RequestResponse</span>
+    <span class="p">}</span>
+  <span class="p">}</span> 
+<span class="p">}</span>
+</code></pre>
+<p>service definition is the contract between the provider to the consumer of the service.<br>
+in other words, it is the contract that the service must uphold.</p>
+
+<p>it is possible that the service will contain more functionality then what you define in the contract,<br>
+but only the functions that are in the definition will be accessible via scalecube.</p>
+
+<ul>
+<li>serviceName - The name of a service</li>
+<li>methods - Map of methods that exist in the service.<br>
+each method describe its <a href="#asyncmodel">asyncModel</a>.</li>
+</ul>
+<h2 id='2-create-the-servicereference'>2. create the serviceReference</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// class example</span>
+<span class="kr">class</span> <span class="nx">Service</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(){</span>
+
+  <span class="p">}</span>
+
+  <span class="nx">someMethod</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">'some method been resolved'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// module example</span>
+<span class="kr">const</span> <span class="nx">someMethod</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="s1">'some method been resolved'</span><span class="p">);</span>
+
+</code></pre><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">ServiceReference</span> <span class="o">=</span> <span class="nx">ServiceFactory</span> <span class="o">|</span> <span class="nx">ServiceObject</span><span class="p">;</span>
+
+<span class="kd">type</span> <span class="nx">ServiceFactory</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">createProxy</span><span class="p">,</span> <span class="nx">createServiceCall</span> <span class="p">}:</span> <span class="nx">ServiceFactoryOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ServiceObject</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">ServiceObject</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">?:</span> <span class="kr">any</span><span class="p">;</span>
+
+  <span class="p">[</span><span class="nx">methodName</span><span class="p">:</span> <span class="kr">string</span><span class="p">]:</span> <span class="kr">any</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">ServiceFactoryOptions</span> <span class="p">{</span>
+  <span class="nl">createProxy</span><span class="p">:</span> <span class="nx">CreateProxy</span><span class="p">;</span>
+  <span class="nl">createServiceCall</span><span class="p">:</span> <span class="nx">CreateServiceCall</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+<p>ServiceReference can be a class instance, module or a callback function.</p>
+
+<p>passing callback function in the ServiceReference call <a href="#dependency-hook">depedency hook</a> 
+and it can be used to inject proxy/service call to the service.</p>
+<h2 id='3-creating-microservice'>3. creating microservice</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">ms</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
+             <span class="na">services</span> <span class="p">:</span> <span class="p">[{</span>
+               <span class="na">reference</span> <span class="p">:</span> <span class="p">{</span><span class="nx">someMethod</span><span class="p">},</span>
+               <span class="na">definition</span><span class="p">:</span> <span class="nx">serviceDefinition</span>
+             <span class="p">},</span>
+             <span class="p">{</span>
+                <span class="na">reference</span> <span class="p">:</span> <span class="k">new</span> <span class="nx">Service</span><span class="p">(),</span>
+                <span class="na">definition</span><span class="p">:</span> <span class="nx">serviceDefinition</span>
+              <span class="p">}]</span>
+           <span class="p">});</span>
+</code></pre><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">CreateMicroservice</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">MicroserviceOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Microservice</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">MicroserviceOptions</span> <span class="p">{</span>
+  <span class="nx">services</span><span class="p">?:</span> <span class="nx">Service</span><span class="p">[];</span>
+  <span class="nx">seedAddress</span><span class="p">?:</span> <span class="nx">Address</span> <span class="o">|</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nx">address</span><span class="p">?:</span> <span class="nx">Address</span> <span class="o">|</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nx">transport</span><span class="p">?:</span> <span class="nx">Transport</span><span class="p">;</span>
+  <span class="nx">cluster</span><span class="p">?:</span> <span class="p">(</span><span class="nx">opt</span><span class="p">:</span> <span class="nx">ClusterOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Cluster</span><span class="p">;</span>
+  <span class="nx">debug</span><span class="p">?:</span> <span class="kr">boolean</span><span class="p">;</span>
+ <span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">Service</span> <span class="p">{</span>
+  <span class="nl">definition</span><span class="p">:</span> <span class="nx">ServiceDefinition</span><span class="p">;</span>
+  <span class="nl">reference</span><span class="p">:</span> <span class="nx">ServiceReference</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+<p>After creating a service and a service-definition we can now bootstrap our microservice.   </p>
+
+<ul>
+<li>services - An array of services, that will exist inside a microservice container.</li>
+<li>seedAddress - <a href="#seedaddress">seedAddress</a> is the entry point to our distributed env.</li>
+<li>address - An <a href="#address">address</a> for this microservice instance.</li>
+<li>transport - optional pluggable <a href="#transport">transport</a>.</li>
+<li>cluster - optional pluggable <a href="#cluster">cluster</a>.</li>
+<li>debug - optional logs.</li>
+</ul>

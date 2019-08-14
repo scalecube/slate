@@ -1,0 +1,15 @@
+<h1 id='faq'>FAQ</h1><h2 id='how-can-i-pass-array-in-message'>How can I pass array in message?</h2><pre class="highlight javascript tab-javascript"><code>
+<span class="kr">const</span> <span class="nx">arrayToPassInArgs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">];</span>
+<span class="kr">const</span> <span class="nx">valueToPassInArgs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">objectToPassInArgs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'6'</span><span class="p">:</span><span class="mi">6</span><span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">qualifier</span> <span class="p">:</span> <span class="s1">'Service/someMethod'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="p">[</span><span class="nx">arrayToPassInArgs</span><span class="p">,</span> <span class="nx">valueToPassInArgs</span><span class="p">,</span> <span class="nx">objectToPassInArgs</span><span class="p">]</span>
+<span class="p">}</span>
+
+</code></pre>
+<p>It is possbile to pass any data structure in the message.<br>
+just need to make sure it wrap in array.</p>
+
+<p>please look at the <a href="?javascript#passing-array-argument-in-message">example</a></p>

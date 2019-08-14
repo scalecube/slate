@@ -1,0 +1,122 @@
+<h1 id='basic-usage'>Basic usage</h1>
+<p>After bootstrapping the microservice, we can use it to request services from the <a href="#distributed-environment">distributed environment</a></p>
+<h2 id='createproxy'>createProxy</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">CreateProxy</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">T</span> <span class="o">=</span> <span class="kr">any</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">ProxyOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">T</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">ProxyOptions</span> <span class="p">{</span>
+  <span class="nx">router</span><span class="p">?:</span> <span class="nx">Router</span><span class="p">;</span>
+  <span class="nl">serviceDefinition</span><span class="p">:</span> <span class="nx">ServiceDefinition</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">serviceProxy</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span><span class="nx">serviceDefinition</span><span class="p">});</span>
+<span class="nx">serviceProxy</span><span class="p">.</span><span class="nx">someMethod</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">)</span> <span class="c1">// resolve with `someMethod` response</span>
+</code></pre>
+<p>It is possible to createProxy from the microservice instance we have just created. </p>
+
+<p>This is a proxy to a different service that is shared in the <a href="#distributed-environment">distributed environment</a>.</p>
+
+<ul>
+<li>router - Custom router specifies the logic of choosing the appropriate remoteService.</li>
+<li>serviceDefinition - The metadata for a service container, that includes the name of a service and the map of methods that are included in it.</li>
+</ul>
+<h2 id='createservicecall'>createServiceCall</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">CreateServiceCall</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">CreateServiceCallOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ServiceCall</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">CreateServiceCallOptions</span> <span class="p">{</span>
+  <span class="nx">router</span><span class="p">?:</span> <span class="nx">Router</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">ServiceCall</span> <span class="p">{</span>
+  <span class="nl">requestStream</span><span class="p">:</span> <span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="nx">Message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Observable</span><span class="o">&lt;</span><span class="nx">Message</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nl">requestResponse</span><span class="p">:</span> <span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="nx">Message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Message</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">qualifier</span><span class="p">:</span> <span class="s1">'Service/someMethod'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="p">[</span><span class="s1">'value'</span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="nx">ms</span><span class="p">.</span><span class="nx">createServiceCall</span><span class="p">().</span><span class="nx">requestResponse</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+<span class="nx">ms</span><span class="p">.</span><span class="nx">createServiceCall</span><span class="p">().</span><span class="nx">requestStream</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">subscribe</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+
+</code></pre>
+<p>serviceCall is another way to request a service.<br>
+it is more low level approach and the user must define the <a href="#message"><code>message</code></a> properly in-order for it to work.</p>
+
+<p>good example for preferring serviceCall over Proxy is in the <a href="#"><code>Gateway</code></a>,<br>
+in the Gateway we want to receive a request from outside of our <a href="#distributed-environment">distributed environment</a> and then pass the request to the correct service inside ot it.</p>
+
+<ul>
+<li>router - Custom router specifies the logic of choosing the appropriate remoteService</li>
+<li>requestStream - A method using which a consumer requires a stream and receives an Observable sequence describing updates of the method and qualifier that was used for the invocation</li>
+<li>requestResponse - A method using which a consumer requires data and a provider responds with the data once in the form of promise,<br>
+that includes the response from the method and qualifier that was used for the invocation.</li>
+</ul>
+<h2 id='createproxies'>createProxies</h2><pre class="highlight typescript tab-typescript"><code>
+<span class="kd">type</span> <span class="nx">CreateProxies</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">CreateProxiesOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ProxiesMap</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">CreateProxiesOptions</span> <span class="p">{</span>
+  <span class="nl">proxies</span><span class="p">:</span> <span class="nx">ProxiesOptions</span><span class="p">[];</span>
+  <span class="nx">router</span><span class="p">?:</span> <span class="nx">Router</span><span class="p">;</span>
+  <span class="nx">isAsync</span><span class="p">?:</span> <span class="kr">boolean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">ProxiesOptions</span> <span class="p">{</span>
+  <span class="nl">proxyName</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">serviceDefinition</span><span class="p">:</span> <span class="nx">ServiceDefinition</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">ProxiesMap</span> <span class="p">{</span>
+  <span class="p">[</span><span class="nx">proxyName</span><span class="p">:</span> <span class="kr">string</span><span class="p">]:</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">proxy</span><span class="p">:</span> <span class="nx">Proxy</span> <span class="p">}</span><span class="o">&gt;</span> <span class="o">|</span> <span class="nx">Proxy</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Proxy</span><span class="o">&lt;</span><span class="nx">T</span> <span class="o">=</span> <span class="kr">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span><span class="p">;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">awaitServiceProxy</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxies</span><span class="p">({</span>
+  <span class="na">proxies</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="nx">serviceDefinition</span><span class="p">,</span>
+    <span class="na">proxyName</span><span class="p">:</span> <span class="s1">'awaitServiceProxy'</span>
+  <span class="p">}],</span>
+  <span class="na">isAsync</span> <span class="p">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+
+<span class="nx">awaitServiceProxy</span><span class="p">.</span><span class="nx">then</span><span class="p">(({</span><span class="na">proxy</span><span class="p">:</span> <span class="nx">serviceProxy</span><span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">serviceProxy</span><span class="p">.</span><span class="nx">someMethod</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+<p>createProxies is an advance way of creating a proxy to a service.
+it provide a way to receive multiple proxies in one command.<br>
+also, it provide two option of resolving the proxies:</p>
+
+<ol>
+<li><p>if setting the <code>isAsync</code> to <code>true</code> then you will receive 
+an object with Promises to the proxies.</p></li>
+<li><p>if setting the <code>isAsync</code> to <code>false</code> then you will receive 
+an object with the proxies.</p></li>
+</ol>
+
+<p>promise to the proxy will resolve only when the service already in the registry.
+this help you avoid retry logic till the service is available to use.</p>
+
+<ul>
+<li>proxies - List of ProxiesOptions, contain the configuration for creating the proxy</li>
+<li>router - optional router to provide extra logic (remoteCall).</li>
+<li>isAsync - optional flag to resolve the proxy asynchronous way<br>
+if true then the proxy will be resolved when the service is in the registry.<br>
+if false then the proxy will be resolved immediately.</li>
+<li>proxyName - name of the proxy (used as the key in the map).</li>
+<li>serviceDefinition - metadata of the service.</li>
+<li>ProxiesMap - Map of generic proxyName and a Promise to the proxy.</li>
+</ul>
+<h2 id='destroy'>destroy</h2><pre class="highlight typescript tab-typescript"><code><span class="kr">interface</span> <span class="nx">Microservice</span> <span class="p">{</span>
+  <span class="nl">destroy</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="nx">ms</span><span class="p">.</span><span class="nx">destroy</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+</code></pre>
+<p>destroy the microservice instance.</p>
+
+<ol>
+<li>stop listen to the <a href="#address">address</a>.<br></li>
+<li>notify in the <a href="#distributed-environment">distributed environment</a> that the services from this microservice are not available anymore.<br></li>
+<li>remove it self from the <a href="#distributed-environment">distributed environment</a>.<br></li>
+</ol>
+
+<ul>
+<li>destroy - The method is used to delete a microservice and close all the subscriptions related with it.</li>
+</ul>
