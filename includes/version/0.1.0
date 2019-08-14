@@ -305,107 +305,127 @@ or if you want to add life cycle to your bootstrap process.</p>
 </tr>
 </thead><tbody>
 <tr>
-<td>MS1000</td>
+<td>MS0000</td>
 <td>microservice does not exists</td>
 <td>microservice instance have been destroyed</td>
 </tr>
 <tr>
-<td>MS1001</td>
+<td>MS0001</td>
 <td><a href="#message">Message</a> has not been provided</td>
 <td>calling requestResponse or requestStream must contain a Message</td>
 </tr>
 <tr>
-<td>MS1002</td>
+<td>MS0002</td>
 <td><a href="#message">Message</a> data has not been provided</td>
 <td>Message must contain data property</td>
 </tr>
 <tr>
-<td>MS1003</td>
+<td>MS0003</td>
 <td><a href="#message">Message</a> qualifier has not been provided</td>
 <td>Message must contain qualifier property</td>
 </tr>
 <tr>
-<td>MS1004</td>
+<td>MS0004</td>
 <td><a href="#message">Message</a> should not to be empty object</td>
 <td>can not pass empty object as Message</td>
 </tr>
 <tr>
-<td>MS1005</td>
+<td>MS0005</td>
 <td><a href="#qualifier">qualifier</a> expected to be service/method format</td>
 <td>qualifier is not a string divided by &#39;/&#39;</td>
 </tr>
 <tr>
-<td>MS1006</td>
+<td>MS0006</td>
 <td><a href="#service">Service</a> missing definition</td>
 <td>when <a href="#bootstrap">bootstrap microservice</a> you provide service without a contract</td>
 </tr>
 <tr>
-<td>MS1007</td>
+<td>MS0007</td>
 <td><a href="#message">Message</a> format error: data must be Array</td>
 <td>Message data property must be array, <a href="#passing-array-serviceall">how can i pass array in message</a></td>
 </tr>
 <tr>
-<td>MS1008</td>
+<td>MS0008</td>
 <td>Not valid format, <a href="#3-creating-microservice">services</a> must be Array</td>
 <td>when <a href="#bootstrap">bootstrap microservice</a>, services must be array of service</td>
 </tr>
 <tr>
-<td>MS1009</td>
+<td>MS0009</td>
 <td>Not valid format, <a href="#service">service</a> must be Object</td>
 <td>service must be an object</td>
 </tr>
 <tr>
-<td>MS1010</td>
+<td>MS0010</td>
 <td>Not valid format, <a href="#microservice">Microservice configuration</a> must be an Object</td>
 <td>missing configuration when bootstrapping a microservice instance</td>
 </tr>
 <tr>
-<td>MS1011</td>
+<td>MS0011</td>
 <td><a href="#qualifier">qualifier</a> should not be empty string</td>
 <td>qualifier must be valid string in the format &#39;part1/part2&#39;</td>
 </tr>
 <tr>
-<td>MS1012</td>
+<td>MS0012</td>
 <td>Invalid <a href="##createproxies">createProxies</a> configuration, proxyName must be unique</td>
 <td>when createProxies you are passing the same proxyName twice</td>
 </tr>
 <tr>
-<td>MS1013</td>
+<td>MS0013</td>
 <td>Transport provider is not define</td>
 <td>when running on nodejs, <a href="#transport">Transport</a> must be provided</td>
 </tr>
 <tr>
-<td>MS1014</td>
+<td>MS0014</td>
 <td>service method <methodName> missing in the <a href="#1-define-the-service">serviceDefinition</a></td>
 <td>try to call a method from a proxy that does not in the definition</td>
 </tr>
 <tr>
-<td>MS1015</td>
+<td>MS0015</td>
 <td>can&#39;t find services that match the give criteria: &lt;<a href="#qualifier">qualifier</a>&gt;</td>
 <td>requesting a service that is not in the <a href="#registry">registry</a></td>
 </tr>
 <tr>
-<td>MS1016</td>
+<td>MS0016</td>
 <td>&lt;<a href="#asyncmodel">asyncModel</a> does not match, expect asyncModel in the proxy definition&gt;, but received <asyncModel in the endpoint definition></td>
 <td>asyncModel in the request does not match the asyncModel define in the registry for the service</td>
 </tr>
 <tr>
-<td>MS1017</td>
+<td>MS0017</td>
 <td>service (&lt;<a href="#qualifier">qualifier</a>&gt;) has valid definition but reference is not a function.</td>
 <td><a href="#2-create-the-servicereference">ServiceObject</a> method is not a function</td>
 </tr>
 <tr>
-<td>MS1018</td>
+<td>MS0018</td>
 <td>service does not uphold the contract, <serviceName> is not provided</td>
 <td>definition has a method that is not provided in the reference</td>
 </tr>
 <tr>
-<td>MS1019</td>
+<td>MS0019</td>
 <td>Not valid format, <serviceName> reference must be an Object</td>
 <td><a href="#2-create-the-servicereference">ServiceReference</a> must return object</td>
 </tr>
+<tr>
+<td>MS0020</td>
+<td>Invalid format, definition must contain valid serviceName</td>
+<td>serviceDefinition must contain property <code>serviceName</code></td>
+</tr>
+<tr>
+<td>MS0021</td>
+<td>Invalid format, definition must contain valid methods of type object</td>
+<td>methods must be of type object</td>
+</tr>
+<tr>
+<td>MS0022</td>
+<td>Invalid format, definition must contain valid methods</td>
+<td>methods must be none empty object</td>
+</tr>
+<tr>
+<td>MS0023</td>
+<td>Invalid format, serviceName must be not empty string but received type <typeof serviceName></td>
+<td>fix the serviceDefinition, serviceName must be a string</td>
+</tr>
 </tbody></table>
-<h1 id='faq'>FAQ</h1><h2 id='passing-array-argument-in-message'>Passing Array argument in Message</h2><pre class="highlight javascript tab-javascript"><code>
+<h1 id='faq'>FAQ</h1><h2 id='how-can-i-pass-array-in-message'>How can I pass array in message?</h2><pre class="highlight javascript tab-javascript"><code>
 <span class="kr">const</span> <span class="nx">arrayToPassInArgs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">];</span>
 <span class="kr">const</span> <span class="nx">valueToPassInArgs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">objectToPassInArgs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'6'</span><span class="p">:</span><span class="mi">6</span><span class="p">};</span>
@@ -415,7 +435,7 @@ or if you want to add life cycle to your bootstrap process.</p>
   <span class="na">data</span><span class="p">:</span> <span class="p">[</span><span class="nx">arrayToPassInArgs</span><span class="p">,</span> <span class="nx">valueToPassInArgs</span><span class="p">,</span> <span class="nx">objectToPassInArgs</span><span class="p">]</span>
 <span class="p">}</span>
 
-</code></pre><h3 id='how-can-i-pass-array-in-message'>How can I pass array in message?</h3>
+</code></pre>
 <p>It is possbile to pass any data structure in the message.<br>
 just need to make sure it wrap in array.</p>
 
