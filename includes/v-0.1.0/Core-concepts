@@ -4,14 +4,70 @@
 <p>Distributed environment is collection of members that share services between them.</p>
 
 <p>Each member have access to all the services that are shared in the distributed environment.</p>
+<h3 id='environment-topology'>environment <a href="https://en.wikipedia.org/wiki/Network_topology">topology</a></h3>
+<ul>
+<li>Star - when all microservice container are connected to the same microservice <a href="#seed">seed</a>.</li>
+<li>Hybrid - most of the microservices instance act as <a href="#seed">seed</a>.</li>
+</ul>
 <h2 id='registry'>Registry</h2>
-<p>Registry store all <a href="#endpoint">endpoints</a> received from the discovery.</p>
-<h2 id='localcall'>LocalCall</h2>
+<p>Registry store all <a href="#endpoint">endpoints</a> of the available services it can request.<br>
+when a microservice bootstrap with a new service, it is connect via the <a href="#discovery">discovery</a> to the <a href="#seed">microservice seed</a>,<br>
+once connection is established, then they share their Endpoints.<br>
+every change in the microservices in the <a href="#distributed-environment">distributed environment</a> the registry is notified and update accordingly.</p>
+<h2 id='localcall'>LocalCall</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// main.js</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">localMs</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
+  <span class="na">services</span><span class="p">:[{</span>
+    <span class="c1">// add your services</span>
+  <span class="p">}]</span>
+<span class="p">});</span>
+
+<span class="kr">const</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">localMs</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span>
+ <span class="c1">// create proxy to the services on the microservice instance</span>
+<span class="p">});</span>
+</code></pre>
 <p>When a microservice use it own services.</p>
-<h2 id='remotecall'>RemoteCall</h2>
+<h3 id='use-case'>use-case</h3><h4 id='monolith-application'>monolith application</h4>
+<p>starting building the application as monolith (in this step all services are local)<br>
+change the application to microservice architecture when you are ready to scale-up.</p>
+<h4 id='gateway'>gateway</h4>
+<p>when your microservice also act as a gateway,
+some of the requests will be from the local services and some will require propagate the request to another microservice instance.</p>
+<h2 id='remotecall'>RemoteCall</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// seed.js</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+
+<span class="nx">createMicroservice</span><span class="p">({</span>
+  <span class="na">address</span><span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'seed'</span><span class="p">),</span>
+  <span class="na">services</span><span class="p">:[{</span>
+    <span class="c1">// add your services</span>
+  <span class="p">}]</span>
+<span class="p">});</span>
+
+<span class="c1">// main.js</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">localMs</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
+  <span class="na">address</span><span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'local'</span><span class="p">),</span>
+  <span class="na">seedAddress</span> <span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'seed'</span><span class="p">),</span>
+  <span class="na">services</span><span class="p">:[{</span>
+    <span class="c1">// add your services</span>
+  <span class="p">}]</span>
+<span class="p">});</span>
+
+<span class="kr">const</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">localMs</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span>
+ <span class="c1">// create proxy to the services on the other microservice instance</span>
+<span class="p">});</span>
+</code></pre>
 <p>When a microservice use another microservice&#39;s services.</p>
+<h3 id='steps'>steps:</h3>
+<ol>
+<li>use seedAddress to connect the microservice to the right distributed environment.</li>
+<li>bootstrap the microservice with the seedAddress</li>
+<li>createProxy to the service located on the other microservice instance.</li>
+</ol>
 <h2 id='seedaddress'>SeedAddress</h2>
-<p>seedAddress is an <a href="#address">address</a> of another microservice(seed).</p>
+<p>seedAddress is the <a href="#address">address</a> of the <a href="#seed">seed</a>.</p>
 <h2 id='seed'>Seed</h2>
-<p>the seed is a microservice container that used as an entrypoint to the <a href="#distributed-environment">distributed environment</a>.
+<p>the seed is a microservice container that used as an entry-point to the <a href="#distributed-environment">distributed environment</a>.
 each microservice can act as a seed for other microservice containers.</p>

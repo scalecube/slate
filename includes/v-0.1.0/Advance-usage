@@ -72,4 +72,44 @@
 </code></pre>
 <p>dependency hook is used if your service deepened on another service,<br>
 or if you want to add life cycle to your bootstrap process.</p>
-<h2 id='gateway'>gateway</h2>
+<h2 id='gateway'>gateway</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">RequestHandler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">serviceCall</span><span class="p">:</span> <span class="nx">ServiceCall</span><span class="p">,</span> <span class="nx">data</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">subscriber</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">GatewayOptions</span> <span class="p">{</span>
+  <span class="nl">port</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+  <span class="nx">requestResponse</span><span class="p">?:</span> <span class="nx">RequestHandler</span><span class="p">;</span>
+  <span class="nx">requestStream</span><span class="p">?:</span> <span class="nx">RequestHandler</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">GatewayStartOptions</span> <span class="p">{</span>
+  <span class="nl">serviceCall</span><span class="p">:</span> <span class="nx">ServiceCall</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">Gateway</span> <span class="p">{</span>
+  <span class="nl">start</span><span class="p">:</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">GatewayStartOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">stop</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span><span class="nx">Gateway</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/rsocket-ws-gateway'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span><span class="nx">createMicroservice</span><span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">gateway</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Gateway</span><span class="p">({</span><span class="na">port</span> <span class="p">:</span> <span class="mi">3000</span><span class="p">});</span>
+<span class="kr">const</span> <span class="nx">serviceCall</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
+  <span class="na">services</span><span class="p">:</span> <span class="p">[{</span>
+    <span class="na">reference</span><span class="p">:</span> <span class="k">new</span> <span class="nx">Service</span><span class="p">(),</span>
+    <span class="na">definition</span><span class="p">:</span> <span class="nx">serviceDefinition</span>
+  <span class="p">}]</span>
+<span class="p">}).</span><span class="nx">createServiceCall</span><span class="p">({});</span>
+
+<span class="nx">gateway</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span><span class="nx">serviceCall</span><span class="p">});</span>
+</code></pre>
+<p>Its a technique to centralize all the requests that are coming from outside of the distributed environment.</p>
+
+<p>scalecube provide gateway implementation base on RSocketWebsocket.</p>
+
+<ul>
+<li>port - The gateway will listen to it.</li>
+<li>requestResponse - handle requestResponse requests.</li>
+<li><p>requestStream - handle requestStream requests.</p></li>
+<li><p><a href="#createservicecall">serviceCall</a> - low level approach for requesting a service in the distributed environment.</p></li>
+<li><p>start - start the gateway.</p></li>
+<li><p>stop - stop the gateway.</p></li>
+</ul>

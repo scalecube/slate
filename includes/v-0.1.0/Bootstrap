@@ -24,12 +24,6 @@ in other words, it is the contract that the service must uphold.</p>
 
 <p>it is possible that the service will contain more functionality then what you define in the contract,<br>
 but only the functions that are in the definition will be accessible via scalecube.</p>
-
-<ul>
-<li>serviceName - The name of a service</li>
-<li>methods - Map of methods that exist in the service.<br>
-each method describe its <a href="#asyncmodel">asyncModel</a>.</li>
-</ul>
 <h2 id='2-create-the-servicereference'>2. create the serviceReference</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// class example</span>
 <span class="kr">class</span> <span class="nx">Service</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(){</span>
