@@ -4,7 +4,7 @@
 <p>Distributed environment is collection of members that share services between them.</p>
 
 <p>Each member have access to all the services that are shared in the distributed environment.</p>
-<h3 id='environment-topology'>environment <a href="https://en.wikipedia.org/wiki/Network_topology">topology</a></h3>
+<h3 id='possible-topologies'>possible <a href="https://en.wikipedia.org/wiki/Network_topology">topologies:</a></h3>
 <ul>
 <li>Star - when all microservice container are connected to the same microservice <a href="#seed">seed</a>.</li>
 <li>Hybrid - most of the microservices instance act as <a href="#seed">seed</a>.</li>
