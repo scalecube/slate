@@ -13,3 +13,14 @@
 just need to make sure it wrap in array.</p>
 
 <p>please look at the <a href="?javascript#passing-array-argument-in-message">example</a></p>
+<h2 id='invoking-a-method-from-proxy-throw-error-code-ms0015-can-39-t-find-services'>Invoking a method from proxy throw error code MS0015 - can&#39;t find services ...</h2>
+<p>createProxy or createProxies (without asyncModel flag set to true) does not guarantee that the service is available.</p>
+
+<p>it just provide a proxy to the service.</p>
+<h3 id='possible-solutions'>possible solutions:</h3>
+<ol>
+<li><p>set asyncModel flag to true when using <a href="##createproxies">createProxies</a>.<br>
+this option will provide a promise to a proxy.
+when calling the promise, it will resolve when the service is available.</p></li>
+<li><p>implement retry logic when requesting a service.</p></li>
+</ol>
