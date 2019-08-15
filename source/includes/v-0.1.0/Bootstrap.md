@@ -37,9 +37,6 @@ in other words, it is the contract that the service must uphold.
 it is possible that the service will contain more functionality then what you define in the contract,  
 but only the functions that are in the definition will be accessible via scalecube.
 
-* serviceName - The name of a service
-* methods - Map of methods that exist in the service.  
- each method describe its [asyncModel](#asyncmodel).
  
 ## 2. create the serviceReference
 

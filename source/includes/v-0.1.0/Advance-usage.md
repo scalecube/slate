@@ -89,3 +89,48 @@ or if you want to add life cycle to your bootstrap process.
 
 ## gateway
 
+```typescript
+type RequestHandler = (serviceCall: ServiceCall, data: any, subscriber: any) => void;
+
+interface GatewayOptions {
+  port: number;
+  requestResponse?: RequestHandler;
+  requestStream?: RequestHandler;
+}
+
+interface GatewayStartOptions {
+  serviceCall: ServiceCall;
+}
+
+interface Gateway {
+  start: (options: GatewayStartOptions) => void;
+  stop: () => void;
+}
+```
+
+```javascript
+import {Gateway} from '@scalecube/rsocket-ws-gateway';
+import {createMicroservice} from '@scalecube/scalecube-microservice';
+
+const gateway = new Gateway({port : 3000});
+const serviceCall = createMicroservice({
+  services: [{
+    reference: new Service(),
+    definition: serviceDefinition
+  }]
+}).createServiceCall({});
+
+gateway.start({serviceCall});
+```
+Its a technique to centralize all the requests that are coming from outside of the distributed environment.
+
+scalecube provide gateway implementation base on RSocketWebsocket.
+
+* port - The gateway will listen to it.
+* requestResponse - handle requestResponse requests.
+* requestStream - handle requestStream requests.
+
+* [serviceCall](#createservicecall) - low level approach for requesting a service in the distributed environment.
+
+* start - start the gateway.
+* stop - stop the gateway.

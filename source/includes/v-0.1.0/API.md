@@ -1,5 +1,89 @@
-# Terminology
+# API
 
+## Microservice
+```typescript
+type CreateMicroservice = (options: MicroserviceOptions) => Microservice;
+
+export interface Microservice {
+  destroy: () => Promise<any>;
+  createProxies: CreateProxies;
+  createProxy: CreateProxy;
+  createServiceCall: CreateServiceCall;
+}
+
+export interface MicroserviceOptions {
+  services?: Service[];
+  seedAddress?: Address | string;
+  address?: Address | string;
+  transport?: Transport;
+  cluster?: (opt: ClusterOptions) => Cluster;
+  debug?: boolean;
+}
+```
+
+* destroy - The method is used to delete a microservice and close all the subscriptions related with it.
+* [createProxies](#createproxies) - Create a map of proxies or Promises to proxy. (deepened on configuration)
+* [createProxy](#createproxy) - Creates a proxy to a method and provides extra logic when is invoked.
+* [createServiceCall](#createServiceCall) - Exposes serviceCall to a user (not via Proxy)
+
+* services - An array of [services](#service), that will exist inside a microservice container
+* seedAddress - The seedAddress is an [address](#address) of another microservice container in our distributed env.
+* address - An [address](#address) for this microservice instance, other microservices can use this address to connect with this microservice container.
+* transport - a module that implements MicroserviceTransport.
+* cluster - a module that implements [Cluster](#cluster) API
+* debug - add logs
+
+## Service
+
+```typescript
+interface Service {
+  definition: ServiceDefinition;
+  reference: ServiceReference;
+}
+
+interface ServiceDefinition {
+  serviceName: string;
+  methods: {
+    [methodName: string]: {
+      asyncModel: AsyncModel;
+    };
+  };
+}
+
+type ServiceReference = ServiceFactory | ServiceObject;
+
+type ServiceFactory = ({ createProxy, createServiceCall }: ServiceFactoryOptions) => ServiceObject;
+
+interface ServiceObject {
+  constructor?: any;
+
+  [methodName: string]: any;
+}
+
+interface ServiceFactoryOptions {
+  createProxy: CreateProxy;
+  createServiceCall: CreateServiceCall;
+}
+```
+
+Service is combination of contract and the reference that uphold the contract.  
+
+* definition - metadata that define the service.
+* reference - code of the service
+
+### ServiceDefinition
+Its the contract that describe the service.
+
+* serviceName - The name of a service
+* methods - Map of methods that exist in the service.  
+ each method describe its [asyncModel](#asyncmodel).
+
+### ServiceReference
+Its the code of the service.
+
+* ServiceFactory - callback that provide life-cycle/inject hook in the bootstrap process.
+* ServiceObject - object that contains the functionality described in the serviceDefinition.
+ 
 ## Discovery
 
 ```typescript
@@ -43,7 +127,46 @@ create a [member](#member) from the data it receive from the discovery,
 and use it in-order to share data in the distributed environment.
 
 ## Transport
-is the way scalecube send request/response from one microservice to another.
+```typescript
+interface Transport {
+  clientProvider: Provider;
+  serverProvider: Provider;
+}
+
+interface Provider {
+  providerFactory: ProviderFactory;
+  factoryOptions?: any;
+  serializers?: PayloadSerializers;
+}
+
+interface PayloadSerializers {
+  data: {
+    deserialize: (data: any) => any;
+    serialize: (data: any) => any;
+  };
+  metadata: {
+    deserialize: (data: any) => any;
+    serialize: (data: any) => any;
+  };
+}
+
+type ProviderFactory = (options: { address: Address; factoryOptions?: any }) => DuplexConnection;
+
+type DuplexConnection = any;
+```
+Opinionated communication layer.  
+It is used when requesting a service from another microservice instance.
+
+When bootstrapping microservice, it is possible to pass transport in the [options](#microservice).
+
+transport is your custom implementation to [RSocket](https://github.com/rsocket/rsocket-js) Transport Providers.
+
+* clientProvider - implementation for the client side.
+* serverProvider - implementation for the server side.
+
+* providerFactory - Factory for creating RSocket client transport provider
+* factoryOptions - Extra configuration to pass to the factory
+* serializers - Optional serialize functionality for the payload
 
 ## Router
 
@@ -111,39 +234,6 @@ Search for [endPoints](#endpoint) in the registry that match the qualifier.
 
 * qualifier - The combination of serviceName and methodName: <serviceName/methodName>
 
-## Microservice
-```typescript
-type CreateMicroservice = (options: MicroserviceOptions) => Microservice;
-
-export interface Microservice {
-  destroy: () => Promise<any>;
-  createProxies: CreateProxies;
-  createProxy: CreateProxy;
-  createServiceCall: CreateServiceCall;
-}
-
-export interface MicroserviceOptions {
-  services?: Service[];
-  seedAddress?: Address | string;
-  address?: Address | string;
-  transport?: Transport;
-  cluster?: (opt: ClusterOptions) => Cluster;
-  debug?: boolean;
-}
-```
-
-* destroy - The method is used to delete a microservice and close all the subscriptions related with it.
-* createProxies - Create a map of proxies or Promises to proxy. (deepened on configuration)
-* createProxy - Creates a proxy to a method and provides extra logic when is invoked.
-* createServiceCall - Exposes serviceCall to a user (not via Proxy)
-
-* services - An array of services, that will exist inside a microservice container
-* seedAddress - The seedAddress is an address of another microservice container in our distributed env.
-* address - An address for this microservice instance, other microservices can use this address to connect with this microservice container.
-* transport - a module that implements MicroserviceTransport.
-* cluster - a module that implements Cluster API
-* debug - add logs
-
 ## Endpoint
 
 ```typescript
@@ -198,17 +288,3 @@ Address is the URI for the service.
 * port - determine on which port number the server will receive the data.
 * protocol - rules for communication between server and client (ws | pm | tcp)
 * path - relative address.
-
-## Service
-
-```typescript
-interface Service {
-  definition: ServiceDefinition;
-  reference: ServiceReference;
-}
-```
-
-Service is combination of contract and the reference that uphold the contract.  
-
-* definition - metadata that define the service.
-* reference - code of the service

@@ -10,7 +10,7 @@ toc_footers:
 
 includes:
   - v-0.1.0/Core-concepts
-  - v-0.1.0/Term
+  - v-0.1.0/API
   - v-0.1.0/Bootstrap
   - v-0.1.0/Basic-usage
   - v-0.1.0/Advance-usage
@@ -50,13 +50,31 @@ npm install @scalecube/scalecube-microservice
 # Motivation
 
 Scalecube implements [Decouple by interface](https://en.wikipedia.org/wiki/Loose_coupling) architecture.  
-it is event-base communication system,  
-and allow to create services that are loosely coupled in a distributed environment.
+it is event-base system that allow to create loosely coupled services in a distributed environment.
  
-It can run on both browser or server.
+### Environment
 
-It support Reactive programing.
+can run on both browser or server.
 
+### Reactive programing.
+
+support Observable pattern.
+
+### Tools
+
+Provides additional tools:
+
+* workers - tool for using web-workers in scalecube ecosystem.
+  '@scalecube/scalecube-microservice' export workers which contain:
+   * addWorker - add a web-worker to sclaecube's ecosystem.
+   * removeWorker -  remove a web-worker to sclaecube's ecosystem.
+
+* stringToAddress - tool for creating address from string.  
+receive URI format and convert it to Address.
+  * can use partial URI format
+  * use default params to fill the missing values from the given string.
+  
+  
 ## Browser
 
 scalecube provide event-base tool for working in microservice approach.
@@ -74,7 +92,7 @@ scalecube bootstrap is the same if your feature located on the main thread or in
 
 ### Isolation
 
-
+different services communicate via web-socket, each service can run on different node server.
 
 ### Scalability
 
