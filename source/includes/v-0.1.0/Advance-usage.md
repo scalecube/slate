@@ -20,7 +20,9 @@ const proxyA = localMs.createProxy({serviceDefinition});
 proxyA.someMethod().then(console.log);
 ```
 
-remoteCall is a request for a service that located in different microservice container in our [distributed environment](#distributed-environment)
+remoteCall is a request for a service that located in different microservice container in our [distributed environment](#distributed-environment),
+
+the other microservice can be located on a different process and it will still be accessible with scalecube.
 
 ## dependency hook
 
@@ -86,6 +88,19 @@ createMicroservice({
 
 dependency hook is used if your service deepened on another service,  
 or if you want to add life cycle to your bootstrap process.
+
+### injectProxy example:
+
+In the example we have two services with dependency between them,  
+ServiceB deepened on ServiceA.
+
+instead of passing the class instance of serviceB in the reference, we are passing a callback.
+
+the callback is called from scalecube as part of the bootstrapping process.  
+the callback will be called with createProxy or createServiceCall methods which allow us to create proxy to serviceA and inject it to ServiceB constructor.
+
+this technique can be apply to modules by passing the proxy to a factory.
+
 
 ## gateway
 

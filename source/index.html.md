@@ -49,12 +49,16 @@ npm install @scalecube/scalecube-microservice
 
 # Motivation
 
-Scalecube implements [Decouple by interface](https://en.wikipedia.org/wiki/Loose_coupling) architecture.  
+Scalecube implements [Decouple by interface](https://en.wikipedia.org/wiki/Loose_coupling) microservice's architecture.  
 it is event-base system that allow to create loosely coupled services in a distributed environment.
  
 ### Environment
 
-can run on both browser or server.
+scalecube can run on both browser and server.
+
+on browser it will use postMessage events.
+
+on server it will use websocket.
 
 ### Reactive programing.
 
@@ -64,12 +68,12 @@ support Observable pattern.
 
 Provides additional tools:
 
-* workers - tool for using web-workers in scalecube ecosystem.
+* **workers** - tool for using web-workers in scalecube ecosystem.
   '@scalecube/scalecube-microservice' export workers which contain:
    * addWorker - add a web-worker to sclaecube's ecosystem.
    * removeWorker -  remove a web-worker to sclaecube's ecosystem.
 
-* stringToAddress - tool for creating address from string.  
+* **stringToAddress** - tool for creating address from string.  
 receive URI format and convert it to Address.
   * can use partial URI format
   * use default params to fill the missing values from the given string.

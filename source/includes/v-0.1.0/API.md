@@ -205,14 +205,33 @@ export interface MicroserviceOptions {
 }
 ```
 
+```javascript
+import { createMicroservice } from '@scalecube/scalecube-microservice';
+import { TransportNodeJS } from '@scalecube/transport-nodejs';
+import { joinCluster } from '@scalecube/cluster-nodejs';
+
+const microserviceInstance = createMicroservice({
+  services: [/* array of services */],
+  seedAddress : 'pm://myOrganization:8080/ServiceA',
+  address : {
+    protocol : 'pm',
+    host: 'myOrganization',
+    port : 8080,
+    path: 'ServiceB'
+  },
+  transport: TransportNodeJS, // scalecube provide a default transport configuration when running on browser,
+  cluster: joinCluster, // scalecube provide a default cluster configuration when running on browser,
+  debug: true // default is false
+})
+```
 * [destroy](#destroy) - The method is used to delete a microservice and close all the subscriptions related with it.
 * [createProxies](#createproxies) - Create a map of proxies or Promises to proxy. (deepened on configuration)
 * [createProxy](#createproxy) - Creates a proxy to a method and provides extra logic when is invoked.
 * [createServiceCall](#createServiceCall) - Exposes serviceCall to a user (not via Proxy)
 
 * services - An array of [services](#service), that will exist inside a microservice container
-* seedAddress - The seedAddress is an [address](#address) of another microservice container in our distributed env.
-* address - An [address](#address) for this microservice instance, other microservices can use this address to connect with this microservice container.
+* seedAddress - The seedAddress is an [address](#address) or a **string (URI format)** of another microservice container in our distributed env.
+* address - An [address](#address) or a **string (URI format)** for this microservice instance, other microservices can use this address to connect with this microservice container.
 * transport - a module that implements MicroserviceTransport.
 * cluster - a module that implements [Cluster](#cluster) API
 * debug - add logs

@@ -22,6 +22,10 @@ just need to make sure it wrap in array.
 
 please look at the [example](?javascript#passing-array-argument-in-message)
 
+### related topics:
+
+[message](#message)
+
 ## Invoking a method from proxy throw error code MS0015 - can't find services ...
 
 createProxy or createProxies (without asyncModel flag set to true) does not guarantee that the service is available.
@@ -30,9 +34,52 @@ it just provide a proxy to the service.
 
 ### possible solutions:
 
-1. set asyncModel flag to true when using [createProxies](##createproxies).  
+1. set asyncModel flag to true when using [createProxies](#createproxies).  
 this option will provide a promise to a proxy.
 when calling the promise, it will resolve when the service is available.
 
 2. implement retry logic when requesting a service.
-  
+
+### related topics:
+
+[createProxies](#createproxies), [remoteCall](#remotecall)
+
+## Does the order of services is important when using the dependency hook?
+
+The order of the services you provide is the order in which they are registered in the registry.
+
+but, you don't need the service in the registry in order to create a proxy to it.
+
+farther more, it is possible to use the dependency hook for services that are located in other microservice instances. 
+
+### possible solution: 
+
+it is common to apply retry logic in order to make sure the service will run.
+
+### related topics:
+
+[remoteCall](#remotecall)
+
+
+## Does seedAddress and address are mandatory for scalecube?
+
+No, they are both optional.
+
+### Why to provide seedAddress?
+
+seedAddress is used to connected to a distributed environment.
+
+you must provide the address to one of the microservice instance in the distributed environment you want to joined.
+
+### why to provide address?
+
+It is important to set your microservice instance address 
+if you want that other microservice instance will use it as seedAddress.
+
+farther more, microservice without address won't be able to share it services in the distributed environment.
+
+if no address is provided, then microservice bootstrap will generate address for you. 
+auto generate address stop you from sharing your services in the distributed environment.
+### related topics:
+
+[remoteCall](#remotecall), [distributed environment](#distributed-environment), [seed](#seed), [address](#address)

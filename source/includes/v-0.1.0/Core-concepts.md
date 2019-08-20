@@ -23,7 +23,16 @@ when a microservice bootstrap with a new service, it is connect via the [discove
 once connection is established, then they share their Endpoints.  
 every change in the microservices in the [distributed environment](#distributed-environment) the registry is notified and update accordingly.
 
-## LocalCall
+## ServiceCall
+
+ServiceCall is the process of requesting a service to execute.
+
+there are two types of service call:
+
+* localCall
+* remoteCall
+
+### LocalCall
 
 ```javascript
 // main.js
@@ -40,10 +49,9 @@ const proxy = localMs.createProxy({
 });
 ```
 
-When a microservice use it own services.
+When a microservice use its own services.
 
-### use-case
-
+**use cases:**
 #### monolith application
 starting building the application as monolith (in this step all services are local)  
 change the application to microservice architecture when you are ready to scale-up.
@@ -52,7 +60,7 @@ change the application to microservice architecture when you are ready to scale-
 when your microservice also act as a gateway,
 some of the requests will be from the local services and some will require propagate the request to another microservice instance.
 
-## RemoteCall
+### RemoteCall
 
 ```javascript
 // seed.js
@@ -82,7 +90,7 @@ const proxy = localMs.createProxy({
 ```
 When a microservice use another microservice's services.
 
-### steps:
+**steps:**
 
 1. use seedAddress to connect the microservice to the right distributed environment.
 2. bootstrap the microservice with the seedAddress
