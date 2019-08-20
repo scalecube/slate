@@ -14,7 +14,16 @@
 when a microservice bootstrap with a new service, it is connect via the <a href="#discovery">discovery</a> to the <a href="#seed">microservice seed</a>,<br>
 once connection is established, then they share their Endpoints.<br>
 every change in the microservices in the <a href="#distributed-environment">distributed environment</a> the registry is notified and update accordingly.</p>
-<h2 id='localcall'>LocalCall</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// main.js</span>
+<h2 id='servicecall'>ServiceCall</h2>
+<p>ServiceCall is the process of requesting a service to execute.</p>
+
+<p>there are two types of service call:</p>
+
+<ul>
+<li>localCall</li>
+<li>remoteCall</li>
+</ul>
+<h3 id='localcall'>LocalCall</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// main.js</span>
 <span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">localMs</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
@@ -27,14 +36,16 @@ every change in the microservices in the <a href="#distributed-environment">dist
  <span class="c1">// create proxy to the services on the microservice instance</span>
 <span class="p">});</span>
 </code></pre>
-<p>When a microservice use it own services.</p>
-<h3 id='use-case'>use-case</h3><h4 id='monolith-application'>monolith application</h4>
+<p>When a microservice use its own services.</p>
+
+<p><strong>use cases:</strong></p>
+<h4 id='monolith-application'>monolith application</h4>
 <p>starting building the application as monolith (in this step all services are local)<br>
 change the application to microservice architecture when you are ready to scale-up.</p>
 <h4 id='gateway'>gateway</h4>
 <p>when your microservice also act as a gateway,
 some of the requests will be from the local services and some will require propagate the request to another microservice instance.</p>
-<h2 id='remotecall'>RemoteCall</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// seed.js</span>
+<h3 id='remotecall'>RemoteCall</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// seed.js</span>
 <span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="nx">createMicroservice</span><span class="p">({</span>
@@ -60,7 +71,9 @@ some of the requests will be from the local services and some will require propa
 <span class="p">});</span>
 </code></pre>
 <p>When a microservice use another microservice&#39;s services.</p>
-<h3 id='steps'>steps:</h3>
+
+<p><strong>steps:</strong></p>
+
 <ol>
 <li>use seedAddress to connect the microservice to the right distributed environment.</li>
 <li>bootstrap the microservice with the seedAddress</li>

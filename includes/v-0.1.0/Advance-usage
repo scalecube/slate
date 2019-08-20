@@ -14,7 +14,9 @@
 
 <span class="nx">proxyA</span><span class="p">.</span><span class="nx">someMethod</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
 </code></pre>
-<p>remoteCall is a request for a service that located in different microservice container in our <a href="#distributed-environment">distributed environment</a></p>
+<p>remoteCall is a request for a service that located in different microservice container in our <a href="#distributed-environment">distributed environment</a>,</p>
+
+<p>the other microservice can be located on a different process and it will still be accessible with scalecube.</p>
 <h2 id='dependency-hook'>dependency hook</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">ServiceFactory</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">createProxy</span><span class="p">,</span> <span class="nx">createServiceCall</span> <span class="p">}:</span> <span class="nx">ServiceFactoryOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ServiceObject</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">ServiceFactoryOptions</span> <span class="p">{</span>
@@ -72,6 +74,16 @@
 </code></pre>
 <p>dependency hook is used if your service deepened on another service,<br>
 or if you want to add life cycle to your bootstrap process.</p>
+<h3 id='injectproxy-example'>injectProxy example:</h3>
+<p>In the example we have two services with dependency between them,<br>
+ServiceB deepened on ServiceA.</p>
+
+<p>instead of passing the class instance of serviceB in the reference, we are passing a callback.</p>
+
+<p>the callback is called from scalecube as part of the bootstrapping process.<br>
+the callback will be called with createProxy or createServiceCall methods which allow us to create proxy to serviceA and inject it to ServiceB constructor.</p>
+
+<p>this technique can be apply to modules by passing the proxy to a factory.</p>
 <h2 id='gateway'>gateway</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">RequestHandler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">serviceCall</span><span class="p">:</span> <span class="nx">ServiceCall</span><span class="p">,</span> <span class="nx">data</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">subscriber</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">GatewayOptions</span> <span class="p">{</span>

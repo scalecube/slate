@@ -13,14 +13,44 @@
 just need to make sure it wrap in array.</p>
 
 <p>please look at the <a href="?javascript#passing-array-argument-in-message">example</a></p>
+<h3 id='related-topics'>related topics:</h3>
+<p><a href="#message">message</a></p>
 <h2 id='invoking-a-method-from-proxy-throw-error-code-ms0015-can-39-t-find-services'>Invoking a method from proxy throw error code MS0015 - can&#39;t find services ...</h2>
 <p>createProxy or createProxies (without asyncModel flag set to true) does not guarantee that the service is available.</p>
 
 <p>it just provide a proxy to the service.</p>
 <h3 id='possible-solutions'>possible solutions:</h3>
 <ol>
-<li><p>set asyncModel flag to true when using <a href="##createproxies">createProxies</a>.<br>
+<li><p>set asyncModel flag to true when using <a href="#createproxies">createProxies</a>.<br>
 this option will provide a promise to a proxy.
 when calling the promise, it will resolve when the service is available.</p></li>
 <li><p>implement retry logic when requesting a service.</p></li>
 </ol>
+<h3 id='related-topics-2'>related topics:</h3>
+<p><a href="#createproxies">createProxies</a>, <a href="#remotecall">remoteCall</a></p>
+<h2 id='does-the-order-of-services-is-important-when-using-the-dependency-hook'>Does the order of services is important when using the dependency hook?</h2>
+<p>The order of the services you provide is the order in which they are registered in the registry.</p>
+
+<p>but, you don&#39;t need the service in the registry in order to create a proxy to it.</p>
+
+<p>farther more, it is possible to use the dependency hook for services that are located in other microservice instances. </p>
+<h3 id='possible-solution'>possible solution:</h3>
+<p>it is common to apply retry logic in order to make sure the service will run.</p>
+<h3 id='related-topics-3'>related topics:</h3>
+<p><a href="#remotecall">remoteCall</a></p>
+<h2 id='does-seedaddress-and-address-are-mandatory-for-scalecube'>Does seedAddress and address are mandatory for scalecube?</h2>
+<p>No, they are both optional.</p>
+<h3 id='why-to-provide-seedaddress'>Why to provide seedAddress?</h3>
+<p>seedAddress is used to connected to a distributed environment.</p>
+
+<p>you must provide the address to one of the microservice instance in the distributed environment you want to joined.</p>
+<h3 id='why-to-provide-address'>why to provide address?</h3>
+<p>It is important to set your microservice instance address 
+if you want that other microservice instance will use it as seedAddress.</p>
+
+<p>farther more, microservice without address won&#39;t be able to share it services in the distributed environment.</p>
+
+<p>if no address is provided, then microservice bootstrap will generate address for you. 
+auto generate address stop you from sharing your services in the distributed environment.</p>
+<h3 id='related-topics-4'>related topics:</h3>
+<p><a href="#remotecall">remoteCall</a>, <a href="#distributed-environment">distributed environment</a>, <a href="#seed">seed</a>, <a href="#address">address</a></p>

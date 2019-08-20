@@ -260,10 +260,7 @@
                     <a href="#registry" class="toc-h2 toc-link" data-title="Registry">Registry</a>
                   </li>
                   <li>
-                    <a href="#localcall" class="toc-h2 toc-link" data-title="LocalCall">LocalCall</a>
-                  </li>
-                  <li>
-                    <a href="#remotecall" class="toc-h2 toc-link" data-title="RemoteCall">RemoteCall</a>
+                    <a href="#servicecall" class="toc-h2 toc-link" data-title="ServiceCall">ServiceCall</a>
                   </li>
                   <li>
                     <a href="#seedaddress" class="toc-h2 toc-link" data-title="SeedAddress">SeedAddress</a>
@@ -368,6 +365,12 @@
                   <li>
                     <a href="#invoking-a-method-from-proxy-throw-error-code-ms0015-can-39-t-find-services" class="toc-h2 toc-link" data-title="Invoking a method from proxy throw error code MS0015 - can't find services ...">Invoking a method from proxy throw error code MS0015 - can't find services ...</a>
                   </li>
+                  <li>
+                    <a href="#does-the-order-of-services-is-important-when-using-the-dependency-hook" class="toc-h2 toc-link" data-title="Does the order of services is important when using the dependency hook?">Does the order of services is important when using the dependency hook?</a>
+                  </li>
+                  <li>
+                    <a href="#does-seedaddress-and-address-are-mandatory-for-scalecube" class="toc-h2 toc-link" data-title="Does seedAddress and address are mandatory for scalecube?">Does seedAddress and address are mandatory for scalecube?</a>
+                  </li>
               </ul>
           </li>
       </ul>
@@ -404,24 +407,28 @@ yarn add @scalecube/scalecube-microservice
 npm install @scalecube/scalecube-microservice
 </code> </p>
 <h1 id='motivation'>Motivation</h1>
-<p>Scalecube implements <a href="https://en.wikipedia.org/wiki/Loose_coupling">Decouple by interface</a> architecture.<br>
+<p>Scalecube implements <a href="https://en.wikipedia.org/wiki/Loose_coupling">Decouple by interface</a> microservice&#39;s architecture.<br>
 it is event-base system that allow to create loosely coupled services in a distributed environment.</p>
 <h3 id='environment'>Environment</h3>
-<p>can run on both browser or server.</p>
+<p>scalecube can run on both browser and server.</p>
+
+<p>on browser it will use postMessage events.</p>
+
+<p>on server it will use websocket.</p>
 <h3 id='reactive-programing'>Reactive programing.</h3>
 <p>support Observable pattern.</p>
 <h3 id='tools'>Tools</h3>
 <p>Provides additional tools:</p>
 
 <ul>
-<li><p>workers - tool for using web-workers in scalecube ecosystem.
+<li><p><strong>workers</strong> - tool for using web-workers in scalecube ecosystem.
 &#39;@scalecube/scalecube-microservice&#39; export workers which contain:</p>
 
 <ul>
 <li>addWorker - add a web-worker to sclaecube&#39;s ecosystem.</li>
 <li>removeWorker -  remove a web-worker to sclaecube&#39;s ecosystem.</li>
 </ul></li>
-<li><p>stringToAddress - tool for creating address from string.<br>
+<li><p><strong>stringToAddress</strong> - tool for creating address from string.<br>
 receive URI format and convert it to Address.</p>
 
 <ul>
@@ -453,7 +460,16 @@ receive URI format and convert it to Address.</p>
 when a microservice bootstrap with a new service, it is connect via the <a href="#discovery">discovery</a> to the <a href="#seed">microservice seed</a>,<br>
 once connection is established, then they share their Endpoints.<br>
 every change in the microservices in the <a href="#distributed-environment">distributed environment</a> the registry is notified and update accordingly.</p>
-<h2 id='localcall'>LocalCall</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// main.js</span>
+<h2 id='servicecall'>ServiceCall</h2>
+<p>ServiceCall is the process of requesting a service to execute.</p>
+
+<p>there are two types of service call:</p>
+
+<ul>
+<li>localCall</li>
+<li>remoteCall</li>
+</ul>
+<h3 id='localcall'>LocalCall</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// main.js</span>
 <span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">localMs</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
@@ -466,14 +482,16 @@ every change in the microservices in the <a href="#distributed-environment">dist
  <span class="c1">// create proxy to the services on the microservice instance</span>
 <span class="p">});</span>
 </code></pre>
-<p>When a microservice use it own services.</p>
-<h3 id='use-case'>use-case</h3><h4 id='monolith-application'>monolith application</h4>
+<p>When a microservice use its own services.</p>
+
+<p><strong>use cases:</strong></p>
+<h4 id='monolith-application'>monolith application</h4>
 <p>starting building the application as monolith (in this step all services are local)<br>
 change the application to microservice architecture when you are ready to scale-up.</p>
 <h4 id='gateway'>gateway</h4>
 <p>when your microservice also act as a gateway,
 some of the requests will be from the local services and some will require propagate the request to another microservice instance.</p>
-<h2 id='remotecall'>RemoteCall</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// seed.js</span>
+<h3 id='remotecall'>RemoteCall</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// seed.js</span>
 <span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="nx">createMicroservice</span><span class="p">({</span>
@@ -499,7 +517,9 @@ some of the requests will be from the local services and some will require propa
 <span class="p">});</span>
 </code></pre>
 <p>When a microservice use another microservice&#39;s services.</p>
-<h3 id='steps'>steps:</h3>
+
+<p><strong>steps:</strong></p>
+
 <ol>
 <li>use seedAddress to connect the microservice to the right distributed environment.</li>
 <li>bootstrap the microservice with the seedAddress</li>
@@ -689,6 +709,23 @@ Contain information of how to access the service.</p>
   <span class="nx">cluster</span><span class="p">?:</span> <span class="p">(</span><span class="nx">opt</span><span class="p">:</span> <span class="nx">ClusterOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Cluster</span><span class="p">;</span>
   <span class="nx">debug</span><span class="p">?:</span> <span class="kr">boolean</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">TransportNodeJS</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/transport-nodejs'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">joinCluster</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/cluster-nodejs'</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">microserviceInstance</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
+  <span class="na">services</span><span class="p">:</span> <span class="p">[</span><span class="cm">/* array of services */</span><span class="p">],</span>
+  <span class="na">seedAddress</span> <span class="p">:</span> <span class="s1">'pm://myOrganization:8080/ServiceA'</span><span class="p">,</span>
+  <span class="na">address</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="na">protocol</span> <span class="p">:</span> <span class="s1">'pm'</span><span class="p">,</span>
+    <span class="na">host</span><span class="p">:</span> <span class="s1">'myOrganization'</span><span class="p">,</span>
+    <span class="na">port</span> <span class="p">:</span> <span class="mi">8080</span><span class="p">,</span>
+    <span class="na">path</span><span class="p">:</span> <span class="s1">'ServiceB'</span>
+  <span class="p">},</span>
+  <span class="na">transport</span><span class="p">:</span> <span class="nx">TransportNodeJS</span><span class="p">,</span> <span class="c1">// scalecube provide a default transport configuration when running on browser,</span>
+  <span class="na">cluster</span><span class="p">:</span> <span class="nx">joinCluster</span><span class="p">,</span> <span class="c1">// scalecube provide a default cluster configuration when running on browser,</span>
+  <span class="na">debug</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// default is false</span>
+<span class="p">})</span>
 </code></pre>
 <ul>
 <li><a href="#destroy">destroy</a> - The method is used to delete a microservice and close all the subscriptions related with it.</li>
@@ -696,8 +733,8 @@ Contain information of how to access the service.</p>
 <li><a href="#createproxy">createProxy</a> - Creates a proxy to a method and provides extra logic when is invoked.</li>
 <li><p><a href="#createServiceCall">createServiceCall</a> - Exposes serviceCall to a user (not via Proxy)</p></li>
 <li><p>services - An array of <a href="#service">services</a>, that will exist inside a microservice container</p></li>
-<li><p>seedAddress - The seedAddress is an <a href="#address">address</a> of another microservice container in our distributed env.</p></li>
-<li><p>address - An <a href="#address">address</a> for this microservice instance, other microservices can use this address to connect with this microservice container.</p></li>
+<li><p>seedAddress - The seedAddress is an <a href="#address">address</a> or a <strong>string (URI format)</strong> of another microservice container in our distributed env.</p></li>
+<li><p>address - An <a href="#address">address</a> or a <strong>string (URI format)</strong> for this microservice instance, other microservices can use this address to connect with this microservice container.</p></li>
 <li><p>transport - a module that implements MicroserviceTransport.</p></li>
 <li><p>cluster - a module that implements <a href="#cluster">Cluster</a> API</p></li>
 <li><p>debug - add logs</p></li>
@@ -1047,7 +1084,9 @@ if false then the proxy will be resolved immediately.</li>
 
 <span class="nx">proxyA</span><span class="p">.</span><span class="nx">someMethod</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
 </code></pre>
-<p>remoteCall is a request for a service that located in different microservice container in our <a href="#distributed-environment">distributed environment</a></p>
+<p>remoteCall is a request for a service that located in different microservice container in our <a href="#distributed-environment">distributed environment</a>,</p>
+
+<p>the other microservice can be located on a different process and it will still be accessible with scalecube.</p>
 <h2 id='dependency-hook'>dependency hook</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">ServiceFactory</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">createProxy</span><span class="p">,</span> <span class="nx">createServiceCall</span> <span class="p">}:</span> <span class="nx">ServiceFactoryOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ServiceObject</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">ServiceFactoryOptions</span> <span class="p">{</span>
@@ -1105,6 +1144,16 @@ if false then the proxy will be resolved immediately.</li>
 </code></pre>
 <p>dependency hook is used if your service deepened on another service,<br>
 or if you want to add life cycle to your bootstrap process.</p>
+<h3 id='injectproxy-example'>injectProxy example:</h3>
+<p>In the example we have two services with dependency between them,<br>
+ServiceB deepened on ServiceA.</p>
+
+<p>instead of passing the class instance of serviceB in the reference, we are passing a callback.</p>
+
+<p>the callback is called from scalecube as part of the bootstrapping process.<br>
+the callback will be called with createProxy or createServiceCall methods which allow us to create proxy to serviceA and inject it to ServiceB constructor.</p>
+
+<p>this technique can be apply to modules by passing the proxy to a factory.</p>
 <h2 id='gateway'>gateway</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">RequestHandler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">serviceCall</span><span class="p">:</span> <span class="nx">ServiceCall</span><span class="p">,</span> <span class="nx">data</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">subscriber</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">GatewayOptions</span> <span class="p">{</span>
@@ -1290,17 +1339,47 @@ or if you want to add life cycle to your bootstrap process.</p>
 just need to make sure it wrap in array.</p>
 
 <p>please look at the <a href="?javascript#passing-array-argument-in-message">example</a></p>
+<h3 id='related-topics'>related topics:</h3>
+<p><a href="#message">message</a></p>
 <h2 id='invoking-a-method-from-proxy-throw-error-code-ms0015-can-39-t-find-services'>Invoking a method from proxy throw error code MS0015 - can&#39;t find services ...</h2>
 <p>createProxy or createProxies (without asyncModel flag set to true) does not guarantee that the service is available.</p>
 
 <p>it just provide a proxy to the service.</p>
 <h3 id='possible-solutions'>possible solutions:</h3>
 <ol>
-<li><p>set asyncModel flag to true when using <a href="##createproxies">createProxies</a>.<br>
+<li><p>set asyncModel flag to true when using <a href="#createproxies">createProxies</a>.<br>
 this option will provide a promise to a proxy.
 when calling the promise, it will resolve when the service is available.</p></li>
 <li><p>implement retry logic when requesting a service.</p></li>
 </ol>
+<h3 id='related-topics-2'>related topics:</h3>
+<p><a href="#createproxies">createProxies</a>, <a href="#remotecall">remoteCall</a></p>
+<h2 id='does-the-order-of-services-is-important-when-using-the-dependency-hook'>Does the order of services is important when using the dependency hook?</h2>
+<p>The order of the services you provide is the order in which they are registered in the registry.</p>
+
+<p>but, you don&#39;t need the service in the registry in order to create a proxy to it.</p>
+
+<p>farther more, it is possible to use the dependency hook for services that are located in other microservice instances. </p>
+<h3 id='possible-solution'>possible solution:</h3>
+<p>it is common to apply retry logic in order to make sure the service will run.</p>
+<h3 id='related-topics-3'>related topics:</h3>
+<p><a href="#remotecall">remoteCall</a></p>
+<h2 id='does-seedaddress-and-address-are-mandatory-for-scalecube'>Does seedAddress and address are mandatory for scalecube?</h2>
+<p>No, they are both optional.</p>
+<h3 id='why-to-provide-seedaddress'>Why to provide seedAddress?</h3>
+<p>seedAddress is used to connected to a distributed environment.</p>
+
+<p>you must provide the address to one of the microservice instance in the distributed environment you want to joined.</p>
+<h3 id='why-to-provide-address'>why to provide address?</h3>
+<p>It is important to set your microservice instance address 
+if you want that other microservice instance will use it as seedAddress.</p>
+
+<p>farther more, microservice without address won&#39;t be able to share it services in the distributed environment.</p>
+
+<p>if no address is provided, then microservice bootstrap will generate address for you. 
+auto generate address stop you from sharing your services in the distributed environment.</p>
+<h3 id='related-topics-4'>related topics:</h3>
+<p><a href="#remotecall">remoteCall</a>, <a href="#distributed-environment">distributed environment</a>, <a href="#seed">seed</a>, <a href="#address">address</a></p>
 
       </div>
       <div class="dark-box">
