@@ -71,7 +71,7 @@ Provides additional tools:
 * **workers** - tool for using web-workers in scalecube ecosystem.
   '@scalecube/scalecube-microservice' export workers which contain:
    * addWorker - add a web-worker to sclaecube's ecosystem.
-   * removeWorker -  remove a web-worker to sclaecube's ecosystem.
+   * removeWorker -  remove a web-worker from sclaecube's ecosystem.
 
 * **stringToAddress** - tool for creating address from string.  
 receive URI format and convert it to Address.
@@ -85,12 +85,22 @@ scalecube provide event-base tool for working in microservice approach.
 
 ### Isolation
 
-different services communicate via postMessage events, this solution isolates each service.
+#### RunTime 
+Different services communicate via postMessage events, this solution isolates each service.
+if one of the services throw exception, it won't break the whole js application.
+
+#### Development 
+Each feature/service can be developed in isolation from other features/services.
+services will be able to integrate together base on the interface of each service.
 
 ### Scalability
 
-scalecube bootstrap is the same if your feature located on the main thread or in a web-worker.
+#### RunTime
+Scalecube bootstrap is the same if your feature located on the main thread or in a web-worker.
+therefor, it is easier to use workers to scale your runtime processing.
 
+#### Development
+Scalecube provide easy way to integrate services base on their definition.
 
 ## NodeJS
 
