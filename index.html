@@ -426,7 +426,7 @@ it is event-base system that allow to create loosely coupled services in a distr
 
 <ul>
 <li>addWorker - add a web-worker to sclaecube&#39;s ecosystem.</li>
-<li>removeWorker -  remove a web-worker to sclaecube&#39;s ecosystem.</li>
+<li>removeWorker -  remove a web-worker from sclaecube&#39;s ecosystem.</li>
 </ul></li>
 <li><p><strong>stringToAddress</strong> - tool for creating address from string.<br>
 receive URI format and convert it to Address.</p>
@@ -438,10 +438,17 @@ receive URI format and convert it to Address.</p>
 </ul>
 <h2 id='browser'>Browser</h2>
 <p>scalecube provide event-base tool for working in microservice approach.</p>
-<h3 id='isolation'>Isolation</h3>
-<p>different services communicate via postMessage events, this solution isolates each service.</p>
-<h3 id='scalability'>Scalability</h3>
-<p>scalecube bootstrap is the same if your feature located on the main thread or in a web-worker.</p>
+<h3 id='isolation'>Isolation</h3><h4 id='runtime'>RunTime</h4>
+<p>Different services communicate via postMessage events, this solution isolates each service.
+if one of the services throw exception, it won&#39;t break the whole js application.</p>
+<h4 id='development'>Development</h4>
+<p>Each feature/service can be developed in isolation from other features/services.
+services will be able to integrate together base on the interface of each service.</p>
+<h3 id='scalability'>Scalability</h3><h4 id='runtime-2'>RunTime</h4>
+<p>Scalecube bootstrap is the same if your feature located on the main thread or in a web-worker.
+therefor, it is easier to use workers to scale your runtime processing.</p>
+<h4 id='development-2'>Development</h4>
+<p>Scalecube provide easy way to integrate services base on their definition.</p>
 <h2 id='nodejs'>NodeJS</h2><h3 id='isolation-2'>Isolation</h3>
 <p>different services communicate via web-socket, each service can run on different node server.</p>
 <h3 id='scalability-2'>Scalability</h3><h1 id='core-concepts'>Core-concepts</h1><h2 id='member'>Member</h2>
