@@ -240,10 +240,10 @@
                     <a href="#tools" class="toc-h2 toc-link" data-title="Tools">Tools</a>
                   </li>
                   <li>
-                    <a href="#browser" class="toc-h2 toc-link" data-title="Browser">Browser</a>
+                    <a href="#isolation" class="toc-h2 toc-link" data-title="Isolation">Isolation</a>
                   </li>
                   <li>
-                    <a href="#nodejs" class="toc-h2 toc-link" data-title="NodeJS">NodeJS</a>
+                    <a href="#scalability" class="toc-h2 toc-link" data-title="Scalability">Scalability</a>
                   </li>
               </ul>
           </li>
@@ -354,6 +354,14 @@
               </ul>
           </li>
           <li>
+            <a href="#debug" class="toc-h1 toc-link" data-title="Debug">Debug</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mocks" class="toc-h2 toc-link" data-title="Mocks">Mocks</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
           <li>
@@ -436,22 +444,23 @@ receive URI format and convert it to Address.</p>
 <li>use default params to fill the missing values from the given string.</li>
 </ul></li>
 </ul>
-<h2 id='browser'>Browser</h2>
+
 <p>scalecube provide event-base tool for working in microservice approach.</p>
-<h3 id='isolation'>Isolation</h3><h4 id='runtime'>RunTime</h4>
-<p>Different services communicate via postMessage events, this solution isolates each service.
+<h2 id='isolation'>Isolation</h2><h3 id='runtime'>RunTime</h3>
+<p>Different services communicate via events, this solution isolates each service.
 if one of the services throw exception, it won&#39;t break the whole js application.</p>
-<h4 id='development'>Development</h4>
+<h3 id='development'>Development</h3>
 <p>Each feature/service can be developed in isolation from other features/services.
 services will be able to integrate together base on the interface of each service.</p>
-<h3 id='scalability'>Scalability</h3><h4 id='runtime-2'>RunTime</h4>
-<p>Scalecube bootstrap is the same if your feature located on the main thread or in a web-worker.
-therefor, it is easier to use workers to scale your runtime processing.</p>
-<h4 id='development-2'>Development</h4>
+<h2 id='scalability'>Scalability</h2><h3 id='runtime-2'>RunTime</h3>
+<p>Easy to bootstrap in every environment/process.</p>
+<h4 id='browser'>Browser</h4>
+<p>A feature can be located on the main thread or in a web-worker.
+Scalecube will manage the communication between the services.
+that way scalecube help you to use workers and to scale your runtime processing.</p>
+<h4 id='nodejs'>NodeJS</h4><h3 id='development-2'>Development</h3>
 <p>Scalecube provide easy way to integrate services base on their definition.</p>
-<h2 id='nodejs'>NodeJS</h2><h3 id='isolation-2'>Isolation</h3>
-<p>different services communicate via web-socket, each service can run on different node server.</p>
-<h3 id='scalability-2'>Scalability</h3><h1 id='core-concepts'>Core-concepts</h1><h2 id='member'>Member</h2>
+<h1 id='core-concepts'>Core-concepts</h1><h2 id='member'>Member</h2>
 <p>member is a microservice instances.</p>
 <h2 id='distributed-environment'>Distributed environment</h2>
 <p>Distributed environment is collection of members that share services between them.</p>
@@ -746,11 +755,13 @@ Contain information of how to access the service.</p>
 <li><p>cluster - a module that implements <a href="#cluster">Cluster</a> API</p></li>
 <li><p>debug - add logs</p></li>
 </ul>
-<h2 id='router'>Router</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">roundRobin</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/routers'</span><span class="p">;</span>
+<h2 id='router'>Router</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">roundRobin</span><span class="p">,</span> <span class="nx">retryRouter</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/routers'</span><span class="p">;</span>
 
-<span class="kr">const</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span><span class="nx">serviceDefinition</span><span class="p">,</span> <span class="na">router</span><span class="p">:</span> <span class="nx">roundRobin</span><span class="p">})</span>
+<span class="kr">const</span> <span class="nx">proxyA</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span><span class="nx">serviceDefinition</span><span class="p">,</span> <span class="na">router</span><span class="p">:</span> <span class="nx">roundRobin</span><span class="p">});</span>
+
+<span class="kr">const</span> <span class="nx">proxyB</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span><span class="nx">serviceDefinition</span><span class="p">,</span> <span class="na">router</span><span class="p">:</span> <span class="nx">retryRouter</span><span class="p">({</span><span class="na">period</span><span class="p">:</span> <span class="mi">10</span><span class="p">})});</span>
 </code></pre><pre class="highlight typescript tab-typescript"><code>
-<span class="kd">type</span> <span class="nx">Router</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">RouterOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Endpoint</span> <span class="o">|</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">type</span> <span class="nx">Router</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">RouterOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Endpoint</span><span class="o">&gt;</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">RouterOptions</span> <span class="p">{</span>
   <span class="nl">lookUp</span><span class="p">:</span> <span class="nx">LookUp</span><span class="p">;</span>
@@ -767,6 +778,9 @@ Contain information of how to access the service.</p>
 <p>pick the first available item.</p>
 <h3 id='roundrobin'>RoundRobin</h3>
 <p>pick the next item from a list of available items.</p>
+<h3 id='retryrouter'>retryRouter</h3>
+<p>ping the registry every @ms and checking if there are any available items.
+pick the first available item.</p>
 <h2 id='service'>Service</h2><pre class="highlight typescript tab-typescript"><code><span class="kr">interface</span> <span class="nx">Service</span> <span class="p">{</span>
   <span class="nl">definition</span><span class="p">:</span> <span class="nx">ServiceDefinition</span><span class="p">;</span>
   <span class="nl">reference</span><span class="p">:</span> <span class="nx">ServiceReference</span><span class="p">;</span>
@@ -878,11 +892,14 @@ It is used when requesting a service from another microservice instance.</p>
   <span class="p">}</span> 
 <span class="p">}</span>
 </code></pre>
-<p>service definition is the contract between the provider to the consumer of the service.<br>
+<p><a href="#service">service</a> definition is the contract between the provider to the consumer of the service.<br>
 in other words, it is the contract that the service must uphold.</p>
 
-<p>it is possible that the service will contain more functionality then what you define in the contract,<br>
-but only the functions that are in the definition will be accessible via scalecube.</p>
+<p>service definition is used when we are bootstrapping a service
+and when we are creating a proxy to a service.</p>
+
+<p>when we are boostraping the service we are binding the serviceReference with the serviceDefinition.
+when we are creating a proxy with a serviceDefinition then scalecube search for the serviceReference that is bound to the serviceDefinition. </p>
 <h2 id='2-create-the-servicereference'>2. create the serviceReference</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// class example</span>
 <span class="kr">class</span> <span class="nx">Service</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(){</span>
@@ -911,10 +928,15 @@ but only the functions that are in the definition will be accessible via scalecu
   <span class="nl">createServiceCall</span><span class="p">:</span> <span class="nx">CreateServiceCall</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre>
-<p>ServiceReference can be a class instance, module or a callback function.</p>
+<p>ServiceReference is the implementation of the contract.</p>
+
+<p>It can be a class instance, module or a callback function.</p>
 
 <p>passing callback function in the ServiceReference call <a href="#dependency-hook">depedency hook</a> 
 and it can be used to inject proxy/service call to the service.</p>
+
+<p>it is possible that the service will contain more functionality then what you define in the contract,<br>
+but only the functions that are in the definition will be public (accessible) in the <a href="#distributed-environment">distributed environment</a>.</p>
 <h2 id='3-creating-microservice'>3. creating microservice</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">ms</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
@@ -1202,6 +1224,19 @@ the callback will be called with createProxy or createServiceCall methods which 
 <li><p>start - start the gateway.</p></li>
 <li><p>stop - stop the gateway.</p></li>
 </ul>
+<h1 id='debug'>Debug</h1><h2 id='mocks'>Mocks</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'@scalecube/utils'</span><span class="p">);</span>
+
+<span class="c1">// polyfill for messageChannel</span>
+<span class="nx">utils</span><span class="p">.</span><span class="nx">mockMessageChannel</span><span class="p">();</span>
+</code></pre>
+<p>When trying to test app as if running on browser 
+and testing microservices in node environment (jest) 
+and the test involve multiple microservice instances
+and performing <a href="#remotecall">remoteCall</a> then it is require to 
+add the code snippet before the test is running.</p>
+
+<p>the snippet will mock scalecube check if running in node
+and will add polyfill <a href="https://developer.mozilla.org/en-US/docs/Web/API/MessageChannel">messageChannel</a> which required by browser implementation of scalecube.</p>
 <h1 id='errors'>Errors</h1>
 <table><thead>
 <tr>
@@ -1357,10 +1392,11 @@ just need to make sure it wrap in array.</p>
 <li><p>set asyncModel flag to true when using <a href="#createproxies">createProxies</a>.<br>
 this option will provide a promise to a proxy.
 when calling the promise, it will resolve when the service is available.</p></li>
-<li><p>implement retry logic when requesting a service.</p></li>
+<li><p>using retryRouter when creating the proxy.
+retryRouter will ping the registry before the remoteCall till the service is registered.</p></li>
 </ol>
 <h3 id='related-topics-2'>related topics:</h3>
-<p><a href="#createproxies">createProxies</a>, <a href="#remotecall">remoteCall</a></p>
+<p><a href="#createproxies">createProxies</a>, <a href="#remotecall">remoteCall</a>, <a href="#router">retryRouter</a></p>
 <h2 id='does-the-order-of-services-is-important-when-using-the-dependency-hook'>Does the order of services is important when using the dependency hook?</h2>
 <p>The order of the services you provide is the order in which they are registered in the registry.</p>
 

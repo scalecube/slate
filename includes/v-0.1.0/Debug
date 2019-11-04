@@ -1,0 +1,13 @@
+<h1 id='debug'>Debug</h1><h2 id='mocks'>Mocks</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'@scalecube/utils'</span><span class="p">);</span>
+
+<span class="c1">// polyfill for messageChannel</span>
+<span class="nx">utils</span><span class="p">.</span><span class="nx">mockMessageChannel</span><span class="p">();</span>
+</code></pre>
+<p>When trying to test app as if running on browser 
+and testing microservices in node environment (jest) 
+and the test involve multiple microservice instances
+and performing <a href="#remotecall">remoteCall</a> then it is require to 
+add the code snippet before the test is running.</p>
+
+<p>the snippet will mock scalecube check if running in node
+and will add polyfill <a href="https://developer.mozilla.org/en-US/docs/Web/API/MessageChannel">messageChannel</a> which required by browser implementation of scalecube.</p>

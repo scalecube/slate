@@ -207,11 +207,13 @@ Contain information of how to access the service.</p>
 <li><p>cluster - a module that implements <a href="#cluster">Cluster</a> API</p></li>
 <li><p>debug - add logs</p></li>
 </ul>
-<h2 id='router'>Router</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">roundRobin</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/routers'</span><span class="p">;</span>
+<h2 id='router'>Router</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">roundRobin</span><span class="p">,</span> <span class="nx">retryRouter</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/routers'</span><span class="p">;</span>
 
-<span class="kr">const</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span><span class="nx">serviceDefinition</span><span class="p">,</span> <span class="na">router</span><span class="p">:</span> <span class="nx">roundRobin</span><span class="p">})</span>
+<span class="kr">const</span> <span class="nx">proxyA</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span><span class="nx">serviceDefinition</span><span class="p">,</span> <span class="na">router</span><span class="p">:</span> <span class="nx">roundRobin</span><span class="p">});</span>
+
+<span class="kr">const</span> <span class="nx">proxyB</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxy</span><span class="p">({</span><span class="nx">serviceDefinition</span><span class="p">,</span> <span class="na">router</span><span class="p">:</span> <span class="nx">retryRouter</span><span class="p">({</span><span class="na">period</span><span class="p">:</span> <span class="mi">10</span><span class="p">})});</span>
 </code></pre><pre class="highlight typescript tab-typescript"><code>
-<span class="kd">type</span> <span class="nx">Router</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">RouterOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Endpoint</span> <span class="o">|</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">type</span> <span class="nx">Router</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">RouterOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">Endpoint</span><span class="o">&gt;</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">RouterOptions</span> <span class="p">{</span>
   <span class="nl">lookUp</span><span class="p">:</span> <span class="nx">LookUp</span><span class="p">;</span>
@@ -228,6 +230,9 @@ Contain information of how to access the service.</p>
 <p>pick the first available item.</p>
 <h3 id='roundrobin'>RoundRobin</h3>
 <p>pick the next item from a list of available items.</p>
+<h3 id='retryrouter'>retryRouter</h3>
+<p>ping the registry every @ms and checking if there are any available items.
+pick the first available item.</p>
 <h2 id='service'>Service</h2><pre class="highlight typescript tab-typescript"><code><span class="kr">interface</span> <span class="nx">Service</span> <span class="p">{</span>
   <span class="nl">definition</span><span class="p">:</span> <span class="nx">ServiceDefinition</span><span class="p">;</span>
   <span class="nl">reference</span><span class="p">:</span> <span class="nx">ServiceReference</span><span class="p">;</span>

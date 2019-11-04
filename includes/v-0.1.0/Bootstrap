@@ -19,11 +19,14 @@
   <span class="p">}</span> 
 <span class="p">}</span>
 </code></pre>
-<p>service definition is the contract between the provider to the consumer of the service.<br>
+<p><a href="#service">service</a> definition is the contract between the provider to the consumer of the service.<br>
 in other words, it is the contract that the service must uphold.</p>
 
-<p>it is possible that the service will contain more functionality then what you define in the contract,<br>
-but only the functions that are in the definition will be accessible via scalecube.</p>
+<p>service definition is used when we are bootstrapping a service
+and when we are creating a proxy to a service.</p>
+
+<p>when we are boostraping the service we are binding the serviceReference with the serviceDefinition.
+when we are creating a proxy with a serviceDefinition then scalecube search for the serviceReference that is bound to the serviceDefinition. </p>
 <h2 id='2-create-the-servicereference'>2. create the serviceReference</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// class example</span>
 <span class="kr">class</span> <span class="nx">Service</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(){</span>
@@ -52,10 +55,15 @@ but only the functions that are in the definition will be accessible via scalecu
   <span class="nl">createServiceCall</span><span class="p">:</span> <span class="nx">CreateServiceCall</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre>
-<p>ServiceReference can be a class instance, module or a callback function.</p>
+<p>ServiceReference is the implementation of the contract.</p>
+
+<p>It can be a class instance, module or a callback function.</p>
 
 <p>passing callback function in the ServiceReference call <a href="#dependency-hook">depedency hook</a> 
 and it can be used to inject proxy/service call to the service.</p>
+
+<p>it is possible that the service will contain more functionality then what you define in the contract,<br>
+but only the functions that are in the definition will be public (accessible) in the <a href="#distributed-environment">distributed environment</a>.</p>
 <h2 id='3-creating-microservice'>3. creating microservice</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">ms</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
