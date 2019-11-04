@@ -767,6 +767,14 @@ Contain information of how to access the service.</p>
   <span class="nl">lookUp</span><span class="p">:</span> <span class="nx">LookUp</span><span class="p">;</span>
   <span class="nl">message</span><span class="p">:</span> <span class="nx">Message</span><span class="p">;</span>
 <span class="p">}</span>
+
+
+<span class="kd">type</span> <span class="nx">RetryRouter</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">RetryRouterOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Router</span>
+
+<span class="kr">interface</span> <span class="nx">RetryRouterOptions</span> <span class="p">{</span> 
+  <span class="nl">period</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span> 
+  <span class="nx">maxRetry</span><span class="p">?:</span> <span class="kr">number</span> 
+<span class="p">}</span>
 </code></pre>
 <p>router is a tool for picking the best service base on given criteria.</p>
 
