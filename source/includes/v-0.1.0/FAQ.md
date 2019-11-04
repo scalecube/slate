@@ -38,7 +38,8 @@ it just provide a proxy to the service.
 this option will provide a promise to a proxy.
 when calling the promise, it will resolve when the service is available.
 
-2. implement retry logic when requesting a service.
+2. using retryRouter when creating the proxy.
+retryRouter will ping the registry before the remoteCall till the service is registered.
 
 ### related topics:
 

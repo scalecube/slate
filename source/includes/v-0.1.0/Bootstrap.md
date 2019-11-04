@@ -30,12 +30,14 @@ const serviceDefinition = {
 }
 ```
 
-service definition is the contract between the provider to the consumer of the service.  
+[service](#service) definition is the contract between the provider to the consumer of the service.  
 in other words, it is the contract that the service must uphold.
 
-  
-it is possible that the service will contain more functionality then what you define in the contract,  
-but only the functions that are in the definition will be accessible via scalecube.
+service definition is used when we are bootstrapping a service
+and when we are creating a proxy to a service.
+
+when we are boostraping the service we are binding the serviceReference with the serviceDefinition.
+when we are creating a proxy with a serviceDefinition then scalecube search for the serviceReference that is bound to the serviceDefinition. 
 
  
 ## 2. create the serviceReference
@@ -72,10 +74,15 @@ interface ServiceFactoryOptions {
   createServiceCall: CreateServiceCall;
 }
 ```
-ServiceReference can be a class instance, module or a callback function.
+ServiceReference is the implementation of the contract.
+
+It can be a class instance, module or a callback function.
 
 passing callback function in the ServiceReference call [depedency hook](#dependency-hook) 
 and it can be used to inject proxy/service call to the service.
+
+it is possible that the service will contain more functionality then what you define in the contract,  
+but only the functions that are in the definition will be public (accessible) in the [distributed environment](#distributed-environment).
 
 ## 3. creating microservice
 

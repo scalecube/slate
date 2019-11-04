@@ -14,6 +14,7 @@ includes:
   - v-0.1.0/Bootstrap
   - v-0.1.0/Basic-usage
   - v-0.1.0/Advance-usage
+  - v-0.1.0/Debug
   - v-0.1.0/Errors
   - v-0.1.0/FAQ
 search: true
@@ -79,34 +80,33 @@ receive URI format and convert it to Address.
   * use default params to fill the missing values from the given string.
   
   
-## Browser
 
 scalecube provide event-base tool for working in microservice approach.
 
-### Isolation
+## Isolation
 
-#### RunTime 
-Different services communicate via postMessage events, this solution isolates each service.
+### RunTime 
+Different services communicate via events, this solution isolates each service.
 if one of the services throw exception, it won't break the whole js application.
 
-#### Development 
+### Development 
 Each feature/service can be developed in isolation from other features/services.
 services will be able to integrate together base on the interface of each service.
 
-### Scalability
+## Scalability
 
-#### RunTime
-Scalecube bootstrap is the same if your feature located on the main thread or in a web-worker.
-therefor, it is easier to use workers to scale your runtime processing.
+### RunTime
+Easy to bootstrap in every environment/process.
 
-#### Development
+#### Browser
+A feature can be located on the main thread or in a web-worker.
+Scalecube will manage the communication between the services.
+that way scalecube help you to use workers and to scale your runtime processing.
+
+#### NodeJS
+
+ 
+
+### Development
 Scalecube provide easy way to integrate services base on their definition.
-
-## NodeJS
-
-### Isolation
-
-different services communicate via web-socket, each service can run on different node server.
-
-### Scalability
 

@@ -239,14 +239,16 @@ const microserviceInstance = createMicroservice({
 ## Router
 
 ```javascript
-import { roundRobin } from '@scalecube/routers';
+import { roundRobin, retryRouter } from '@scalecube/routers';
 
-const proxy = ms.createProxy({serviceDefinition, router: roundRobin})
+const proxyA = ms.createProxy({serviceDefinition, router: roundRobin});
+
+const proxyB = ms.createProxy({serviceDefinition, router: retryRouter({period: 10})});
 ```
 
 ```typescript
 
-type Router = (options: RouterOptions) => Endpoint | null;
+type Router = (options: RouterOptions) => Promise<Endpoint>;
 
 interface RouterOptions {
   lookUp: LookUp;
@@ -265,6 +267,11 @@ pick the first available item.
 ### RoundRobin
 
 pick the next item from a list of available items.
+
+### retryRouter
+
+ping the registry every @ms and checking if there are any available items.
+pick the first available item.
 
 ## Service
 
