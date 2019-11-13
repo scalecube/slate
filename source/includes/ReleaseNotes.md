@@ -4,7 +4,7 @@
 
 ## 0.1.5
 
-- [remove create proxies](https://github.com/scalecube/scalecube-js/issues/217)
+- [remove create proxies](https://github.com/scalecube/scalecube-js/issues/215)
 
 ## 0.1.4
 
