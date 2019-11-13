@@ -164,7 +164,6 @@ Contain information of how to access the service.</p>
 
 <span class="k">export</span> <span class="kr">interface</span> <span class="nx">Microservice</span> <span class="p">{</span>
   <span class="nl">destroy</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="nl">createProxies</span><span class="p">:</span> <span class="nx">CreateProxies</span><span class="p">;</span>
   <span class="nl">createProxy</span><span class="p">:</span> <span class="nx">CreateProxy</span><span class="p">;</span>
   <span class="nl">createServiceCall</span><span class="p">:</span> <span class="nx">CreateServiceCall</span><span class="p">;</span>
 <span class="p">}</span>
@@ -197,7 +196,6 @@ Contain information of how to access the service.</p>
 </code></pre>
 <ul>
 <li><a href="#destroy">destroy</a> - The method is used to delete a microservice and close all the subscriptions related with it.</li>
-<li><a href="#createproxies">createProxies</a> - Create a map of proxies or Promises to proxy. (deepened on configuration)</li>
 <li><a href="#createproxy">createProxy</a> - Creates a proxy to a method and provides extra logic when is invoked.</li>
 <li><p><a href="#createServiceCall">createServiceCall</a> - Exposes serviceCall to a user (not via Proxy)</p></li>
 <li><p>services - An array of <a href="#service">services</a>, that will exist inside a microservice container</p></li>

@@ -332,9 +332,6 @@
                     <a href="#createservicecall" class="toc-h2 toc-link" data-title="createServiceCall">createServiceCall</a>
                   </li>
                   <li>
-                    <a href="#createproxies" class="toc-h2 toc-link" data-title="createProxies">createProxies</a>
-                  </li>
-                  <li>
                     <a href="#destroy" class="toc-h2 toc-link" data-title="destroy">destroy</a>
                   </li>
               </ul>
@@ -727,7 +724,6 @@ Contain information of how to access the service.</p>
 
 <span class="k">export</span> <span class="kr">interface</span> <span class="nx">Microservice</span> <span class="p">{</span>
   <span class="nl">destroy</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="nl">createProxies</span><span class="p">:</span> <span class="nx">CreateProxies</span><span class="p">;</span>
   <span class="nl">createProxy</span><span class="p">:</span> <span class="nx">CreateProxy</span><span class="p">;</span>
   <span class="nl">createServiceCall</span><span class="p">:</span> <span class="nx">CreateServiceCall</span><span class="p">;</span>
 <span class="p">}</span>
@@ -760,7 +756,6 @@ Contain information of how to access the service.</p>
 </code></pre>
 <ul>
 <li><a href="#destroy">destroy</a> - The method is used to delete a microservice and close all the subscriptions related with it.</li>
-<li><a href="#createproxies">createProxies</a> - Create a map of proxies or Promises to proxy. (deepened on configuration)</li>
 <li><a href="#createproxy">createProxy</a> - Creates a proxy to a method and provides extra logic when is invoked.</li>
 <li><p><a href="#createServiceCall">createServiceCall</a> - Exposes serviceCall to a user (not via Proxy)</p></li>
 <li><p>services - An array of <a href="#service">services</a>, that will exist inside a microservice container</p></li>
@@ -1049,61 +1044,6 @@ in the Gateway we want to receive a request from outside of our <a href="#distri
 <li>requestResponse - A method using which a consumer requires data and a provider responds with the data once in the form of promise,<br>
 that includes the response from the method and qualifier that was used for the invocation.</li>
 </ul>
-<h2 id='createproxies'>createProxies</h2><pre class="highlight typescript tab-typescript"><code>
-<span class="kd">type</span> <span class="nx">CreateProxies</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">CreateProxiesOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ProxiesMap</span><span class="p">;</span>
-
-<span class="kr">interface</span> <span class="nx">CreateProxiesOptions</span> <span class="p">{</span>
-  <span class="nl">proxies</span><span class="p">:</span> <span class="nx">ProxiesOptions</span><span class="p">[];</span>
-  <span class="nx">router</span><span class="p">?:</span> <span class="nx">Router</span><span class="p">;</span>
-  <span class="nx">isAsync</span><span class="p">?:</span> <span class="kr">boolean</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kr">interface</span> <span class="nx">ProxiesOptions</span> <span class="p">{</span>
-  <span class="nl">proxyName</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
-  <span class="nl">serviceDefinition</span><span class="p">:</span> <span class="nx">ServiceDefinition</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kr">interface</span> <span class="nx">ProxiesMap</span> <span class="p">{</span>
-  <span class="p">[</span><span class="nx">proxyName</span><span class="p">:</span> <span class="kr">string</span><span class="p">]:</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">proxy</span><span class="p">:</span> <span class="nx">Proxy</span> <span class="p">}</span><span class="o">&gt;</span> <span class="o">|</span> <span class="nx">Proxy</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kd">type</span> <span class="nx">Proxy</span><span class="o">&lt;</span><span class="nx">T</span> <span class="o">=</span> <span class="kr">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">T</span><span class="p">;</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="p">{</span> <span class="nx">awaitServiceProxy</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">ms</span><span class="p">.</span><span class="nx">createProxies</span><span class="p">({</span>
-  <span class="na">proxies</span><span class="p">:</span> <span class="p">[{</span>
-    <span class="nx">serviceDefinition</span><span class="p">,</span>
-    <span class="na">proxyName</span><span class="p">:</span> <span class="s1">'awaitServiceProxy'</span>
-  <span class="p">}],</span>
-  <span class="na">isAsync</span> <span class="p">:</span> <span class="kc">true</span>
-<span class="p">});</span>
-
-<span class="nx">awaitServiceProxy</span><span class="p">.</span><span class="nx">then</span><span class="p">(({</span><span class="na">proxy</span><span class="p">:</span> <span class="nx">serviceProxy</span><span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">serviceProxy</span><span class="p">.</span><span class="nx">someMethod</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
-<span class="p">});</span>
-</code></pre>
-<p>createProxies is an advance way of creating a proxy to a service.
-it provide a way to receive multiple proxies in one command.<br>
-also, it provide two option of resolving the proxies:</p>
-
-<ol>
-<li><p>if setting the <code>isAsync</code> to <code>true</code> then you will receive 
-an object with Promises to the proxies.</p></li>
-<li><p>if setting the <code>isAsync</code> to <code>false</code> then you will receive 
-an object with the proxies.</p></li>
-</ol>
-
-<p>promise to the proxy will resolve only when the service already in the registry.
-this help you avoid retry logic till the service is available to use.</p>
-
-<ul>
-<li>proxies - List of ProxiesOptions, contain the configuration for creating the proxy</li>
-<li>router - optional router to provide extra logic (remoteCall).</li>
-<li>isAsync - optional flag to resolve the proxy asynchronous way<br>
-if true then the proxy will be resolved when the service is in the registry.<br>
-if false then the proxy will be resolved immediately.</li>
-<li>proxyName - name of the proxy (used as the key in the map).</li>
-<li>serviceDefinition - metadata of the service.</li>
-<li>ProxiesMap - Map of generic proxyName and a Promise to the proxy.</li>
-</ul>
 <h2 id='destroy'>destroy</h2><pre class="highlight typescript tab-typescript"><code><span class="kr">interface</span> <span class="nx">Microservice</span> <span class="p">{</span>
   <span class="nl">destroy</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -1329,11 +1269,6 @@ and will add polyfill <a href="https://developer.mozilla.org/en-US/docs/Web/API/
 <td>qualifier must be valid string in the format &#39;part1/part2&#39;</td>
 </tr>
 <tr>
-<td>MS0012</td>
-<td>Invalid <a href="##createproxies">createProxies</a> configuration, proxyName must be unique</td>
-<td>when createProxies you are passing the same proxyName twice</td>
-</tr>
-<tr>
 <td>MS0013</td>
 <td>Transport provider is not define</td>
 <td>when running on nodejs, <a href="#transport">Transport</a> must be provided</td>
@@ -1388,8 +1323,17 @@ and will add polyfill <a href="https://developer.mozilla.org/en-US/docs/Web/API/
 <td>Invalid format, serviceName must be not empty string but received type <typeof serviceName></td>
 <td>fix the serviceDefinition, serviceName must be a string</td>
 </tr>
+<tr>
+<td>MS0024</td>
+<td>ROUTER_NOT_PROVIDED</td>
+<td>pass router plugin in the createProxy</td>
+</tr>
 </tbody></table>
-<h1 id='release-notes'>Release Notes</h1><h2 id='0-2-0'>0.2.0</h2><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2>
+<h1 id='release-notes'>Release Notes</h1><h2 id='0-2-0'>0.2.0</h2><h2 id='0-1-5'>0.1.5</h2>
+<ul>
+<li><a href="https://github.com/scalecube/scalecube-js/issues/217">remove create proxies</a></li>
+</ul>
+<h2 id='0-1-4'>0.1.4</h2>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/201">reduce bundle size</a></li>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/207">resolve router async</a></li>
@@ -1414,19 +1358,14 @@ just need to make sure it wrap in array.</p>
 <h3 id='related-topics'>related topics:</h3>
 <p><a href="#message">message</a></p>
 <h2 id='invoking-a-method-from-proxy-throw-error-code-ms0015-can-39-t-find-services'>Invoking a method from proxy throw error code MS0015 - can&#39;t find services ...</h2>
-<p>createProxy or createProxies (without asyncModel flag set to true) does not guarantee that the service is available.</p>
+<p>createProxy does not guarantee that the service is available.</p>
 
 <p>it just provide a proxy to the service.</p>
 <h3 id='possible-solutions'>possible solutions:</h3>
-<ol>
-<li><p>set asyncModel flag to true when using <a href="#createproxies">createProxies</a>.<br>
-this option will provide a promise to a proxy.
-when calling the promise, it will resolve when the service is available.</p></li>
-<li><p>using retryRouter when creating the proxy.
-retryRouter will ping the registry before the remoteCall till the service is registered.</p></li>
-</ol>
+<p>using retryRouter when creating the proxy.
+retryRouter will ping the registry before the remoteCall till the service is registered.</p>
 <h3 id='related-topics-2'>related topics:</h3>
-<p><a href="#createproxies">createProxies</a>, <a href="#remotecall">remoteCall</a>, <a href="#router">retryRouter</a></p>
+<p><a href="#remotecall">remoteCall</a>, <a href="#router">retryRouter</a></p>
 <h2 id='does-the-order-of-services-is-important-when-using-the-dependency-hook'>Does the order of services is important when using the dependency hook?</h2>
 <p>The order of the services you provide is the order in which they are registered in the registry.</p>
 

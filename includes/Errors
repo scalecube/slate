@@ -67,11 +67,6 @@
 <td>qualifier must be valid string in the format &#39;part1/part2&#39;</td>
 </tr>
 <tr>
-<td>MS0012</td>
-<td>Invalid <a href="##createproxies">createProxies</a> configuration, proxyName must be unique</td>
-<td>when createProxies you are passing the same proxyName twice</td>
-</tr>
-<tr>
 <td>MS0013</td>
 <td>Transport provider is not define</td>
 <td>when running on nodejs, <a href="#transport">Transport</a> must be provided</td>
@@ -125,5 +120,10 @@
 <td>MS0023</td>
 <td>Invalid format, serviceName must be not empty string but received type <typeof serviceName></td>
 <td>fix the serviceDefinition, serviceName must be a string</td>
+</tr>
+<tr>
+<td>MS0024</td>
+<td>ROUTER_NOT_PROVIDED</td>
+<td>pass router plugin in the createProxy</td>
 </tr>
 </tbody></table>
