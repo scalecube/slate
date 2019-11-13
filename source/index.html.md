@@ -16,6 +16,7 @@ includes:
   - Advance-usage
   - Debug
   - Errors
+  - ReleaseNotes
   - FAQ
 search: true
 ---
