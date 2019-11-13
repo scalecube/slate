@@ -43,7 +43,7 @@ retryRouter will ping the registry before the remoteCall till the service is reg
 
 ### related topics:
 
-[createProxies](#createproxies), [remoteCall](#remotecall)
+[createProxies](#createproxies), [remoteCall](#remotecall), [retryRouter](#router)
 
 ## Does the order of services is important when using the dependency hook?
 

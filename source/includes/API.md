@@ -254,6 +254,14 @@ interface RouterOptions {
   lookUp: LookUp;
   message: Message;
 }
+
+
+type RetryRouter = (options: RetryRouterOptions) => Router
+
+interface RetryRouterOptions { 
+  period: number; 
+  maxRetry?: number 
+}
 ```
 router is a tool for picking the best service base on given criteria.
 

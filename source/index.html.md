@@ -9,14 +9,14 @@ toc_footers:
   - <a href='https://github.com/scalecube/scalecube-js'>Scalecube github</a>
 
 includes:
-  - v-0.1.0/Core-concepts
-  - v-0.1.0/API
-  - v-0.1.0/Bootstrap
-  - v-0.1.0/Basic-usage
-  - v-0.1.0/Advance-usage
-  - v-0.1.0/Debug
-  - v-0.1.0/Errors
-  - v-0.1.0/FAQ
+  - Core-concepts
+  - API
+  - Bootstrap
+  - Basic-usage
+  - Advance-usage
+  - Debug
+  - Errors
+  - FAQ
 search: true
 ---
 
@@ -71,6 +71,7 @@ Provides additional tools:
 
 * **workers** - tool for using web-workers in scalecube ecosystem.
   '@scalecube/scalecube-microservice' export workers which contain:
+   * initialize - initialize the web-worker util.
    * addWorker - add a web-worker to sclaecube's ecosystem.
    * removeWorker -  remove a web-worker from sclaecube's ecosystem.
 
