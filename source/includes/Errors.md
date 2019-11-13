@@ -14,7 +14,6 @@
 | MS0009 | Not valid format, [service](#service) must be Object | service must be an object|
 | MS0010 | Not valid format, [Microservice configuration](#microservice) must be an Object | missing configuration when bootstrapping a microservice instance |
 | MS0011 | [qualifier](#qualifier) should not be empty string | qualifier must be valid string in the format 'part1/part2'|
-| MS0012 | Invalid [createProxies](##createproxies) configuration, proxyName must be unique | when createProxies you are passing the same proxyName twice|
 | MS0013 | Transport provider is not define | when running on nodejs, [Transport](#transport) must be provided|
 | MS0014 | service method <methodName> missing in the [serviceDefinition](#1-define-the-service) | try to call a method from a proxy that does not in the definition|
 | MS0015 | can't find services that match the give criteria: <[qualifier](#qualifier)> | requesting a service that is not in the [registry](#registry)|
@@ -26,4 +25,4 @@
 | MS0021 | Invalid format, definition must contain valid methods of type object | methods must be of type object |
 | MS0022 | Invalid format, definition must contain valid methods | methods must be none empty object |
 | MS0023 | Invalid format, serviceName must be not empty string but received type <typeof serviceName> | fix the serviceDefinition, serviceName must be a string |
- 
+| MS0024 | ROUTER_NOT_PROVIDED | pass router plugin in the createProxy |

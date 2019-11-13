@@ -28,22 +28,18 @@ please look at the [example](?javascript#passing-array-argument-in-message)
 
 ## Invoking a method from proxy throw error code MS0015 - can't find services ...
 
-createProxy or createProxies (without asyncModel flag set to true) does not guarantee that the service is available.
+createProxy does not guarantee that the service is available.
 
 it just provide a proxy to the service.
 
 ### possible solutions:
 
-1. set asyncModel flag to true when using [createProxies](#createproxies).  
-this option will provide a promise to a proxy.
-when calling the promise, it will resolve when the service is available.
-
-2. using retryRouter when creating the proxy.
+using retryRouter when creating the proxy.
 retryRouter will ping the registry before the remoteCall till the service is registered.
 
 ### related topics:
 
-[createProxies](#createproxies), [remoteCall](#remotecall), [retryRouter](#router)
+[remoteCall](#remotecall), [retryRouter](#router)
 
 ## Does the order of services is important when using the dependency hook?
 

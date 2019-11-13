@@ -190,7 +190,6 @@ type CreateMicroservice = (options: MicroserviceOptions) => Microservice;
 
 export interface Microservice {
   destroy: () => Promise<any>;
-  createProxies: CreateProxies;
   createProxy: CreateProxy;
   createServiceCall: CreateServiceCall;
 }
@@ -225,7 +224,6 @@ const microserviceInstance = createMicroservice({
 })
 ```
 * [destroy](#destroy) - The method is used to delete a microservice and close all the subscriptions related with it.
-* [createProxies](#createproxies) - Create a map of proxies or Promises to proxy. (deepened on configuration)
 * [createProxy](#createproxy) - Creates a proxy to a method and provides extra logic when is invoked.
 * [createServiceCall](#createServiceCall) - Exposes serviceCall to a user (not via Proxy)
 

@@ -64,65 +64,6 @@ in the Gateway we want to receive a request from outside of our [distributed env
 * requestResponse - A method using which a consumer requires data and a provider responds with the data once in the form of promise,  
  that includes the response from the method and qualifier that was used for the invocation.
 
-## createProxies
-
-```typescript
-
-type CreateProxies = (options: CreateProxiesOptions) => ProxiesMap;
-
-interface CreateProxiesOptions {
-  proxies: ProxiesOptions[];
-  router?: Router;
-  isAsync?: boolean;
-}
-
-interface ProxiesOptions {
-  proxyName: string;
-  serviceDefinition: ServiceDefinition;
-}
-
-interface ProxiesMap {
-  [proxyName: string]: Promise<{ proxy: Proxy }> | Proxy;
-}
-
-type Proxy<T = any> = T;
-```
-
-```javascript
-const { awaitServiceProxy } = ms.createProxies({
-  proxies: [{
-    serviceDefinition,
-    proxyName: 'awaitServiceProxy'
-  }],
-  isAsync : true
-});
-
-awaitServiceProxy.then(({proxy: serviceProxy}) => {
-  serviceProxy.someMethod().then(console.log);
-});
-```
-createProxies is an advance way of creating a proxy to a service.
-it provide a way to receive multiple proxies in one command.  
-also, it provide two option of resolving the proxies:
-
-1. if setting the `isAsync` to `true` then you will receive 
-an object with Promises to the proxies.
-
-2.  if setting the `isAsync` to `false` then you will receive 
-    an object with the proxies.
-    
-promise to the proxy will resolve only when the service already in the registry.
-this help you avoid retry logic till the service is available to use.
-
-* proxies - List of ProxiesOptions, contain the configuration for creating the proxy
-* router - optional router to provide extra logic (remoteCall).
-* isAsync - optional flag to resolve the proxy asynchronous way  
-if true then the proxy will be resolved when the service is in the registry.  
-if false then the proxy will be resolved immediately.
-* proxyName - name of the proxy (used as the key in the map).
-* serviceDefinition - metadata of the service.
-* ProxiesMap - Map of generic proxyName and a Promise to the proxy.
-
 ## destroy
 
 ```typescript
