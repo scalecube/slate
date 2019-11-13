@@ -2,11 +2,11 @@
 
 ## 0.2.0
 
-## 0.1.5
+## 0.1.4-next.8
 
 - [remove create proxies](https://github.com/scalecube/scalecube-js/issues/215)
 
-## 0.1.4
+## 0.1.4-next.7
 
 - [reduce bundle size](https://github.com/scalecube/scalecube-js/issues/201)
 - [resolve router async](https://github.com/scalecube/scalecube-js/issues/207)
