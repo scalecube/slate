@@ -1,16 +1,16 @@
-<h1 id='release-notes'>Release Notes</h1><h2 id='0-2-0'>0.2.0</h2><h2 id='0-1-4-next-10'>0.1.4-next.10</h2>
+<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-10'>0.1.4-next.10</h3>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/178">advance rsocket-transport-config</a></li>
 </ul>
-<h2 id='0-1-4-next-9'>0.1.4-next.9</h2>
+<h3 id='0-1-4-next-9'>0.1.4-next.9</h3>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/218">defaultRouter option in microservice API</a></li>
 </ul>
-<h2 id='0-1-4-next-8'>0.1.4-next.8</h2>
+<h3 id='0-1-4-next-8'>0.1.4-next.8</h3>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/215">remove create proxies</a></li>
 </ul>
-<h2 id='0-1-4-next-7'>0.1.4-next.7</h2>
+<h3 id='0-1-4-next-7'>0.1.4-next.7</h3>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/201">reduce bundle size</a></li>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/207">resolve router async</a></li>
