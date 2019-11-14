@@ -867,6 +867,14 @@ each method describe its <a href="#asyncmodel">asyncModel</a>.</li>
   <span class="nl">providerFactory</span><span class="p">:</span> <span class="nx">ProviderFactory</span><span class="p">;</span>
   <span class="nx">factoryOptions</span><span class="p">?:</span> <span class="kr">any</span><span class="p">;</span>
   <span class="nx">serializers</span><span class="p">?:</span> <span class="nx">PayloadSerializers</span><span class="p">;</span>
+  <span class="nx">setup</span> <span class="p">?:</span> <span class="nx">ProviderSetup</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">ProviderSetup</span> <span class="p">{</span>
+    <span class="nx">dataMimeType</span> <span class="p">?:</span> <span class="kr">string</span><span class="p">,</span>
+    <span class="nx">keepAlive</span> <span class="p">?:</span> <span class="kr">number</span><span class="p">,</span>
+    <span class="nx">lifetime</span> <span class="p">?:</span> <span class="kr">number</span><span class="p">,</span>
+    <span class="nx">metadataMimeType</span> <span class="p">?:</span> <span class="kr">string</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="kr">interface</span> <span class="nx">PayloadSerializers</span> <span class="p">{</span>
@@ -897,6 +905,7 @@ It is used when requesting a service from another microservice instance.</p>
 <li><p>providerFactory - Factory for creating RSocket client transport provider</p></li>
 <li><p>factoryOptions - Extra configuration to pass to the factory</p></li>
 <li><p>serializers - Optional serialize functionality for the payload</p></li>
+<li><p>setup - Optional setup configuration for the provider</p></li>
 </ul>
 <h1 id='bootstrap'>Bootstrap</h1>
 <p>bootstrap the microservice can be done in 3 steps:</p>
@@ -1338,7 +1347,11 @@ and will add polyfill <a href="https://developer.mozilla.org/en-US/docs/Web/API/
 <td>pass router plugin in the createProxy</td>
 </tr>
 </tbody></table>
-<h1 id='release-notes'>Release Notes</h1><h2 id='0-2-0'>0.2.0</h2><h2 id='0-1-4-next-10'>0.1.4-next.10</h2><h2 id='0-1-4-next-9'>0.1.4-next.9</h2>
+<h1 id='release-notes'>Release Notes</h1><h2 id='0-2-0'>0.2.0</h2><h2 id='0-1-4-next-10'>0.1.4-next.10</h2>
+<ul>
+<li><a href="https://github.com/scalecube/scalecube-js/issues/178">advance rsocket-transport-config</a></li>
+</ul>
+<h2 id='0-1-4-next-9'>0.1.4-next.9</h2>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/218">defaultRouter option in microservice API</a></li>
 </ul>
