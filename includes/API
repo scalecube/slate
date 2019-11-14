@@ -169,6 +169,7 @@ Contain information of how to access the service.</p>
 <span class="p">}</span>
 
 <span class="k">export</span> <span class="kr">interface</span> <span class="nx">MicroserviceOptions</span> <span class="p">{</span>
+  <span class="nx">defaultRouter</span><span class="p">?:</span> <span class="nx">Router</span><span class="p">;</span>
   <span class="nx">services</span><span class="p">?:</span> <span class="nx">Service</span><span class="p">[];</span>
   <span class="nx">seedAddress</span><span class="p">?:</span> <span class="nx">Address</span> <span class="o">|</span> <span class="kr">string</span><span class="p">;</span>
   <span class="nx">address</span><span class="p">?:</span> <span class="nx">Address</span> <span class="o">|</span> <span class="kr">string</span><span class="p">;</span>
@@ -191,6 +192,7 @@ Contain information of how to access the service.</p>
   <span class="p">},</span>
   <span class="na">transport</span><span class="p">:</span> <span class="nx">TransportNodeJS</span><span class="p">,</span> <span class="c1">// scalecube provide a default transport configuration when running on browser,</span>
   <span class="na">cluster</span><span class="p">:</span> <span class="nx">joinCluster</span><span class="p">,</span> <span class="c1">// scalecube provide a default cluster configuration when running on browser,</span>
+  <span class="na">defaultRouter</span><span class="p">:</span> <span class="nx">retryRouter</span><span class="p">({</span><span class="na">period</span><span class="p">:</span><span class="mi">10</span><span class="p">}),</span>
   <span class="na">debug</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// default is false</span>
 <span class="p">})</span>
 </code></pre>
@@ -198,6 +200,7 @@ Contain information of how to access the service.</p>
 <li><a href="#destroy">destroy</a> - The method is used to delete a microservice and close all the subscriptions related with it.</li>
 <li><a href="#createproxy">createProxy</a> - Creates a proxy to a method and provides extra logic when is invoked.</li>
 <li><p><a href="#createServiceCall">createServiceCall</a> - Exposes serviceCall to a user (not via Proxy)</p></li>
+<li><p>defaultRouter - set a default router for this microservice container</p></li>
 <li><p>services - An array of <a href="#service">services</a>, that will exist inside a microservice container</p></li>
 <li><p>seedAddress - The seedAddress is an <a href="#address">address</a> or a <strong>string (URI format)</strong> of another microservice container in our distributed env.</p></li>
 <li><p>address - An <a href="#address">address</a> or a <strong>string (URI format)</strong> for this microservice instance, other microservices can use this address to connect with this microservice container.</p></li>
