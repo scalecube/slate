@@ -345,8 +345,16 @@ interface Provider {
   providerFactory: ProviderFactory;
   factoryOptions?: any;
   serializers?: PayloadSerializers;
+  setup ?: ProviderSetup;
 }
 
+interface ProviderSetup {
+    dataMimeType ?: string,
+    keepAlive ?: number,
+    lifetime ?: number,
+    metadataMimeType ?: string,
+}
+  
 interface PayloadSerializers {
   data: {
     deserialize: (data: any) => any;
@@ -375,3 +383,4 @@ transport is your custom implementation to [RSocket](https://github.com/rsocket/
 * providerFactory - Factory for creating RSocket client transport provider
 * factoryOptions - Extra configuration to pass to the factory
 * serializers - Optional serialize functionality for the payload
+* setup - Optional setup configuration for the provider
