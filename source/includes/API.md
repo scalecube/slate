@@ -195,6 +195,7 @@ export interface Microservice {
 }
 
 export interface MicroserviceOptions {
+  defaultRouter?: Router;
   services?: Service[];
   seedAddress?: Address | string;
   address?: Address | string;
@@ -220,6 +221,7 @@ const microserviceInstance = createMicroservice({
   },
   transport: TransportNodeJS, // scalecube provide a default transport configuration when running on browser,
   cluster: joinCluster, // scalecube provide a default cluster configuration when running on browser,
+  defaultRouter: retryRouter({period:10}),
   debug: true // default is false
 })
 ```
@@ -227,6 +229,7 @@ const microserviceInstance = createMicroservice({
 * [createProxy](#createproxy) - Creates a proxy to a method and provides extra logic when is invoked.
 * [createServiceCall](#createServiceCall) - Exposes serviceCall to a user (not via Proxy)
 
+* defaultRouter - set a default router for this microservice container
 * services - An array of [services](#service), that will exist inside a microservice container
 * seedAddress - The seedAddress is an [address](#address) or a **string (URI format)** of another microservice container in our distributed env.
 * address - An [address](#address) or a **string (URI format)** for this microservice instance, other microservices can use this address to connect with this microservice container.

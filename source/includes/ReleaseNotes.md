@@ -2,6 +2,12 @@
 
 ## 0.2.0
 
+## 0.1.4-next.10
+
+## 0.1.4-next.9
+
+- [defaultRouter option in microservice API](https://github.com/scalecube/scalecube-js/issues/218)
+
 ## 0.1.4-next.8
 
 - [remove create proxies](https://github.com/scalecube/scalecube-js/issues/215)
