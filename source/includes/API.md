@@ -315,13 +315,13 @@ interface ServiceFactoryOptions {
 }
 ```
 
-Service is combination of contract and the reference that uphold the contract.  
+Service is combination of definition and the reference that uphold the contract.  
 
 * definition - metadata that define the service.
 * reference - code of the service
 
 ### ServiceDefinition
-Its the contract that describe the service.
+Its the metadata that describe the service.
 
 * serviceName - The name of a service
 * methods - Map of methods that exist in the service.  

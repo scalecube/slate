@@ -26,3 +26,5 @@
 | MS0022 | Invalid format, definition must contain valid methods | methods must be none empty object |
 | MS0023 | Invalid format, serviceName must be not empty string but received type <typeof serviceName> | fix the serviceDefinition, serviceName must be a string |
 | MS0024 | ROUTER_NOT_PROVIDED | pass router plugin in the createProxy |
+| MS0025 | <service provider>'s service 'serviceName/methodName' define as Promise but service return not Promise | incorrect implementation of the service |
+| MS0026 | <service provider>'s service 'serviceName/methodName' define as Observable but service return not Observable | incorrect implementation of the service |

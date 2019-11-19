@@ -3,12 +3,12 @@
 
 ## Member
 
-member is a microservice instances.
+member is an entity in the distributed environment.  
+in the eco-system of scalecube, member will be a microservice container.
 
 ## Distributed environment
 
-Distributed environment is collection of members that share services between them.
-
+Distributed environment is collection of members that share services between them.  
 Each member have access to all the services that are shared in the distributed environment.
 
 ### possible [topologies:](https://en.wikipedia.org/wiki/Network_topology)
@@ -18,10 +18,9 @@ Each member have access to all the services that are shared in the distributed e
 
 ## Registry
 
-Registry store all [endpoints](#endpoint) of the available services it can request.  
-when a microservice bootstrap with a new service, it is connect via the [discovery](#discovery) to the [microservice seed](#seed),   
-once connection is established, then they share their Endpoints.  
-every change in the microservices in the [distributed environment](#distributed-environment) the registry is notified and update accordingly.
+Registry store all [endpoints](#endpoint) of the available services it can request.    
+the registry reflect the state in the [distributed environment](#distributed-environment).  
+if the state has changed, then the registry is notified and update accordingly.
 
 ## ServiceCall
 
@@ -36,7 +35,7 @@ there are two types of service call:
 
 ```javascript
 // main.js
-import { createMicroservice, stringToAddress } from '@scalecube/scalecube-microservice';
+import { createMicroservice } from '@scalecube/scalecube-microservice';
 
 const localMs = createMicroservice({
   services:[{
@@ -64,21 +63,21 @@ some of the requests will be from the local services and some will require propa
 
 ```javascript
 // seed.js
-import { createMicroservice, stringToAddress } from '@scalecube/scalecube-microservice';
+import { createMicroservice } from '@scalecube/scalecube-microservice';
 
 createMicroservice({
-  address: stringToAddress('seed'),
+  address: 'seed',
   services:[{
     // add your services
   }]
 });
 
 // main.js
-import { createMicroservice, stringToAddress } from '@scalecube/scalecube-microservice';
+import { createMicroservice } from '@scalecube/scalecube-microservice';
 
 const localMs = createMicroservice({
-  address: stringToAddress('local'),
-  seedAddress : stringToAddress('seed'),
+  address: 'local',
+  seedAddress : 'seed',
   services:[{
     // add your services
   }]
@@ -101,6 +100,7 @@ When a microservice use another microservice's services.
 ## SeedAddress
 
 seedAddress is the [address](#address) of the [seed](#seed).
+
 
 ## Seed
 the seed is a microservice container that used as an entry-point to the [distributed environment](#distributed-environment).

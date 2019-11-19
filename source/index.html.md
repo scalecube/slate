@@ -23,17 +23,17 @@ search: true
 
 # Introduction
 
-Scalecube is a toolkit for creating microservices based systems.
+Scalecube is a toolkit for creating [microservices](#bootstrap) based systems.
 
-Scalecube provides tools: 
+Scalecube also provides the follow modules: 
  
-* [Microservice](#bootstrap)  
 * [Router](#router)  
 * [Discovery](#discovery)  
 * [Cluster](#cluster)  
 * [Transport](#transport)  
 * [Gateway](#gateway)  
 
+all modules are pluggable in a [microservice](#bootstrap) container and can be customise and replaced.
 
 ## Installation
 
@@ -51,9 +51,12 @@ npm install @scalecube/scalecube-microservice
 
 # Motivation
 
-Scalecube implements [Decouple by interface](https://en.wikipedia.org/wiki/Loose_coupling) microservice's architecture.  
+Scalecube provide solution for microservice's architecture.
+
+It is based on the principle of [Decouple by interface](https://en.wikipedia.org/wiki/Loose_coupling).  
+
 it is event-base system that allow to create loosely coupled services in a distributed environment.
- 
+
 ### Environment
 
 scalecube can run on both browser and server.
@@ -100,14 +103,14 @@ services will be able to integrate together base on the interface of each servic
 ### RunTime
 Easy to bootstrap in every environment/process.
 
-#### Browser
+**Browser**
 A feature can be located on the main thread or in a web-worker.
 Scalecube will manage the communication between the services.
 that way scalecube help you to use workers and to scale your runtime processing.
 
-#### NodeJS
-
- 
+**NodeJS**
+A feature can be located on different servers.
+Scalecube will manage the communication between the services.
 
 ### Development
 Scalecube provide easy way to integrate services base on their definition.
