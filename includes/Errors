@@ -126,4 +126,14 @@
 <td>ROUTER_NOT_PROVIDED</td>
 <td>pass router plugin in the createProxy</td>
 </tr>
+<tr>
+<td>MS0025</td>
+<td><service provider>&#39;s service &#39;serviceName/methodName&#39; define as Promise but service return not Promise</td>
+<td>incorrect implementation of the service</td>
+</tr>
+<tr>
+<td>MS0026</td>
+<td><service provider>&#39;s service &#39;serviceName/methodName&#39; define as Observable but service return not Observable</td>
+<td>incorrect implementation of the service</td>
+</tr>
 </tbody></table>

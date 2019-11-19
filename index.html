@@ -398,18 +398,19 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Scalecube is a toolkit for creating microservices based systems.</p>
+<p>Scalecube is a toolkit for creating <a href="#bootstrap">microservices</a> based systems.</p>
 
-<p>Scalecube provides tools: </p>
+<p>Scalecube also provides the follow modules: </p>
 
 <ul>
-<li><a href="#bootstrap">Microservice</a><br></li>
 <li><a href="#router">Router</a><br></li>
 <li><a href="#discovery">Discovery</a><br></li>
 <li><a href="#cluster">Cluster</a><br></li>
 <li><a href="#transport">Transport</a><br></li>
 <li><a href="#gateway">Gateway</a><br></li>
 </ul>
+
+<p>all modules are pluggable in a <a href="#bootstrap">microservice</a> container and can be customise and replaced.</p>
 <h2 id='installation'>Installation</h2>
 <p>yarn:</p>
 
@@ -423,8 +424,11 @@ yarn add @scalecube/scalecube-microservice
 npm install @scalecube/scalecube-microservice
 </code> </p>
 <h1 id='motivation'>Motivation</h1>
-<p>Scalecube implements <a href="https://en.wikipedia.org/wiki/Loose_coupling">Decouple by interface</a> microservice&#39;s architecture.<br>
-it is event-base system that allow to create loosely coupled services in a distributed environment.</p>
+<p>Scalecube provide solution for microservice&#39;s architecture.</p>
+
+<p>It is based on the principle of <a href="https://en.wikipedia.org/wiki/Loose_coupling">Decouple by interface</a>.  </p>
+
+<p>it is event-base system that allow to create loosely coupled services in a distributed environment.</p>
 <h3 id='environment'>Environment</h3>
 <p>scalecube can run on both browser and server.</p>
 
@@ -463,18 +467,23 @@ if one of the services throw exception, it won&#39;t break the whole js applicat
 services will be able to integrate together base on the interface of each service.</p>
 <h2 id='scalability'>Scalability</h2><h3 id='runtime-2'>RunTime</h3>
 <p>Easy to bootstrap in every environment/process.</p>
-<h4 id='browser'>Browser</h4>
-<p>A feature can be located on the main thread or in a web-worker.
+
+<p><strong>Browser</strong>
+A feature can be located on the main thread or in a web-worker.
 Scalecube will manage the communication between the services.
 that way scalecube help you to use workers and to scale your runtime processing.</p>
-<h4 id='nodejs'>NodeJS</h4><h3 id='development-2'>Development</h3>
+
+<p><strong>NodeJS</strong>
+A feature can be located on different servers.
+Scalecube will manage the communication between the services.</p>
+<h3 id='development-2'>Development</h3>
 <p>Scalecube provide easy way to integrate services base on their definition.</p>
 <h1 id='core-concepts'>Core-concepts</h1><h2 id='member'>Member</h2>
-<p>member is a microservice instances.</p>
+<p>member is an entity in the distributed environment.<br>
+in the eco-system of scalecube, member will be a microservice container.</p>
 <h2 id='distributed-environment'>Distributed environment</h2>
-<p>Distributed environment is collection of members that share services between them.</p>
-
-<p>Each member have access to all the services that are shared in the distributed environment.</p>
+<p>Distributed environment is collection of members that share services between them.<br>
+Each member have access to all the services that are shared in the distributed environment.</p>
 <h3 id='possible-topologies'>possible <a href="https://en.wikipedia.org/wiki/Network_topology">topologies:</a></h3>
 <ul>
 <li>Star - when all microservice container are connected to the same microservice <a href="#seed">seed</a>.</li>
@@ -482,9 +491,8 @@ that way scalecube help you to use workers and to scale your runtime processing.
 </ul>
 <h2 id='registry'>Registry</h2>
 <p>Registry store all <a href="#endpoint">endpoints</a> of the available services it can request.<br>
-when a microservice bootstrap with a new service, it is connect via the <a href="#discovery">discovery</a> to the <a href="#seed">microservice seed</a>,<br>
-once connection is established, then they share their Endpoints.<br>
-every change in the microservices in the <a href="#distributed-environment">distributed environment</a> the registry is notified and update accordingly.</p>
+the registry reflect the state in the <a href="#distributed-environment">distributed environment</a>.<br>
+if the state has changed, then the registry is notified and update accordingly.</p>
 <h2 id='servicecall'>ServiceCall</h2>
 <p>ServiceCall is the process of requesting a service to execute.</p>
 
@@ -495,7 +503,7 @@ every change in the microservices in the <a href="#distributed-environment">dist
 <li>remoteCall</li>
 </ul>
 <h3 id='localcall'>LocalCall</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// main.js</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">localMs</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
   <span class="na">services</span><span class="p">:[{</span>
@@ -517,21 +525,21 @@ change the application to microservice architecture when you are ready to scale-
 <p>when your microservice also act as a gateway,
 some of the requests will be from the local services and some will require propagate the request to another microservice instance.</p>
 <h3 id='remotecall'>RemoteCall</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// seed.js</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="nx">createMicroservice</span><span class="p">({</span>
-  <span class="na">address</span><span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'seed'</span><span class="p">),</span>
+  <span class="na">address</span><span class="p">:</span> <span class="s1">'seed'</span><span class="p">,</span>
   <span class="na">services</span><span class="p">:[{</span>
     <span class="c1">// add your services</span>
   <span class="p">}]</span>
 <span class="p">});</span>
 
 <span class="c1">// main.js</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">localMs</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
-  <span class="na">address</span><span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'local'</span><span class="p">),</span>
-  <span class="na">seedAddress</span> <span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'seed'</span><span class="p">),</span>
+  <span class="na">address</span><span class="p">:</span> <span class="s1">'local'</span><span class="p">,</span>
+  <span class="na">seedAddress</span> <span class="p">:</span> <span class="s1">'seed'</span><span class="p">,</span>
   <span class="na">services</span><span class="p">:[{</span>
     <span class="c1">// add your services</span>
   <span class="p">}]</span>
@@ -828,14 +836,14 @@ pick the first available item.</p>
   <span class="nl">createServiceCall</span><span class="p">:</span> <span class="nx">CreateServiceCall</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre>
-<p>Service is combination of contract and the reference that uphold the contract.  </p>
+<p>Service is combination of definition and the reference that uphold the contract.  </p>
 
 <ul>
 <li>definition - metadata that define the service.</li>
 <li>reference - code of the service</li>
 </ul>
 <h3 id='servicedefinition'>ServiceDefinition</h3>
-<p>Its the contract that describe the service.</p>
+<p>Its the metadata that describe the service.</p>
 
 <ul>
 <li>serviceName - The name of a service</li>
@@ -1336,6 +1344,16 @@ and will add polyfill <a href="https://developer.mozilla.org/en-US/docs/Web/API/
 <td>MS0024</td>
 <td>ROUTER_NOT_PROVIDED</td>
 <td>pass router plugin in the createProxy</td>
+</tr>
+<tr>
+<td>MS0025</td>
+<td><service provider>&#39;s service &#39;serviceName/methodName&#39; define as Promise but service return not Promise</td>
+<td>incorrect implementation of the service</td>
+</tr>
+<tr>
+<td>MS0026</td>
+<td><service provider>&#39;s service &#39;serviceName/methodName&#39; define as Observable but service return not Observable</td>
+<td>incorrect implementation of the service</td>
 </tr>
 </tbody></table>
 <h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-10'>0.1.4-next.10</h3>

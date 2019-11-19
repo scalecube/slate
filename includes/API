@@ -271,14 +271,14 @@ pick the first available item.</p>
   <span class="nl">createServiceCall</span><span class="p">:</span> <span class="nx">CreateServiceCall</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre>
-<p>Service is combination of contract and the reference that uphold the contract.  </p>
+<p>Service is combination of definition and the reference that uphold the contract.  </p>
 
 <ul>
 <li>definition - metadata that define the service.</li>
 <li>reference - code of the service</li>
 </ul>
 <h3 id='servicedefinition'>ServiceDefinition</h3>
-<p>Its the contract that describe the service.</p>
+<p>Its the metadata that describe the service.</p>
 
 <ul>
 <li>serviceName - The name of a service</li>

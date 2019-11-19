@@ -1,9 +1,9 @@
 <h1 id='core-concepts'>Core-concepts</h1><h2 id='member'>Member</h2>
-<p>member is a microservice instances.</p>
+<p>member is an entity in the distributed environment.<br>
+in the eco-system of scalecube, member will be a microservice container.</p>
 <h2 id='distributed-environment'>Distributed environment</h2>
-<p>Distributed environment is collection of members that share services between them.</p>
-
-<p>Each member have access to all the services that are shared in the distributed environment.</p>
+<p>Distributed environment is collection of members that share services between them.<br>
+Each member have access to all the services that are shared in the distributed environment.</p>
 <h3 id='possible-topologies'>possible <a href="https://en.wikipedia.org/wiki/Network_topology">topologies:</a></h3>
 <ul>
 <li>Star - when all microservice container are connected to the same microservice <a href="#seed">seed</a>.</li>
@@ -11,9 +11,8 @@
 </ul>
 <h2 id='registry'>Registry</h2>
 <p>Registry store all <a href="#endpoint">endpoints</a> of the available services it can request.<br>
-when a microservice bootstrap with a new service, it is connect via the <a href="#discovery">discovery</a> to the <a href="#seed">microservice seed</a>,<br>
-once connection is established, then they share their Endpoints.<br>
-every change in the microservices in the <a href="#distributed-environment">distributed environment</a> the registry is notified and update accordingly.</p>
+the registry reflect the state in the <a href="#distributed-environment">distributed environment</a>.<br>
+if the state has changed, then the registry is notified and update accordingly.</p>
 <h2 id='servicecall'>ServiceCall</h2>
 <p>ServiceCall is the process of requesting a service to execute.</p>
 
@@ -24,7 +23,7 @@ every change in the microservices in the <a href="#distributed-environment">dist
 <li>remoteCall</li>
 </ul>
 <h3 id='localcall'>LocalCall</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// main.js</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">localMs</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
   <span class="na">services</span><span class="p">:[{</span>
@@ -46,21 +45,21 @@ change the application to microservice architecture when you are ready to scale-
 <p>when your microservice also act as a gateway,
 some of the requests will be from the local services and some will require propagate the request to another microservice instance.</p>
 <h3 id='remotecall'>RemoteCall</h3><pre class="highlight javascript tab-javascript"><code><span class="c1">// seed.js</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="nx">createMicroservice</span><span class="p">({</span>
-  <span class="na">address</span><span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'seed'</span><span class="p">),</span>
+  <span class="na">address</span><span class="p">:</span> <span class="s1">'seed'</span><span class="p">,</span>
   <span class="na">services</span><span class="p">:[{</span>
     <span class="c1">// add your services</span>
   <span class="p">}]</span>
 <span class="p">});</span>
 
 <span class="c1">// main.js</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">stringToAddress</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">localMs</span> <span class="o">=</span> <span class="nx">createMicroservice</span><span class="p">({</span>
-  <span class="na">address</span><span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'local'</span><span class="p">),</span>
-  <span class="na">seedAddress</span> <span class="p">:</span> <span class="nx">stringToAddress</span><span class="p">(</span><span class="s1">'seed'</span><span class="p">),</span>
+  <span class="na">address</span><span class="p">:</span> <span class="s1">'local'</span><span class="p">,</span>
+  <span class="na">seedAddress</span> <span class="p">:</span> <span class="s1">'seed'</span><span class="p">,</span>
   <span class="na">services</span><span class="p">:[{</span>
     <span class="c1">// add your services</span>
   <span class="p">}]</span>
