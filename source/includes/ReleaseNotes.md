@@ -4,6 +4,10 @@
 
 ## 0.1.4
 
+### 0.1.4-next.11
+
+- localCall throw error when service impl. is not according to definition
+
 ### 0.1.4-next.10
 
 - [advance rsocket-transport-config](https://github.com/scalecube/scalecube-js/issues/178)
