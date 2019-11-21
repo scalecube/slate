@@ -31,23 +31,6 @@ there are two types of service call:
 * localCall
 * remoteCall
 
-### LocalCall
-
-```javascript
-// main.js
-import { createMicroservice } from '@scalecube/scalecube-microservice';
-
-const localMs = createMicroservice({
-  services:[{
-    // add your services
-  }]
-});
-
-const proxy = localMs.createProxy({
- // create proxy to the services on the microservice instance
-});
-```
-
 ```typescript
 Scenario: microservice use its own service (LocalCall)
 Given     a service (definition + reference)
@@ -67,11 +50,25 @@ Then      the microservice container B will perform remoteCall to microservice c
 And       the microservice container A will perform localCall inorder to execute the method
 
 ```
-When a microservice use its own services.
-
-### RemoteCall
 
 ```javascript
+// LocalCall example:
+// main.js
+import { createMicroservice } from '@scalecube/scalecube-microservice';
+
+const localMs = createMicroservice({
+  services:[{
+    // add your services
+  }]
+});
+
+const proxy = localMs.createProxy({
+ // create proxy to the services on the microservice instance
+});
+```
+
+```javascript
+// RemoteCall example:
 // seed.js
 import { createMicroservice } from '@scalecube/scalecube-microservice';
 
@@ -97,6 +94,13 @@ const proxy = localMs.createProxy({
  // create proxy to the services on the other microservice instance
 });
 ```
+
+### LocalCall
+
+When a microservice use its own services.
+
+### RemoteCall
+
 When a microservice use another microservice's services.
 
 **steps:**
