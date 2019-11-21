@@ -74,14 +74,6 @@ if the state has changed, then the registry is notified and update accordingly.<
 <p>When a microservice use its own services.</p>
 <h3 id='remotecall'>RemoteCall</h3>
 <p>When a microservice use another microservice&#39;s services.</p>
-
-<p><strong>steps:</strong></p>
-
-<ol>
-<li>use seedAddress to connect the microservice to the right distributed environment.</li>
-<li>bootstrap the microservice with the seedAddress</li>
-<li>createProxy to the service located on the other microservice instance.</li>
-</ol>
 <h2 id='seedaddress'>SeedAddress</h2>
 <p>seedAddress is the <a href="#address">address</a> of the <a href="#seed">seed</a>.</p>
 <h2 id='seed'>Seed</h2>
