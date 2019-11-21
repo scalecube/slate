@@ -95,14 +95,6 @@ When a microservice use its own services.
 
 When a microservice use another microservice's services.
 
-**steps:**
-
-1. use seedAddress to connect the microservice to the right distributed environment.
-2. bootstrap the microservice with the seedAddress
-3. createProxy to the service located on the other microservice instance.
-
-
-
 ## SeedAddress
 
 seedAddress is the [address](#address) of the [seed](#seed).
