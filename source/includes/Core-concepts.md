@@ -48,16 +48,26 @@ const proxy = localMs.createProxy({
 });
 ```
 
+```typescript
+Scenario: microservice use its own service (LocalCall)
+Given     a service (definition + reference)
+And       bootstraping a microservice container with the service
+When      using the service definition to create a proxy from the microservice container
+And       calling a method from the service
+Then      the microservice container will perform localCall inorder to execute the method
+
+
+Scenario: microservice use other microservice service (RemoteCall)
+Given     a service (definition + reference)
+And       bootstraping a microservice container A with the service
+And       bootstraping a microservice container B without the service
+When      using the service definition to create a proxy from the microservice container B
+And       calling a method from the service
+Then      the microservice container B will perform remoteCall to microservice container A inorder to request excution of the method
+And       the microservice container A will perform localCall inorder to execute the method
+
+```
 When a microservice use its own services.
-
-**use cases:**
-#### monolith application
-starting building the application as monolith (in this step all services are local)  
-change the application to microservice architecture when you are ready to scale-up.
-
-#### gateway
-when your microservice also act as a gateway,
-some of the requests will be from the local services and some will require propagate the request to another microservice instance.
 
 ### RemoteCall
 

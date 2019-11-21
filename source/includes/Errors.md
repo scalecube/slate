@@ -28,3 +28,5 @@
 | MS0024 | ROUTER_NOT_PROVIDED | pass router plugin in the createProxy |
 | MS0025 | (service provider)'s service 'serviceName/methodName' define as Promise but service return not Promise | incorrect implementation of the service |
 | MS0026 | (service provider)'s service 'serviceName/methodName' define as Observable but service return not Observable | incorrect implementation of the service |
+| MS0027 | (service provider)'s 'serviceName/methodName' has no valid response, expect Promise or Observable | incorrect implementation of the service |
+| MS0028 | invalid async model | asyncModel in definition is invalid |

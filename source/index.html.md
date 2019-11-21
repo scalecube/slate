@@ -2,7 +2,7 @@
 title: Scalecube
 
 language_tabs:
-  - typescript : api
+  - typescript : info
   - javascript : example
 
 toc_footers:
@@ -25,7 +25,7 @@ search: true
 
 Scalecube is a toolkit for creating [microservices](#bootstrap) based systems.
 
-Scalecube also provides the follow modules: 
+as part of the solution, Scalecube provides the follow modules: 
  
 * [Router](#router)  
 * [Discovery](#discovery)  
@@ -33,7 +33,7 @@ Scalecube also provides the follow modules:
 * [Transport](#transport)  
 * [Gateway](#gateway)  
 
-all modules are pluggable in a [microservice](#bootstrap) container and can be customise and replaced.
+all modules are pluggable in a [microservice](#bootstrap) container and can be customized and replaced.
 
 ## Installation
 
@@ -51,18 +51,14 @@ npm install @scalecube/scalecube-microservice
 
 # Motivation
 
-Scalecube provide solution for microservice's architecture.
-
+Scalecube provide solution for microservice's architecture.  
 It is based on the principle of [Decouple by interface](https://en.wikipedia.org/wiki/Loose_coupling).  
-
 it is event-base system that allow to create loosely coupled services in a distributed environment.
 
 ### Environment
 
-scalecube can run on both browser and server.
-
-on browser it will use postMessage events.
-
+scalecube can run on both browser and server.  
+on browser it will use postMessage events.  
 on server it will use websocket.
 
 ### Reactive programing.
@@ -78,18 +74,13 @@ Provides additional tools:
    * initialize - initialize the web-worker util.
    * addWorker - add a web-worker to sclaecube's ecosystem.
    * removeWorker -  remove a web-worker from sclaecube's ecosystem.
-
 * **stringToAddress** - tool for creating address from string.  
 receive URI format and convert it to Address.
   * can use partial URI format
   * use default params to fill the missing values from the given string.
   
-  
-
-scalecube provide event-base tool for working in microservice approach.
-
 ## Isolation
-
+ 
 ### RunTime 
 Different services communicate via events, this solution isolates each service.
 if one of the services throw exception, it won't break the whole js application.
@@ -97,6 +88,11 @@ if one of the services throw exception, it won't break the whole js application.
 ### Development 
 Each feature/service can be developed in isolation from other features/services.
 services will be able to integrate together base on the interface of each service.
+
+**private methods/property**
+  
+side effect of using Scalecube allow you to design a system in which the developer of the service can determine which methods/property are public.
+only methods/property that are in the service definition can be access from out-side the service.
 
 ## Scalability
 
