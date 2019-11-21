@@ -24,12 +24,6 @@ if the state has changed, then the registry is notified and update accordingly.
 
 ## ServiceCall
 
-ServiceCall is the process of requesting a service to execute.
-
-there are two types of service call:
-
-* localCall
-* remoteCall
 
 ```typescript
 Scenario: microservice use its own service (LocalCall)
@@ -94,6 +88,13 @@ const proxy = localMs.createProxy({
  // create proxy to the services on the other microservice instance
 });
 ```
+
+ServiceCall is the process of requesting a service to execute.
+
+there are two types of service call:
+
+* localCall
+* remoteCall
 
 ### LocalCall
 
