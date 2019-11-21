@@ -46,45 +46,14 @@ And       the microservice container A will perform localCall inorder to execute
 ```
 
 ```javascript
-// LocalCall example:
 // main.js
 import { createMicroservice } from '@scalecube/scalecube-microservice';
 
-const localMs = createMicroservice({
-  services:[{
-    // add your services
-  }]
-});
+const msA = createMicroservice({ address: 'msA', services:[{ /* add your services */ }]});
+const msB = createMicroservice({ address: 'msB', seedAddress : 'msA', services:[{ /* add your services */ }]});
 
-const proxy = localMs.createProxy({
- // create proxy to the services on the microservice instance
-});
-
-// RemoteCall example:
-// seed.js
-import { createMicroservice } from '@scalecube/scalecube-microservice';
-
-createMicroservice({
-  address: 'seed',
-  services:[{
-    // add your services
-  }]
-});
-
-// main.js
-import { createMicroservice } from '@scalecube/scalecube-microservice';
-
-const localMs = createMicroservice({
-  address: 'local',
-  seedAddress : 'seed',
-  services:[{
-    // add your services
-  }]
-});
-
-const proxy = localMs.createProxy({
- // create proxy to the services on the other microservice instance
-});
+const proxyA = msA.createProxy({ /* create proxy to the services on the microservice instance */ });
+const proxyB = msB.createProxy({ /* create proxy to the services on the other microservice instance */ });
 ```
 
 ### LocalCall
