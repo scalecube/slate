@@ -24,6 +24,12 @@ if the state has changed, then the registry is notified and update accordingly.
 
 ## ServiceCall
 
+ServiceCall is the process of requesting a service to execute.
+
+there are two types of service call:
+
+* localCall
+* remoteCall
 
 ```typescript
 Scenario: microservice use its own service (LocalCall)
@@ -42,7 +48,6 @@ When      using the service definition to create a proxy from the microservice c
 And       calling a method from the service
 Then      the microservice container B will perform remoteCall to microservice container A inorder to request excution of the method
 And       the microservice container A will perform localCall inorder to execute the method
-
 ```
 
 ```javascript
@@ -59,9 +64,7 @@ const localMs = createMicroservice({
 const proxy = localMs.createProxy({
  // create proxy to the services on the microservice instance
 });
-```
 
-```javascript
 // RemoteCall example:
 // seed.js
 import { createMicroservice } from '@scalecube/scalecube-microservice';
@@ -88,13 +91,6 @@ const proxy = localMs.createProxy({
  // create proxy to the services on the other microservice instance
 });
 ```
-
-ServiceCall is the process of requesting a service to execute.
-
-there are two types of service call:
-
-* localCall
-* remoteCall
 
 ### LocalCall
 
