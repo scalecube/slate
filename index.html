@@ -494,13 +494,6 @@ the registry reflect the state in the <a href="#distributed-environment">distrib
 if the state has changed, then the registry is notified and update accordingly.</p>
 <h2 id='servicecall'>ServiceCall</h2>
 <p>ServiceCall is the process of requesting a service to execute.</p>
-
-<p>there are two types of service call:</p>
-
-<ul>
-<li>localCall</li>
-<li>remoteCall</li>
-</ul>
 <pre class="highlight typescript tab-typescript"><code><span class="nx">Scenario</span><span class="p">:</span> <span class="nx">microservice</span> <span class="nx">use</span> <span class="nx">its</span> <span class="nx">own</span> <span class="nx">service</span> <span class="p">(</span><span class="nx">LocalCall</span><span class="p">)</span>
 <span class="nx">Given</span>     <span class="nx">a</span> <span class="nx">service</span> <span class="p">(</span><span class="nx">definition</span> <span class="o">+</span> <span class="nx">reference</span><span class="p">)</span>
 <span class="nx">And</span>       <span class="nx">bootstraping</span> <span class="nx">a</span> <span class="nx">microservice</span> <span class="nx">container</span> <span class="kd">with</span> <span class="nx">the</span> <span class="nx">service</span>
