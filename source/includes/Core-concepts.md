@@ -26,11 +26,6 @@ if the state has changed, then the registry is notified and update accordingly.
 
 ServiceCall is the process of requesting a service to execute.
 
-there are two types of service call:
-
-* localCall
-* remoteCall
-
 ```typescript
 Scenario: microservice use its own service (LocalCall)
 Given     a service (definition + reference)
