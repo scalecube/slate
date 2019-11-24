@@ -1,10 +1,14 @@
-<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-12'>0.1.4-next.12</h3>
+<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-13'>0.1.4-next.13</h3>
+<ul>
+<li><a href="https://github.com/scalecube/scalecube-js/pull/227">fix: remoteCall can&#39;t pass Error format over postMessage</a></li>
+</ul>
+<h3 id='0-1-4-next-12'>0.1.4-next.12</h3>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/issues/225">scalecube convert undefined to {} remoteCall</a></li>
 </ul>
 <h3 id='0-1-4-next-11'>0.1.4-next.11</h3>
 <ul>
-<li>localCall throw error when service impl. is not according to definition</li>
+<li><a href="https://github.com/scalecube/scalecube-js/pull/224">localCall throw error when service impl. is not according to definition</a></li>
 </ul>
 <h3 id='0-1-4-next-10'>0.1.4-next.10</h3>
 <ul>
