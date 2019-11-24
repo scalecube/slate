@@ -4,12 +4,15 @@
 
 ## 0.1.4
 
+### 0.1.4-next.13
+- [fix: remoteCall can't pass Error format over postMessage](https://github.com/scalecube/scalecube-js/pull/227)
+
 ### 0.1.4-next.12
 - [scalecube convert undefined to {} remoteCall](https://github.com/scalecube/scalecube-js/issues/225)
 
 ### 0.1.4-next.11
 
-- localCall throw error when service impl. is not according to definition
+- [localCall throw error when service impl. is not according to definition](https://github.com/scalecube/scalecube-js/pull/224)
 
 ### 0.1.4-next.10
 

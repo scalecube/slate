@@ -20,7 +20,7 @@ It is possbile to pass any data structure in the message.
 just need to make sure it wrap in array.
 
 
-please look at the [example](?javascript#passing-array-argument-in-message)
+please look at the [example](?javascriptt#how-can-i-pass-array-in-message)
 
 ### related topics:
 
