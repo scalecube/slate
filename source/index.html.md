@@ -36,15 +36,21 @@ as part of the solution, Scalecube provides the follow modules:
 all modules are pluggable in a [microservice](#bootstrap) container and can be customized and replaced.
 
 ## Installation
+scalecube available by installing the `@scalecube/scalecube-microservice`.
+`@scalecube/scalecube-microservice` does not come with default configurations.
 
-yarn:
+another option is to use template.
 
+there is a template for running on browser `@scalecube/browser`
+and a template for running on node `@scalecube/node`.
+
+
+yarn:  
 `
 yarn add @scalecube/scalecube-microservice
 `
 
-npm:
-
+npm:  
 `
 npm install @scalecube/scalecube-microservice
 ` 
@@ -53,14 +59,25 @@ npm install @scalecube/scalecube-microservice
 
 **Browser**
 
-yarn:
+yarn:  
 `
 yarn add @scalecube/browser
 `
 
-npm:
+npm:  
 `
 npm add @scalecube/browser
+`
+
+**Node**
+yarn:  
+`
+yarn add @scalecube/node
+`
+
+npm:  
+`
+npm add @scalecube/node
 `
 
 # Motivation
