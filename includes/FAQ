@@ -50,3 +50,16 @@ if you want that other microservice instance will use it as seedAddress.</p>
 auto generate address stop you from sharing your services in the distributed environment.</p>
 <h3 id='related-topics-4'>related topics:</h3>
 <p><a href="#remotecall">remoteCall</a>, <a href="#distributed-environment">distributed environment</a>, <a href="#seed">seed</a>, <a href="#address">address</a></p>
+<h2 id='does-scalecube-support-in-old-browsers'>Does scalecube support in old browsers?</h2>
+<p>@scalecube/browser transpile to es5, </p>
+
+<p>but you must add:</p>
+
+<ul>
+<li>  babel-polyfill</li>
+<li>  proxy-polyfill</li>
+</ul>
+<pre class="highlight plaintext"><code> &lt;script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.6.0/polyfill.min.js"&gt;&lt;/script&gt;
+ &lt;script nomodule src="https://cdn.jsdelivr.net/npm/proxy-polyfill@0.3.0/proxy.min.js"&gt;&lt;/script&gt;
+</code></pre><h3 id='related-topics-5'>related topics:</h3>
+<p><a href="#Old">old browser support</a></p>

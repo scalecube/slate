@@ -225,6 +225,9 @@
                   <li>
                     <a href="#installation" class="toc-h2 toc-link" data-title="Installation">Installation</a>
                   </li>
+                  <li>
+                    <a href="#templates" class="toc-h2 toc-link" data-title="Templates">Templates</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -246,6 +249,9 @@
                     <a href="#scalability" class="toc-h2 toc-link" data-title="Scalability">Scalability</a>
                   </li>
               </ul>
+          </li>
+          <li>
+            <a href="#old-browser-support" class="toc-h1 toc-link" data-title="Old browser support">Old browser support</a>
           </li>
           <li>
             <a href="#core-concepts" class="toc-h1 toc-link" data-title="Core-concepts">Core-concepts</a>
@@ -387,6 +393,9 @@
                   <li>
                     <a href="#does-seedaddress-and-address-are-mandatory-for-scalecube" class="toc-h2 toc-link" data-title="Does seedAddress and address are mandatory for scalecube?">Does seedAddress and address are mandatory for scalecube?</a>
                   </li>
+                  <li>
+                    <a href="#does-scalecube-support-in-old-browsers" class="toc-h2 toc-link" data-title="Does scalecube support in old browsers?">Does scalecube support in old browsers?</a>
+                  </li>
               </ul>
           </li>
       </ul>
@@ -423,6 +432,18 @@ yarn add @scalecube/scalecube-microservice
 <p><code>
 npm install @scalecube/scalecube-microservice
 </code> </p>
+<h2 id='templates'>Templates</h2>
+<p><strong>Browser</strong></p>
+
+<p>yarn:
+<code>
+yarn add @scalecube/browser
+</code></p>
+
+<p>npm:
+<code>
+npm add @scalecube/browser
+</code></p>
 <h1 id='motivation'>Motivation</h1>
 <p>Scalecube provide solution for microservice&#39;s architecture.<br>
 It is based on the principle of <a href="https://en.wikipedia.org/wiki/Loose_coupling">Decouple by interface</a>.<br>
@@ -477,6 +498,16 @@ A feature can be located on different servers.
 Scalecube will manage the communication between the services.</p>
 <h3 id='development-2'>Development</h3>
 <p>Scalecube provide easy way to integrate services base on their definition.</p>
+<h1 id='old-browser-support'>Old browser support</h1>
+<p>currently <code>@scalecube/browser</code> transpile the code to es5.<br>
+but it is still require to add proxy-polyfill to browsers that does not have proxy support.</p>
+
+<p><strong>tested on:</strong><br>
+Chrome 37+<br>
+IE 11<br>
+Edge 15<br>
+FF 41<br>
+Safari 7.1  </p>
 <h1 id='core-concepts'>Core-concepts</h1><h2 id='member'>Member</h2>
 <p>member is an entity in the distributed environment.<br>
 in the eco-system of scalecube, member will be a microservice container.</p>
@@ -1330,7 +1361,11 @@ and will add polyfill <a href="https://developer.mozilla.org/en-US/docs/Web/API/
 <td>asyncModel in definition is invalid</td>
 </tr>
 </tbody></table>
-<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-13'>0.1.4-next.13</h3>
+<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-14'>0.1.4-next.14</h3>
+<ul>
+<li><a href="https://github.com/scalecube/scalecube-js/pull/228">old browser support</a></li>
+</ul>
+<h3 id='0-1-4-next-13'>0.1.4-next.13</h3>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/pull/227">fix: remoteCall can&#39;t pass Error format over postMessage</a></li>
 </ul>
@@ -1413,6 +1448,19 @@ if you want that other microservice instance will use it as seedAddress.</p>
 auto generate address stop you from sharing your services in the distributed environment.</p>
 <h3 id='related-topics-4'>related topics:</h3>
 <p><a href="#remotecall">remoteCall</a>, <a href="#distributed-environment">distributed environment</a>, <a href="#seed">seed</a>, <a href="#address">address</a></p>
+<h2 id='does-scalecube-support-in-old-browsers'>Does scalecube support in old browsers?</h2>
+<p>@scalecube/browser transpile to es5, </p>
+
+<p>but you must add:</p>
+
+<ul>
+<li>  babel-polyfill</li>
+<li>  proxy-polyfill</li>
+</ul>
+<pre class="highlight plaintext"><code> &lt;script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.6.0/polyfill.min.js"&gt;&lt;/script&gt;
+ &lt;script nomodule src="https://cdn.jsdelivr.net/npm/proxy-polyfill@0.3.0/proxy.min.js"&gt;&lt;/script&gt;
+</code></pre><h3 id='related-topics-5'>related topics:</h3>
+<p><a href="#Old">old browser support</a></p>
 
       </div>
       <div class="dark-box">

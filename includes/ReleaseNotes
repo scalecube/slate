@@ -1,4 +1,8 @@
-<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-13'>0.1.4-next.13</h3>
+<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-14'>0.1.4-next.14</h3>
+<ul>
+<li><a href="https://github.com/scalecube/scalecube-js/pull/228">old browser support</a></li>
+</ul>
+<h3 id='0-1-4-next-13'>0.1.4-next.13</h3>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/pull/227">fix: remoteCall can&#39;t pass Error format over postMessage</a></li>
 </ul>
