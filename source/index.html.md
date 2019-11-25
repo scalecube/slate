@@ -49,6 +49,20 @@ npm:
 npm install @scalecube/scalecube-microservice
 ` 
 
+## Templates
+
+**Browser**
+
+yarn:
+`
+yarn add @scalecube/browser
+`
+
+npm:
+`
+npm add @scalecube/browser
+`
+
 # Motivation
 
 Scalecube provide solution for microservice's architecture.  
@@ -111,3 +125,14 @@ Scalecube will manage the communication between the services.
 ### Development
 Scalecube provide easy way to integrate services base on their definition.
 
+# Old browser support
+
+currently `@scalecube/browser` transpile the code to es5.  
+but it is still require to add proxy-polyfill to browsers that does not have proxy support.
+
+**tested on:**  
+Chrome 37+  
+IE 11  
+Edge 15  
+FF 41  
+Safari 7.1  

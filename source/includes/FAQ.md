@@ -80,3 +80,20 @@ auto generate address stop you from sharing your services in the distributed env
 ### related topics:
 
 [remoteCall](#remotecall), [distributed environment](#distributed-environment), [seed](#seed), [address](#address)
+
+## Does scalecube support in old browsers?
+
+@scalecube/browser transpile to es5, 
+
+but you must add:
+
+-   babel-polyfill
+-   proxy-polyfill
+
+```
+ <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.6.0/polyfill.min.js"></script>
+ <script nomodule src="https://cdn.jsdelivr.net/npm/proxy-polyfill@0.3.0/proxy.min.js"></script>
+```
+### related topics:
+
+[old browser support](#Old)

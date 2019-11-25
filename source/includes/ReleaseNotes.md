@@ -4,6 +4,9 @@
 
 ## 0.1.4
 
+### 0.1.4-next.14
+- [old browser support](https://github.com/scalecube/scalecube-js/pull/228)
+
 ### 0.1.4-next.13
 - [fix: remoteCall can't pass Error format over postMessage](https://github.com/scalecube/scalecube-js/pull/227)
 
