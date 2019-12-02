@@ -1,4 +1,12 @@
-<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-14'>0.1.4-next.14</h3>
+<h1 id='release-notes'>Release Notes</h1><h2 id='0-1-5'>0.1.5</h2><h2 id='0-1-4'>0.1.4</h2><h3 id='0-1-4-next-16'>0.1.4-next.16</h3>
+<ul>
+<li><a href="https://github.com/scalecube/scalecube-js/pull/232">node template</a></li>
+</ul>
+<h3 id='0-1-4-next-15'>0.1.4-next.15</h3>
+<ul>
+<li><a href="https://github.com/scalecube/scalecube-js/pull/231">fix firefox &lt;52</a></li>
+</ul>
+<h3 id='0-1-4-next-14'>0.1.4-next.14</h3>
 <ul>
 <li><a href="https://github.com/scalecube/scalecube-js/pull/228">old browser support</a></li>
 </ul>
