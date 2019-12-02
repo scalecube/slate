@@ -36,7 +36,7 @@ as part of the solution, Scalecube provides the follow modules:
 all modules are pluggable in a [microservice](#bootstrap) container and can be customized and replaced.
 
 ## Installation
-scalecube available by installing the `@scalecube/scalecube-microservice`.
+scalecube available by installing the `@scalecube/scalecube-microservice`.  
 `@scalecube/scalecube-microservice` does not come with default configurations.
 
 another option is to use template.
@@ -100,7 +100,7 @@ support Observable pattern.
 
 Provides additional tools:
 
-* **workers** - tool for using web-workers in scalecube ecosystem.
+* **workers** - tool for using web-workers in scalecube ecosystem.  
   '@scalecube/scalecube-microservice' export workers which contain:
    * initialize - initialize the web-worker util.
    * addWorker - add a web-worker to sclaecube's ecosystem.
@@ -131,9 +131,9 @@ only methods/property that are in the service definition can be access from out-
 Easy to bootstrap in every environment/process.
 
 **Browser**
-A feature can be located on the main thread or in a web-worker.
-Scalecube will manage the communication between the services.
-that way scalecube help you to use workers and to scale your runtime processing.
+A feature can be located on the main thread or in a web-worker,
+Scalecube will manage the communication between the services.  
+Allow you to split your services between multiple process and scale your runtime processing.
 
 **NodeJS**
 A feature can be located on different servers.

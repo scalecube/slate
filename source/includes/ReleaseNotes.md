@@ -4,6 +4,12 @@
 
 ## 0.1.4
 
+### 0.1.4-next.16
+- [node template](https://github.com/scalecube/scalecube-js/pull/232)
+
+### 0.1.4-next.15
+- [fix firefox <52](https://github.com/scalecube/scalecube-js/pull/231)
+
 ### 0.1.4-next.14
 - [old browser support](https://github.com/scalecube/scalecube-js/pull/228)
 
