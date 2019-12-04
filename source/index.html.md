@@ -45,40 +45,13 @@ there is a template for running on browser `@scalecube/browser`
 and a template for running on node `@scalecube/node`.
 
 
-yarn:  
-`
-yarn add @scalecube/scalecube-microservice
-`
+**install options:**
 
-npm:  
-`
-npm install @scalecube/scalecube-microservice
-` 
-
-## Templates
-
-**Browser**
-
-yarn:  
-`
-yarn add @scalecube/browser
-`
-
-npm:  
-`
-npm add @scalecube/browser
-`
-
-**Node**
-yarn:  
-`
-yarn add @scalecube/node
-`
-
-npm:  
-`
-npm add @scalecube/node
-`
+| package | default configuration | yarn | npm |
+| --- | --- | --- | --- |
+| @scalecube/browser | v| `yarn add @scalecube/browser` | `npm i @scalecube/browser` |
+| @scalecube/node | v |`yarn add @scalecube/node` | `npm i @scalecube/node` |
+| @scalecube/scalecube-microservice | x |`yarn add @scalecube/scalecube-microservice` | `npm i @scalecube/scalecube-microservice` |
 
 # Motivation
 
@@ -113,17 +86,17 @@ receive URI format and convert it to Address.
 ## Isolation
  
 ### RunTime 
-Different services communicate via events, this solution isolates each service.
-if one of the services throw exception, it won't break the whole js application.
+Different services communicate via events, this solution isolates each service.  
+if one of the services throw exception, it won't break the whole js application.  
 
 ### Development 
-Each feature/service can be developed in isolation from other features/services.
-services will be able to integrate together base on the interface of each service.
+Each feature/service can be developed in isolation from other features/services.  
+services will be able to integrate together base on the interface of each service.  
 
 **private methods/property**
   
-side effect of using Scalecube allow you to design a system in which the developer of the service can determine which methods/property are public.
-only methods/property that are in the service definition can be access from out-side the service.
+side effect of using Scalecube allow you to design a system in which the developer of the service can determine which methods/property are public.  
+only methods/property that are in the service definition can be access from out-side the service.  
 
 ## Scalability
 
@@ -136,7 +109,7 @@ Scalecube will manage the communication between the services.
 Allow you to split your services between multiple process and scale your runtime processing.
 
 **NodeJS**
-A feature can be located on different servers.
+A feature can be located on different servers.  
 Scalecube will manage the communication between the services.
 
 ### Development
@@ -144,12 +117,13 @@ Scalecube provide easy way to integrate services base on their definition.
 
 # Old browser support
 
-currently `@scalecube/browser` transpile the code to es5.  
+currently `@scalecube/browser` transpile the code to es5.    
 but it is still require to add proxy-polyfill to browsers that does not have proxy support.
 
-**tested on:**  
-Chrome 37+  
-IE 11  
-Edge 15  
-FF 41  
-Safari 7.1  
+| browser | version |
+| --- | --- |
+| Chrome | 37+ |  
+| IE     | 11  |  
+| Edge   | 15  | 
+| FF     | 41  |   
+| Safari | 7.1 |  
