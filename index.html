@@ -885,38 +885,41 @@ each method describe its <a href="#asyncmodel">asyncModel</a>.</li>
 <li>ServiceObject - object that contains the functionality described in the serviceDefinition.</li>
 </ul>
 <h2 id='transport'>Transport</h2><pre class="highlight typescript tab-typescript"><code><span class="kr">interface</span> <span class="nx">Transport</span> <span class="p">{</span>
-  <span class="nl">clientProvider</span><span class="p">:</span> <span class="nx">Provider</span><span class="p">;</span>
-  <span class="nl">serverProvider</span><span class="p">:</span> <span class="nx">Provider</span><span class="p">;</span>
+  <span class="nl">clientTransport</span><span class="p">:</span> <span class="nx">ClientTransport</span><span class="p">;</span>
+  <span class="nl">serverTransport</span><span class="p">:</span> <span class="nx">ServerTransport</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kr">interface</span> <span class="nx">Provider</span> <span class="p">{</span>
-  <span class="nl">providerFactory</span><span class="p">:</span> <span class="nx">ProviderFactory</span><span class="p">;</span>
-  <span class="nx">factoryOptions</span><span class="p">?:</span> <span class="kr">any</span><span class="p">;</span>
-  <span class="nx">serializers</span><span class="p">?:</span> <span class="nx">PayloadSerializers</span><span class="p">;</span>
-  <span class="nx">setup</span> <span class="p">?:</span> <span class="nx">ProviderSetup</span><span class="p">;</span>
+<span class="kr">interface</span> <span class="nx">ClientTransport</span> <span class="p">{</span>
+   <span class="nl">start</span><span class="p">:</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">ClientTransportOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">RequestHandler</span><span class="o">&gt;</span><span class="p">;</span>
+   <span class="nl">destroy</span><span class="p">:</span> <span class="nx">TDestroy</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kr">interface</span> <span class="nx">ProviderSetup</span> <span class="p">{</span>
-    <span class="nx">dataMimeType</span> <span class="p">?:</span> <span class="kr">string</span><span class="p">,</span>
-    <span class="nx">keepAlive</span> <span class="p">?:</span> <span class="kr">number</span><span class="p">,</span>
-    <span class="nx">lifetime</span> <span class="p">?:</span> <span class="kr">number</span><span class="p">,</span>
-    <span class="nx">metadataMimeType</span> <span class="p">?:</span> <span class="kr">string</span><span class="p">,</span>
+<span class="kd">type</span> <span class="nx">ServerTransport</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="nx">ServerTransportOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ServerStop</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">ClientTransportOptions</span> <span class="p">{</span>
+  <span class="nl">remoteAddress</span><span class="p">:</span> <span class="nx">Address</span><span class="p">;</span>
+  <span class="nl">logger</span><span class="p">:</span> <span class="nx">TLogger</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kr">interface</span> <span class="nx">PayloadSerializers</span> <span class="p">{</span>
-  <span class="nl">data</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nl">deserialize</span><span class="p">:</span> <span class="p">(</span><span class="nx">data</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="kr">any</span><span class="p">;</span>
-    <span class="nl">serialize</span><span class="p">:</span> <span class="p">(</span><span class="nx">data</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="kr">any</span><span class="p">;</span>
-  <span class="p">};</span>
-  <span class="nl">metadata</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nl">deserialize</span><span class="p">:</span> <span class="p">(</span><span class="nx">data</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="kr">any</span><span class="p">;</span>
-    <span class="nl">serialize</span><span class="p">:</span> <span class="p">(</span><span class="nx">data</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="kr">any</span><span class="p">;</span>
-  <span class="p">};</span>
+<span class="kr">interface</span> <span class="nx">ServerTransportOptions</span> <span class="p">{</span>
+  <span class="nl">localAddress</span><span class="p">:</span> <span class="nx">Address</span><span class="p">;</span>
+  <span class="nl">serviceCall</span><span class="p">:</span> <span class="nx">RequestHandler</span><span class="p">;</span>
+  <span class="nl">logger</span><span class="p">:</span> <span class="nx">TLogger</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">type</span> <span class="nx">ProviderFactory</span> <span class="o">=</span> <span class="p">(</span><span class="nx">options</span><span class="p">:</span> <span class="p">{</span> <span class="nl">address</span><span class="p">:</span> <span class="nx">Address</span><span class="p">;</span> <span class="nx">factoryOptions</span><span class="p">?:</span> <span class="kr">any</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">DuplexConnection</span><span class="p">;</span>
+<span class="kr">interface</span> <span class="nx">RequestHandler</span> <span class="p">{</span>
+  <span class="nl">requestResponse</span><span class="p">:</span> <span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="nx">Message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nl">requestStream</span><span class="p">:</span> <span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="nx">Message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Observable</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">type</span> <span class="nx">DuplexConnection</span> <span class="o">=</span> <span class="kr">any</span><span class="p">;</span>
+<span class="kd">type</span> <span class="nx">ServerStop</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+<span class="kd">type</span> <span class="nx">TLogger</span> <span class="o">=</span> <span class="p">(</span><span class="nx">msg</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="kd">type</span><span class="p">:</span> <span class="s1">'warn'</span> <span class="o">|</span> <span class="s1">'log'</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+<span class="kd">type</span> <span class="nx">TDestroy</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">address</span><span class="p">,</span> <span class="nx">logger</span> <span class="p">}:</span> <span class="nx">TDestroyOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">TDestroyOptions</span> <span class="p">{</span>
+  <span class="nl">address</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">logger</span><span class="p">:</span> <span class="nx">TLogger</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre>
 <p>Opinionated communication layer.<br>
 It is used when requesting a service from another microservice instance.</p>
