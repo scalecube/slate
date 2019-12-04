@@ -225,9 +225,6 @@
                   <li>
                     <a href="#installation" class="toc-h2 toc-link" data-title="Installation">Installation</a>
                   </li>
-                  <li>
-                    <a href="#templates" class="toc-h2 toc-link" data-title="Templates">Templates</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -429,38 +426,35 @@
 <p>there is a template for running on browser <code>@scalecube/browser</code>
 and a template for running on node <code>@scalecube/node</code>.</p>
 
-<p>yarn:<br>
-<code>
-yarn add @scalecube/scalecube-microservice
-</code></p>
+<p><strong>install options:</strong></p>
 
-<p>npm:<br>
-<code>
-npm install @scalecube/scalecube-microservice
-</code> </p>
-<h2 id='templates'>Templates</h2>
-<p><strong>Browser</strong></p>
-
-<p>yarn:<br>
-<code>
-yarn add @scalecube/browser
-</code></p>
-
-<p>npm:<br>
-<code>
-npm add @scalecube/browser
-</code></p>
-
-<p><strong>Node</strong>
-yarn:<br>
-<code>
-yarn add @scalecube/node
-</code></p>
-
-<p>npm:<br>
-<code>
-npm add @scalecube/node
-</code></p>
+<table><thead>
+<tr>
+<th>package</th>
+<th>default configuration</th>
+<th>yarn</th>
+<th>npm</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>@scalecube/browser</td>
+<td>v</td>
+<td><code>yarn add @scalecube/browser</code></td>
+<td><code>npm i @scalecube/browser</code></td>
+</tr>
+<tr>
+<td>@scalecube/node</td>
+<td>v</td>
+<td><code>yarn add @scalecube/node</code></td>
+<td><code>npm i @scalecube/node</code></td>
+</tr>
+<tr>
+<td>@scalecube/scalecube-microservice</td>
+<td>x</td>
+<td><code>yarn add @scalecube/scalecube-microservice</code></td>
+<td><code>npm i @scalecube/scalecube-microservice</code></td>
+</tr>
+</tbody></table>
 <h1 id='motivation'>Motivation</h1>
 <p>Scalecube provide solution for microservice&#39;s architecture.<br>
 It is based on the principle of <a href="https://en.wikipedia.org/wiki/Loose_coupling">Decouple by interface</a>.<br>
@@ -492,16 +486,16 @@ receive URI format and convert it to Address.
 </ul></li>
 </ul>
 <h2 id='isolation'>Isolation</h2><h3 id='runtime'>RunTime</h3>
-<p>Different services communicate via events, this solution isolates each service.
-if one of the services throw exception, it won&#39;t break the whole js application.</p>
+<p>Different services communicate via events, this solution isolates each service.<br>
+if one of the services throw exception, it won&#39;t break the whole js application.  </p>
 <h3 id='development'>Development</h3>
-<p>Each feature/service can be developed in isolation from other features/services.
-services will be able to integrate together base on the interface of each service.</p>
+<p>Each feature/service can be developed in isolation from other features/services.<br>
+services will be able to integrate together base on the interface of each service.  </p>
 
 <p><strong>private methods/property</strong></p>
 
-<p>side effect of using Scalecube allow you to design a system in which the developer of the service can determine which methods/property are public.
-only methods/property that are in the service definition can be access from out-side the service.</p>
+<p>side effect of using Scalecube allow you to design a system in which the developer of the service can determine which methods/property are public.<br>
+only methods/property that are in the service definition can be access from out-side the service.  </p>
 <h2 id='scalability'>Scalability</h2><h3 id='runtime-2'>RunTime</h3>
 <p>Easy to bootstrap in every environment/process.</p>
 
@@ -511,7 +505,7 @@ Scalecube will manage the communication between the services.<br>
 Allow you to split your services between multiple process and scale your runtime processing.</p>
 
 <p><strong>NodeJS</strong>
-A feature can be located on different servers.
+A feature can be located on different servers.<br>
 Scalecube will manage the communication between the services.</p>
 <h3 id='development-2'>Development</h3>
 <p>Scalecube provide easy way to integrate services base on their definition.</p>
@@ -519,12 +513,33 @@ Scalecube will manage the communication between the services.</p>
 <p>currently <code>@scalecube/browser</code> transpile the code to es5.<br>
 but it is still require to add proxy-polyfill to browsers that does not have proxy support.</p>
 
-<p><strong>tested on:</strong><br>
-Chrome 37+<br>
-IE 11<br>
-Edge 15<br>
-FF 41<br>
-Safari 7.1  </p>
+<table><thead>
+<tr>
+<th>browser</th>
+<th>version</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Chrome</td>
+<td>37+</td>
+</tr>
+<tr>
+<td>IE</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Edge</td>
+<td>15</td>
+</tr>
+<tr>
+<td>FF</td>
+<td>41</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>7.1</td>
+</tr>
+</tbody></table>
 <h1 id='core-concepts'>Core-concepts</h1><h2 id='member'>Member</h2>
 <p>member is an entity in the distributed environment.<br>
 in the eco-system of scalecube, member will be a microservice container.</p>
