@@ -337,38 +337,41 @@ Its the code of the service.
 ## Transport
 ```typescript
 interface Transport {
-  clientProvider: Provider;
-  serverProvider: Provider;
+  clientTransport: ClientTransport;
+  serverTransport: ServerTransport;
 }
 
-interface Provider {
-  providerFactory: ProviderFactory;
-  factoryOptions?: any;
-  serializers?: PayloadSerializers;
-  setup ?: ProviderSetup;
+interface ClientTransport {
+   start: (options: ClientTransportOptions) => Promise<RequestHandler>;
+   destroy: TDestroy;
 }
 
-interface ProviderSetup {
-    dataMimeType ?: string,
-    keepAlive ?: number,
-    lifetime ?: number,
-    metadataMimeType ?: string,
-}
-  
-interface PayloadSerializers {
-  data: {
-    deserialize: (data: any) => any;
-    serialize: (data: any) => any;
-  };
-  metadata: {
-    deserialize: (data: any) => any;
-    serialize: (data: any) => any;
-  };
+type ServerTransport = (options: ServerTransportOptions) => ServerStop;
+
+interface ClientTransportOptions {
+  remoteAddress: Address;
+  logger: TLogger;
 }
 
-type ProviderFactory = (options: { address: Address; factoryOptions?: any }) => DuplexConnection;
+interface ServerTransportOptions {
+  localAddress: Address;
+  serviceCall: RequestHandler;
+  logger: TLogger;
+}
 
-type DuplexConnection = any;
+interface RequestHandler {
+  requestResponse: (message: Message) => Promise<any>;
+  requestStream: (message: Message) => Observable<any>;
+}
+
+type ServerStop = () => void;
+type TLogger = (msg: any, type: 'warn' | 'log') => void;
+type TDestroy = ({ address, logger }: TDestroyOptions) => void;
+
+interface TDestroyOptions {
+  address: string;
+  logger: TLogger;
+}
 ```
 Opinionated communication layer.  
 It is used when requesting a service from another microservice instance.
