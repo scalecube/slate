@@ -322,7 +322,7 @@ each method describe its <a href="#asyncmodel">asyncModel</a>.</li>
 
 <span class="kd">type</span> <span class="nx">ServerStop</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
 <span class="kd">type</span> <span class="nx">TLogger</span> <span class="o">=</span> <span class="p">(</span><span class="nx">msg</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="kd">type</span><span class="p">:</span> <span class="s1">'warn'</span> <span class="o">|</span> <span class="s1">'log'</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
-<span class="kd">type</span> <span class="nx">TDestroy</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">address</span><span class="p">,</span> <span class="nx">logger</span> <span class="p">}:</span> <span class="nx">TDestroyOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+<span class="kd">type</span> <span class="nx">TDestroy</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">logger</span> <span class="p">}:</span> <span class="nx">TDestroyOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">TDestroyOptions</span> <span class="p">{</span>
   <span class="nl">address</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
@@ -338,9 +338,8 @@ It is used when requesting a service from another microservice instance.</p>
 
 <ul>
 <li>clientProvider - implementation for the client side.</li>
+<li>start - open connection to remote container and resolve with RequestHandler to call the remote container</li>
+<li><p>destroy - remove all open connections of the container</p></li>
 <li><p>serverProvider - implementation for the server side.</p></li>
-<li><p>providerFactory - Factory for creating RSocket client transport provider</p></li>
-<li><p>factoryOptions - Extra configuration to pass to the factory</p></li>
-<li><p>serializers - Optional serialize functionality for the payload</p></li>
-<li><p>setup - Optional setup configuration for the provider</p></li>
+<li><p>ServerStop - remove all open connections of this container</p></li>
 </ul>
