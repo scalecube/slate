@@ -366,7 +366,7 @@ interface RequestHandler {
 
 type ServerStop = () => void;
 type TLogger = (msg: any, type: 'warn' | 'log') => void;
-type TDestroy = ({ address, logger }: TDestroyOptions) => void;
+type TDestroy = ({ logger }: TDestroyOptions) => void;
 
 interface TDestroyOptions {
   address: string;
@@ -381,9 +381,8 @@ When bootstrapping microservice, it is possible to pass transport in the [option
 transport is your custom implementation to [RSocket](https://github.com/rsocket/rsocket-js) Transport Providers.
 
 * clientProvider - implementation for the client side.
-* serverProvider - implementation for the server side.
+* start - open connection to remote container and resolve with RequestHandler to call the remote container
+* destroy - remove all open connections of the container
 
-* providerFactory - Factory for creating RSocket client transport provider
-* factoryOptions - Extra configuration to pass to the factory
-* serializers - Optional serialize functionality for the payload
-* setup - Optional setup configuration for the provider
+* serverProvider - implementation for the server side.
+* ServerStop - remove all open connections of this container
