@@ -4,10 +4,10 @@
 
 ## 0.1.4
 
-### 0.1.4-next.17
+### 0.1.4-next.18
 - [decoupling rsocket transport](https://github.com/scalecube/scalecube-js/pull/223)
 
-### 0.1.4-next.16
+### 0.1.4-next.17
 - [node template](https://github.com/scalecube/scalecube-js/pull/232)
 
 ### 0.1.4-next.15
