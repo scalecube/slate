@@ -39,11 +39,7 @@ all modules are pluggable in a [microservice](#bootstrap) container and can be c
 scalecube available by installing the `@scalecube/scalecube-microservice`.  
 `@scalecube/scalecube-microservice` does not come with default configurations.
 
-another option is to use template.
-
-there is a template for running on browser `@scalecube/browser`
-and a template for running on node `@scalecube/node`.
-
+another option is to use template. (a package with default settings)
 
 **install options:**
 
@@ -61,28 +57,12 @@ it is event-base system that allow to create loosely coupled services in a distr
 
 ### Environment
 
-scalecube can run on both browser and server.  
-on browser it will use postMessage events.  
-on server it will use websocket.
+scalecube can be used on browser or node
 
 ### Reactive programing.
 
 support Observable pattern.
 
-### Tools
-
-Provides additional tools:
-
-* **workers** - tool for using web-workers in scalecube ecosystem.  
-  '@scalecube/scalecube-microservice' export workers which contain:
-   * initialize - initialize the web-worker util.
-   * addWorker - add a web-worker to sclaecube's ecosystem.
-   * removeWorker -  remove a web-worker from sclaecube's ecosystem.
-* **stringToAddress** - tool for creating address from string.  
-receive URI format and convert it to Address.
-  * can use partial URI format
-  * use default params to fill the missing values from the given string.
-  
 ## Isolation
  
 ### RunTime 

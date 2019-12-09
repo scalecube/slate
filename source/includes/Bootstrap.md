@@ -121,7 +121,7 @@ interface Service {
 After creating a service and a service-definition we can now bootstrap our microservice.   
 
 * services - An array of services, that will exist inside a microservice container.
-* seedAddress - [seedAddress](#seedaddress) is the entry point to our distributed env.
+* seedAddress - [seedAddress](#seed) is the entry point to our distributed env.
 * address - An [address](#address) for this microservice instance.
 * transport - optional pluggable [transport](#transport).
 * cluster - optional pluggable [cluster](#cluster).

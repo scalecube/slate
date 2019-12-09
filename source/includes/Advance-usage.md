@@ -149,3 +149,14 @@ scalecube provide gateway implementation base on RSocketWebsocket.
 
 * start - start the gateway.
 * stop - stop the gateway.
+
+
+## Web workers (browser)
+
+Scalecube provide an easy way to work in the browser different process (aka webworkers)  
+it provide a **workers** tool to attach webworkers to scalecube ecosystem.  
+can be import from `sclecube/browser` or `scalecube/utils`.  
+
+* initialize - initialize the web-worker util.
+* addWorker - add a web-worker to sclaecube's ecosystem.
+* removeWorker -  remove a web-worker from sclaecube's ecosystem.

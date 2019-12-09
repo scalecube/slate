@@ -64,12 +64,8 @@ When a microservice use its own services.
 
 When a microservice use another microservice's services.
 
-## SeedAddress
-
-seedAddress is the [address](#address) of the [seed](#seed).
-
-
 ## Seed
 the seed is a microservice container that used as an entry-point to the [distributed environment](#distributed-environment).
 each microservice can act as a seed for other microservice containers.
 
+seedAddress is the [address](#address) of the [seed](#seed).
