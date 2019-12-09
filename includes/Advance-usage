@@ -125,3 +125,13 @@ the callback will be called with createProxy or createServiceCall methods which 
 <li><p>start - start the gateway.</p></li>
 <li><p>stop - stop the gateway.</p></li>
 </ul>
+<h2 id='web-workers-browser'>Web workers (browser)</h2>
+<p>Scalecube provide an easy way to work in the browser different process (aka webworkers)<br>
+it provide a <strong>workers</strong> tool to attach webworkers to scalecube ecosystem.<br>
+can be import from <code>sclecube/browser</code> or <code>scalecube/utils</code>.  </p>
+
+<ul>
+<li>initialize - initialize the web-worker util.</li>
+<li>addWorker - add a web-worker to sclaecube&#39;s ecosystem.</li>
+<li>removeWorker -  remove a web-worker from sclaecube&#39;s ecosystem.</li>
+</ul>

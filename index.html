@@ -237,9 +237,6 @@
                     <a href="#reactive-programing" class="toc-h2 toc-link" data-title="Reactive programing.">Reactive programing.</a>
                   </li>
                   <li>
-                    <a href="#tools" class="toc-h2 toc-link" data-title="Tools">Tools</a>
-                  </li>
-                  <li>
                     <a href="#isolation" class="toc-h2 toc-link" data-title="Isolation">Isolation</a>
                   </li>
                   <li>
@@ -264,9 +261,6 @@
                   </li>
                   <li>
                     <a href="#servicecall" class="toc-h2 toc-link" data-title="ServiceCall">ServiceCall</a>
-                  </li>
-                  <li>
-                    <a href="#seedaddress" class="toc-h2 toc-link" data-title="SeedAddress">SeedAddress</a>
                   </li>
                   <li>
                     <a href="#seed" class="toc-h2 toc-link" data-title="Seed">Seed</a>
@@ -351,6 +345,9 @@
                   <li>
                     <a href="#gateway" class="toc-h2 toc-link" data-title="gateway">gateway</a>
                   </li>
+                  <li>
+                    <a href="#web-workers-browser" class="toc-h2 toc-link" data-title="Web workers (browser)">Web workers (browser)</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -421,10 +418,7 @@
 <p>scalecube available by installing the <code>@scalecube/scalecube-microservice</code>.<br>
 <code>@scalecube/scalecube-microservice</code> does not come with default configurations.</p>
 
-<p>another option is to use template.</p>
-
-<p>there is a template for running on browser <code>@scalecube/browser</code>
-and a template for running on node <code>@scalecube/node</code>.</p>
+<p>another option is to use template. (a package with default settings)</p>
 
 <p><strong>install options:</strong></p>
 
@@ -460,31 +454,9 @@ and a template for running on node <code>@scalecube/node</code>.</p>
 It is based on the principle of <a href="https://en.wikipedia.org/wiki/Loose_coupling">Decouple by interface</a>.<br>
 it is event-base system that allow to create loosely coupled services in a distributed environment.</p>
 <h3 id='environment'>Environment</h3>
-<p>scalecube can run on both browser and server.<br>
-on browser it will use postMessage events.<br>
-on server it will use websocket.</p>
+<p>scalecube can be used on browser or node</p>
 <h3 id='reactive-programing'>Reactive programing.</h3>
 <p>support Observable pattern.</p>
-<h3 id='tools'>Tools</h3>
-<p>Provides additional tools:</p>
-
-<ul>
-<li><strong>workers</strong> - tool for using web-workers in scalecube ecosystem.<br>
-&#39;@scalecube/scalecube-microservice&#39; export workers which contain:
-
-<ul>
-<li>initialize - initialize the web-worker util.</li>
-<li>addWorker - add a web-worker to sclaecube&#39;s ecosystem.</li>
-<li>removeWorker -  remove a web-worker from sclaecube&#39;s ecosystem.</li>
-</ul></li>
-<li><strong>stringToAddress</strong> - tool for creating address from string.<br>
-receive URI format and convert it to Address.
-
-<ul>
-<li>can use partial URI format</li>
-<li>use default params to fill the missing values from the given string.</li>
-</ul></li>
-</ul>
 <h2 id='isolation'>Isolation</h2><h3 id='runtime'>RunTime</h3>
 <p>Different services communicate via events, this solution isolates each service.<br>
 if one of the services throw exception, it won&#39;t break the whole js application.  </p>
@@ -585,11 +557,11 @@ if the state has changed, then the registry is notified and update accordingly.<
 <p>When a microservice use its own services.</p>
 <h3 id='remotecall'>RemoteCall</h3>
 <p>When a microservice use another microservice&#39;s services.</p>
-<h2 id='seedaddress'>SeedAddress</h2>
-<p>seedAddress is the <a href="#address">address</a> of the <a href="#seed">seed</a>.</p>
 <h2 id='seed'>Seed</h2>
 <p>the seed is a microservice container that used as an entry-point to the <a href="#distributed-environment">distributed environment</a>.
 each microservice can act as a seed for other microservice containers.</p>
+
+<p>seedAddress is the <a href="#address">address</a> of the <a href="#seed">seed</a>.</p>
 <h1 id='api'>API</h1><h2 id='address'>Address</h2><pre class="highlight typescript tab-typescript"><code><span class="kr">interface</span> <span class="nx">Address</span> <span class="p">{</span>
   <span class="nl">host</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
   <span class="nl">port</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
@@ -1033,7 +1005,7 @@ but only the functions that are in the definition will be public (accessible) in
 
 <ul>
 <li>services - An array of services, that will exist inside a microservice container.</li>
-<li>seedAddress - <a href="#seedaddress">seedAddress</a> is the entry point to our distributed env.</li>
+<li>seedAddress - <a href="#seed">seedAddress</a> is the entry point to our distributed env.</li>
 <li>address - An <a href="#address">address</a> for this microservice instance.</li>
 <li>transport - optional pluggable <a href="#transport">transport</a>.</li>
 <li>cluster - optional pluggable <a href="#cluster">cluster</a>.</li>
@@ -1232,6 +1204,16 @@ the callback will be called with createProxy or createServiceCall methods which 
 <li><p><a href="#createservicecall">serviceCall</a> - low level approach for requesting a service in the distributed environment.</p></li>
 <li><p>start - start the gateway.</p></li>
 <li><p>stop - stop the gateway.</p></li>
+</ul>
+<h2 id='web-workers-browser'>Web workers (browser)</h2>
+<p>Scalecube provide an easy way to work in the browser different process (aka webworkers)<br>
+it provide a <strong>workers</strong> tool to attach webworkers to scalecube ecosystem.<br>
+can be import from <code>sclecube/browser</code> or <code>scalecube/utils</code>.  </p>
+
+<ul>
+<li>initialize - initialize the web-worker util.</li>
+<li>addWorker - add a web-worker to sclaecube&#39;s ecosystem.</li>
+<li>removeWorker -  remove a web-worker from sclaecube&#39;s ecosystem.</li>
 </ul>
 <h1 id='debug'>Debug</h1><h2 id='mocks'>Mocks</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'@scalecube/utils'</span><span class="p">);</span>
 

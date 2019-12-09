@@ -43,8 +43,8 @@ if the state has changed, then the registry is notified and update accordingly.<
 <p>When a microservice use its own services.</p>
 <h3 id='remotecall'>RemoteCall</h3>
 <p>When a microservice use another microservice&#39;s services.</p>
-<h2 id='seedaddress'>SeedAddress</h2>
-<p>seedAddress is the <a href="#address">address</a> of the <a href="#seed">seed</a>.</p>
 <h2 id='seed'>Seed</h2>
 <p>the seed is a microservice container that used as an entry-point to the <a href="#distributed-environment">distributed environment</a>.
 each microservice can act as a seed for other microservice containers.</p>
+
+<p>seedAddress is the <a href="#address">address</a> of the <a href="#seed">seed</a>.</p>

@@ -96,7 +96,7 @@ but only the functions that are in the definition will be public (accessible) in
 
 <ul>
 <li>services - An array of services, that will exist inside a microservice container.</li>
-<li>seedAddress - <a href="#seedaddress">seedAddress</a> is the entry point to our distributed env.</li>
+<li>seedAddress - <a href="#seed">seedAddress</a> is the entry point to our distributed env.</li>
 <li>address - An <a href="#address">address</a> for this microservice instance.</li>
 <li>transport - optional pluggable <a href="#transport">transport</a>.</li>
 <li>cluster - optional pluggable <a href="#cluster">cluster</a>.</li>
