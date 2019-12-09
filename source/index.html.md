@@ -36,18 +36,21 @@ as part of the solution, Scalecube provides the follow modules:
 all modules are pluggable in a [microservice](#bootstrap) container and can be customized and replaced.
 
 ## Installation
-scalecube available by installing the `@scalecube/scalecube-microservice`.  
-`@scalecube/scalecube-microservice` does not come with default configurations.
 
-another option is to use template. (a package with default settings)
+scalecube available in three templates:  
 
-**install options:**
+| package | default configuration |
+| --- | --- |
+| @scalecube/browser | provide default configuration for running in browser |
+| @scalecube/node | provide default configuration for running in server |
+| @scalecube/scalecube-microservice | does not provide any default configuration |
 
-| package | default configuration | yarn | npm |
-| --- | --- | --- | --- |
-| @scalecube/browser | v| `yarn add @scalecube/browser` | `npm i @scalecube/browser` |
-| @scalecube/node | v |`yarn add @scalecube/node` | `npm i @scalecube/node` |
-| @scalecube/scalecube-microservice | x |`yarn add @scalecube/scalecube-microservice` | `npm i @scalecube/scalecube-microservice` |
+
+| package | yarn | npm |
+| --- |  --- | --- |
+| @scalecube/browser | `yarn add @scalecube/browser` | `npm i @scalecube/browser` |
+| @scalecube/node |`yarn add @scalecube/node` | `npm i @scalecube/node` |
+| @scalecube/scalecube-microservice |`yarn add @scalecube/scalecube-microservice` | `npm i @scalecube/scalecube-microservice` |
 
 # Motivation
 
