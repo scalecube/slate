@@ -73,12 +73,8 @@ create a [member](#member) from the data it receive from the discovery,
 and use it in-order to share data in the distributed environment.
 
 scalecube provide two cluster implementations:
-* browser:  
-import { joinCluster } from '@scalecube/cluster-browser';
-* server:  
-import { joinCluster } from '@scalecube/cluster-nodejs';
-
-`@scalecube/cluster-browser` is the default cluster when using the IIFE version.
+* `@scalecube/cluster-browser`
+* `@scalecube/cluster-nodejs`
 
 * address - address of the member
 * seedAddress - address of the member that act as the seed
