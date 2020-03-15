@@ -17,7 +17,7 @@
 <p>remoteCall is a request for a service that located in different microservice container in our <a href="#distributed-environment">distributed environment</a>,</p>
 
 <p>the other microservice can be located on a different process and it will still be accessible with scalecube.</p>
-<h2 id='dependency-hook'>dependency hook</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">ServiceFactory</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">createProxy</span><span class="p">,</span> <span class="nx">createServiceCall</span> <span class="p">}:</span> <span class="nx">ServiceFactoryOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ServiceObject</span><span class="p">;</span>
+<h2 id='dependency-injection'>dependency injection</h2><pre class="highlight typescript tab-typescript"><code><span class="kd">type</span> <span class="nx">ServiceFactory</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">createProxy</span><span class="p">,</span> <span class="nx">createServiceCall</span> <span class="p">}:</span> <span class="nx">ServiceFactoryOptions</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ServiceObject</span><span class="p">;</span>
 
 <span class="kr">interface</span> <span class="nx">ServiceFactoryOptions</span> <span class="p">{</span>
   <span class="nl">createProxy</span><span class="p">:</span> <span class="nx">CreateProxy</span><span class="p">;</span>
@@ -29,7 +29,7 @@
 
   <span class="p">[</span><span class="nx">methodName</span><span class="p">:</span> <span class="kr">string</span><span class="p">]:</span> <span class="kr">any</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">ASYNC_MODEL_TYPES</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube@scalecube/scalecube-microservice'</span><span class="p">;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">createMicroservice</span><span class="p">,</span> <span class="nx">ASYNC_MODEL_TYPES</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'@scalecube/scalecube-microservice'</span><span class="p">;</span>
   <span class="kr">const</span> <span class="nx">definitionA</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">serviceName</span><span class="p">:</span> <span class="s1">'serviceA'</span><span class="p">,</span>
     <span class="na">methods</span><span class="p">:</span> <span class="p">{</span>
