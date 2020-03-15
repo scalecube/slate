@@ -4,6 +4,9 @@
 
 ## 0.1.4
 
+### 0.1.4-next.19
+- [iframe support](https://github.com/scalecube/scalecube-js/pull/239)
+
 ### 0.1.4-next.18
 - [decoupling rsocket transport](https://github.com/scalecube/scalecube-js/pull/223)
 

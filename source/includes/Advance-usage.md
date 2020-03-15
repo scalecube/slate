@@ -24,7 +24,7 @@ remoteCall is a request for a service that located in different microservice con
 
 the other microservice can be located on a different process and it will still be accessible with scalecube.
 
-## dependency hook
+## dependency injection
 
 ```typescript
 type ServiceFactory = ({ createProxy, createServiceCall }: ServiceFactoryOptions) => ServiceObject;
@@ -42,7 +42,7 @@ interface ServiceObject {
 ```
 
 ```javascript
-import { createMicroservice, ASYNC_MODEL_TYPES } from '@scalecube/scalecube@scalecube/scalecube-microservice';
+import { createMicroservice, ASYNC_MODEL_TYPES } from '@scalecube/scalecube-microservice';
   const definitionA = {
     serviceName: 'serviceA',
     methods: {
