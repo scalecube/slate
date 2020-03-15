@@ -1,239 +1,112 @@
 ---
-title: API Reference
+title: Scalecube
 
-language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+language_tabs:
+  - typescript : info
+  - javascript : example
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://github.com/scalecube/scalecube-js'>Scalecube github</a>
 
 includes:
-  - errors
-
+  - Core-concepts
+  - API
+  - Bootstrap
+  - Basic-usage
+  - Advance-usage
+  - Debug
+  - Errors
+  - ReleaseNotes
+  - FAQ
 search: true
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Scalecube is a toolkit for creating [microservices](#bootstrap) based systems.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+as part of the solution, Scalecube provides the follow modules: 
+ 
+* [Router](#router)  
+* [Discovery](#discovery)  
+* [Cluster](#cluster)  
+* [Transport](#transport)  
+* [Gateway](#gateway)  
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+all modules are pluggable in a [microservice](#bootstrap) container and can be customized and replaced.
 
-# Authentication
+## Installation
 
-> To authorize, use this code:
+scalecube available in three templates:  
 
-```ruby
-require 'kittn'
+| package | default configuration |
+| --- | --- |
+| @scalecube/browser | provide default configuration for running in browser |
+| @scalecube/node | provide default configuration for running in server |
+| @scalecube/scalecube-microservice | does not provide any default configuration |
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
 
-```python
-import kittn
+| package | yarn | npm |
+| --- |  --- | --- |
+| @scalecube/browser | `yarn add @scalecube/browser` | `npm i @scalecube/browser` |
+| @scalecube/node |`yarn add @scalecube/node` | `npm i @scalecube/node` |
+| @scalecube/scalecube-microservice |`yarn add @scalecube/scalecube-microservice` | `npm i @scalecube/scalecube-microservice` |
 
-api = kittn.authorize('meowmeowmeow')
-```
+# Motivation
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+Scalecube provide solution for microservice's architecture.  
+It is based on the principle of [Decouple by interface](https://en.wikipedia.org/wiki/Loose_coupling).  
+it is event-base system that allow to create loosely coupled services in a distributed environment.
 
-```javascript
-const kittn = require('kittn');
+### Environment
 
-let api = kittn.authorize('meowmeowmeow');
-```
+scalecube can be used on browser or node
 
-> Make sure to replace `meowmeowmeow` with your API key.
+### Reactive programing.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+support Observable pattern.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+## Isolation
+ 
+### RunTime 
+Different services communicate via events, this solution isolates each service.  
+if one of the services throw exception, it won't break the whole js application.  
 
-`Authorization: meowmeowmeow`
+### Development 
+Each feature/service can be developed in isolation from other features/services.  
+services will be able to integrate together base on the interface of each service.  
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+**private methods/property**
+  
+side effect of using Scalecube allow you to design a system in which the developer of the service can determine which methods/property are public.  
+only methods/property that are in the service definition can be access from out-side the service.  
 
-# Kittens
+## Scalability
 
-## Get All Kittens
+### RunTime
+Easy to bootstrap in every environment/process.
 
-```ruby
-require 'kittn'
+**Browser**
+A feature can be located on the main thread or in a web-worker,
+Scalecube will manage the communication between the services.  
+Allow you to split your services between multiple process and scale your runtime processing.
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+**NodeJS**
+A feature can be located on different servers.  
+Scalecube will manage the communication between the services.
 
-```python
-import kittn
+### Development
+Scalecube provide easy way to integrate services base on their definition.
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+# Old browser support
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+currently `@scalecube/browser` transpile the code to es5.    
+but it is still require to add proxy-polyfill to browsers that does not have proxy support.
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+| browser | version |
+| --- | --- |
+| Chrome | 37+ |  
+| IE     | 11  |  
+| Edge   | 15  | 
+| FF     | 41  |   
+| Safari | 7.1 |  
